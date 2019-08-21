@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "277610398259",
+    "firebase_url": "https://dibapp-aaa3e.firebaseio.com",
+    "project_id": "dibapp-aaa3e",
+    "storage_bucket": "dibapp-aaa3e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:277610398259:android:a6f4dba855793cab",
+        "android_client_info": {
+          "package_name": "it.uniba.maw.dibapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "277610398259-e6c9k7dmea2k84c3u21emlnjl16npjog.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "it.uniba.maw.dibapp",
+            "certificate_hash": "0f95842595b17543df821f3c6a583459c0c9e91d"
+          }
+        },
+        {
+          "client_id": "277610398259-68e2lb0je1mgm5brc9glfal2oso2g08i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrTiKZeXpwysOYTpup6avWioyz9xojrb4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "277610398259-68e2lb0je1mgm5brc9glfal2oso2g08i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
