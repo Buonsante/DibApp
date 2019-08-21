@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">DibApp</string>
+    <string name="hint_email">username</string>
+    <string name="hint_password">password</string>
+    <string name="err_msg_email">Enter valid email address</string>
+    <string name="err_msg_password">Enter the password</string>
+    <string name="authentication_failed">The email or password is incorrect</string>
 </resources>
