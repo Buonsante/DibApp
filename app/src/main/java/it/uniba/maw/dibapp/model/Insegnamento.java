@@ -18,4 +18,60 @@ public class Insegnamento {
     public Insegnamento() {
 
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getAnnoDiCorso() {
+        return annoDiCorso;
+    }
+
+    public void setAnnoDiCorso(int annoDiCorso) {
+        this.annoDiCorso = annoDiCorso;
+    }
+
+    public int getAnnoAccademico() {
+        return annoAccademico;
+    }
+
+    public void setAnnoAccademico(int annoAccademico) {
+        this.annoAccademico = annoAccademico;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCdl() {
+        return cdl;
+    }
+
+    public void setCdl(String cdl) {
+        this.cdl = cdl;
+    }
+
+    public String getCorso() {
+        return corso;
+    }
+
+    public void setCorso(String corso) {
+        this.corso = corso;
+    }
+
+    public String getDocente() {
+        return docente;
+    }
+
+    public void setDocente(String docente) {
+        this.docente = docente;
+    }
 }
