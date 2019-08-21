@@ -21,9 +21,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import static it.uniba.maw.dibapp.util.Util.DEBUG_TAG;
+
 public class LoginActivity extends AppCompatActivity {
 
-    private static final String TAG = "dibappDebug";
+
     Button signInButon;
     EditText usernameEditText, passwordEditText;
     TextInputLayout usernameLayout, passwordLayout;
@@ -80,12 +82,12 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
+                            Log.d(DEBUG_TAG, "signInWithEmail:success");
                             user = mAuth.getCurrentUser();
                             startMainActivity();
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Log.w(DEBUG_TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                             usernameLayout.setError(getString(R.string.authentication_failed));
                             passwordLayout.setError(getString(R.string.authentication_failed));
@@ -104,12 +106,11 @@ public class LoginActivity extends AppCompatActivity {
             String email = user.getEmail();
             // Check if user's email is verified
             boolean emailVerified = user.isEmailVerified();
-
             // The user's ID, unique to the Firebase project. Do NOT use this value to
             // authenticate with your backend server, if you have one. Use
             // FirebaseUser.getIdToken() instead.
             String uid = user.getUid();
-            Log.w(TAG, "USER: "+name+" - "+email+" "+uid);
+            Log.w(DEBUG_TAG, "USER: "+name+" - "+email+" "+uid);
 
             Intent mainActivityIntent = new Intent(this,MainActivity.class);
             startActivity(mainActivityIntent);
