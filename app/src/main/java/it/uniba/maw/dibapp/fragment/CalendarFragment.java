@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar;
+
 import it.uniba.maw.dibapp.R;
 
 /**
@@ -19,6 +21,8 @@ import it.uniba.maw.dibapp.R;
  * create an instance of this fragment.
  */
 public class CalendarFragment extends Fragment {
+
+    CollapsibleCalendar collapsibleCalendar;
 
 
     public CalendarFragment() {
@@ -40,8 +44,41 @@ public class CalendarFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_calendar, container, false);
+
+        collapsibleCalendar = view.findViewById(R.id.calendarView);
+        collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
+            @Override
+            public void onDaySelect() {
+
+            }
+
+            @Override
+            public void onItemClick(View view) {
+
+            }
+
+            @Override
+            public void onDataUpdate() {
+
+            }
+
+            @Override
+            public void onMonthChange() {
+
+            }
+
+            @Override
+            public void onWeekChange(int i) {
+
+            }
+        });
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_calendar, container, false);
+
+
+        return view;
     }
 
 
