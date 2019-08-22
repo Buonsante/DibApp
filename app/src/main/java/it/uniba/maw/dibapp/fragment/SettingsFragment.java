@@ -1,41 +1,16 @@
 package it.uniba.maw.dibapp.fragment;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.v7.preference.PreferenceFragmentCompat;
+
 
 import it.uniba.maw.dibapp.R;
 
-
-public class SettingsFragment extends Fragment {
-
-    public SettingsFragment() {
-        // Required empty public constructor
-    }
-
-
-    public static SettingsFragment newInstance(String param1, String param2) {
-        SettingsFragment fragment = new SettingsFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
+public class SettingsFragment extends PreferenceFragmentCompat {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreatePreferences(Bundle bundle, String s) {
+        // Load the Preferences from the XML file
+        addPreferencesFromResource(R.xml.app_preferences);
     }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
-    }
-
-
 }

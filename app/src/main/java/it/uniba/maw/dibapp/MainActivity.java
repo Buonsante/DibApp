@@ -1,11 +1,7 @@
 package it.uniba.maw.dibapp;
 
-import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.annotation.TransitionRes;
 import android.support.design.widget.BottomNavigationView;
-import android.support.transition.Fade;
-import android.support.transition.Transition;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
