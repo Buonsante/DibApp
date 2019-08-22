@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -24,9 +24,9 @@
             android:hint="@string/hint_email"
             android:inputType="textEmailAddress" />
 
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -43,9 +43,9 @@
             android:hint="@string/hint_password"
             android:inputType="textPassword" />
 
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <android.support.design.button.MaterialButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/sign_in_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -56,4 +56,4 @@
         app:layout_constraintStart_toStartOf="@+id/input_layout_password"
         app:layout_constraintTop_toBottomOf="@+id/input_layout_password" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
