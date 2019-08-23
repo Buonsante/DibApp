@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
@@ -28,6 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.model.Document;
 
 
 import static it.uniba.maw.dibapp.util.Util.DEBUG_TAG;
@@ -51,15 +53,23 @@ public class LoginActivity extends AppCompatActivity {
         //Initialize Firebase Firestore
         db = FirebaseFirestore.getInstance();
 
-        db.collectionGroup("insegnamenti").get()
+        //recupera tutte le lezioni appartenenti a qualsiasi insegnamento
+        Log.w(DEBUG_TAG,"Retrieving collection group");
+        db.collectionGroup("lezioni").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
-                            Log.w(DEBUG_TAG,document.toString());
+                            Log.w(DEBUG_TAG,"Document Collection: "+document.getReference().getParent().getParent().get().getResult().toString());
+
                         }
                     }
-                });
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace();
+            }
+        });
 
 
         // Initialize Firebase Auth

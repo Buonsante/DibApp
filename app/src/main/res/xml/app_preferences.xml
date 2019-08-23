@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v7.preference.PreferenceScreen
+<PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
 
-    <android.support.v7.preference.PreferenceCategory
+    <PreferenceCategory
         android:title="Category 1">
 
-        <android.support.v7.preference.SwitchPreferenceCompat
+        <SwitchPreference
             android:key="key1"
             android:title="Switch Preference"
             android:summary="Switch Summary"
             android:defaultValue="true" />
 
-        <android.support.v7.preference.EditTextPreference
+        <EditTextPreference
             android:key="key2"
             android:title="EditText Preference"
             android:summary="EditText Summary"
             android:dialogMessage="Dialog Message"
             android:defaultValue="Default value" />
-        <android.support.v7.preference.CheckBoxPreference
+        <CheckBoxPreference
             android:key="key3"
             android:title="CheckBox Preference"
             android:summary="CheckBox Summary"
             android:defaultValue="true"/>
-    </android.support.v7.preference.PreferenceCategory>
+    </PreferenceCategory>
 
-</android.support.v7.preference.PreferenceScreen>
+</PreferenceScreen>
