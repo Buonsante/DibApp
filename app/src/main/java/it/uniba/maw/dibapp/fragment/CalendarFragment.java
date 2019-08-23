@@ -59,12 +59,7 @@ public class CalendarFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
 
-        Lezione lezione = new Lezione();
-        List<Lezione> lezioni = new ArrayList<>();
 
-        lezioni = lezione.getLezioniProva();
-
-        Log.w("List", lezioni.toString());
 
 
         collapsibleCalendar = view.findViewById(R.id.calendarView);
@@ -78,19 +73,46 @@ public class CalendarFragment extends Fragment {
         layoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        // specify an adapter
-        mAdapter = new LezioniAdapter(lezioni);
-        recyclerView.setAdapter(mAdapter);
+        Lezione lezione = new Lezione();
+        List<Lezione> lezioni = new ArrayList<>();
+
+        lezioni = lezione.getLezioniProva();
+
+        for(Lezione l: lezioni) {
+            collapsibleCalendar.addEventTag(l.getData().get(Calendar.YEAR), l.getData().get(Calendar.MONTH), l.getData().get(Calendar.DAY_OF_MONTH));
+        }
 
 
-        collapsibleCalendar.addEventTag(lezioni.get(3).getData().get(Calendar.YEAR), lezioni.get(3).getData().get(Calendar.MONTH),
-                                        lezioni.get(3).getData().get(Calendar.DAY_OF_MONTH));
+//        collapsibleCalendar.addEventTag(lezioni.get(3).getData().get(Calendar.YEAR), lezioni.get(3).getData().get(Calendar.MONTH),
+//                                        lezioni.get(3).getData().get(Calendar.DAY_OF_MONTH));
 
 
         collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
             @Override
             public void onDaySelect() {
+                int day = collapsibleCalendar.getSelectedDay().getDay();
+                int month = collapsibleCalendar.getSelectedDay().getMonth();
+                int year = collapsibleCalendar.getSelectedDay().getYear();
 
+                Lezione lezione = new Lezione();
+                List<Lezione> lezioni = new ArrayList<>();
+                List<Lezione> lezioniPerData = new ArrayList<>();
+
+                lezioni = lezione.getLezioniProva();
+
+                for(Lezione l: lezioni) {
+                    if(l.getData().get(Calendar.DAY_OF_MONTH) == day &&
+                            l.getData().get(Calendar.MONTH) == month &&
+                            l.getData().get(Calendar.YEAR) == year){
+                        lezioniPerData.add(l);
+                    }
+                }
+
+                Log.w("List", lezioni.toString());
+
+                // specify an adapter
+                mAdapter = new LezioniAdapter(lezioniPerData);
+                recyclerView.setAdapter(mAdapter);
             }
 
             @Override
