@@ -3,14 +3,20 @@ package it.uniba.maw.dibapp.model;
 
 import android.util.Log;
 
+import com.google.firebase.firestore.Exclude;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class Lezione {
+public class Lezione implements Serializable {
 
     private int numPresenze;
+    //TODO cambiare GregorianCalendar con classe Data
+    //private Data data;
     private GregorianCalendar data;
     private String oraInizio, oraFine;
     private String argomento;
@@ -36,6 +42,7 @@ public class Lezione {
         this.numPresenze = numPresenze;
     }
 
+    @Exclude
     public GregorianCalendar getData() {
         return data;
     }
@@ -92,7 +99,17 @@ public class Lezione {
 
     }
 
-
+    @Override
+    public String toString() {
+        return "Lezione{" +
+                "numPresenze=" + numPresenze +
+                ", data=" + data +
+                ", oraInizio='" + oraInizio + '\'' +
+                ", oraFine='" + oraFine + '\'' +
+                ", argomento='" + argomento + '\'' +
+                ", insegnamento='" + insegnamento + '\'' +
+                '}';
+    }
 }
 
 
