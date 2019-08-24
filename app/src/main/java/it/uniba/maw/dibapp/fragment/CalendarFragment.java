@@ -13,10 +13,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.model.Document;
 import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import it.uniba.maw.dibapp.R;
@@ -100,7 +106,9 @@ public class CalendarFragment extends Fragment {
 
                 lezioni = lezione.getLezioniProva();
 
-                for(Lezione l: lezioni) {
+
+
+            for(Lezione l: lezioni) {
                     if(l.getData().get(Calendar.DAY_OF_MONTH) == day &&
                             l.getData().get(Calendar.MONTH) == month &&
                             l.getData().get(Calendar.YEAR) == year){
@@ -140,6 +148,22 @@ public class CalendarFragment extends Fragment {
         return view;
     }
 
+    private List<Lezione> getLezioni(){
+        final List<Lezione> lezioni = new ArrayList<>();
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collectionGroup("lezioni").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        Log.w(DEBUG_TAG,"Retrieve Lezioni");
+                        for(DocumentSnapshot document : queryDocumentSnapshots.getDocuments()){
+                            lezioni.add(document.toObject(Lezione.class));
+                        }
+                    }
+                });
+
+        return lezioni;
+    }
 
 }

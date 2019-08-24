@@ -24,6 +24,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -31,6 +32,12 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.model.Document;
 
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Random;
+
+import it.uniba.maw.dibapp.model.Lezione;
 
 import static it.uniba.maw.dibapp.util.Util.DEBUG_TAG;
 
@@ -53,23 +60,6 @@ public class LoginActivity extends AppCompatActivity {
         //Initialize Firebase Firestore
         db = FirebaseFirestore.getInstance();
 
-        //recupera tutte le lezioni appartenenti a qualsiasi insegnamento
-        Log.w(DEBUG_TAG,"Retrieving collection group");
-        db.collectionGroup("lezioni").get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
-//                            Log.w(DEBUG_TAG,"Document Collection: "+document.getReference().getParent().getParent().get().getResult().toString());
-
-                        }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                e.printStackTrace();
-            }
-        });
 
 
         // Initialize Firebase Auth
@@ -250,5 +240,43 @@ public class LoginActivity extends AppCompatActivity {
                     break;
             }
         }
+    }
+
+    private void generateLessonsInDatabase(){
+        //algoritmo per la creazione di 10 lezioni per ogni insegnamento generate in modo casauale
+        Log.w(DEBUG_TAG,"Retrieving collection group");
+        db.collectionGroup("insegnamenti").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        Log.w(DEBUG_TAG, "Insegamenti");
+                        for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+//                            Log.w(DEBUG_TAG,"Document Collection: "+document.getReference().getParent().getParent().get().getResult().toString());
+                            final String insegnamentoPath = document.getReference().getPath();
+                            Random random = new Random();
+                            GregorianCalendar calendar;
+                            for(int i=0;i<10;i++) {
+                                calendar = new GregorianCalendar();
+                                calendar.add(Calendar.DATE, random.nextInt(6));
+                                int oraInizioInt = 8+random.nextInt(5);
+                                String oraInizio = String.valueOf(oraInizioInt);
+                                String oraFine = String.valueOf(oraInizioInt + 3);
+                                document.getReference().collection("lezioni")
+                                        .add(new Lezione(0, calendar,oraInizio,oraFine,"argomento"+i,insegnamentoPath))
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                            @Override
+                                            public void onSuccess(DocumentReference documentReference) {
+                                                Log.w(DEBUG_TAG,"Document in "+insegnamentoPath+" - "+documentReference.getPath()+" created");
+                                            }
+                                        });
+                            }
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 }
