@@ -38,8 +38,8 @@ public class LessonActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager){
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new DettagliFragment(), "TAB1");
-        adapter.addFragment(new CommentiFragment(), "TAB2");
+        adapter.addFragment(new DettagliFragment(), "DETTAGLI");
+        adapter.addFragment(new CommentiFragment(), "COMMENTI");
         viewPager.setAdapter(adapter);
     }
 }

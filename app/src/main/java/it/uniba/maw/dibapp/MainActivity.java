@@ -1,8 +1,11 @@
 package it.uniba.maw.dibapp;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -26,6 +29,16 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = getSupportActionBar();
 
+        Button btnHome=(Button)findViewById(R.id.Button1);
+        btnHome.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View arg0) {
+                // definisco l'intenzione
+                Intent openLesson = new Intent(MainActivity.this,LessonActivity.class);
+                // passo all'attivazione dell'activity Lesson.java
+                startActivity(openLesson);
+            }
+        });
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
