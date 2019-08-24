@@ -16,7 +16,7 @@ public class Lezione implements Serializable {
 
     private int numPresenze;
     //TODO cambiare GregorianCalendar con classe Data
-    //private Data data;
+    //private Date data;
     private GregorianCalendar data;
     private String oraInizio, oraFine;
     private String argomento;
@@ -47,9 +47,19 @@ public class Lezione implements Serializable {
         return data;
     }
 
+//    public GregorianCalendar getData(){
+//        GregorianCalendar calendar = new GregorianCalendar();
+//        calendar.setGregorianChange(data);
+//        return calendar;
+//    }
+
     public void setData(GregorianCalendar data) {
         this.data = data;
     }
+
+//    public void setData(GregorianCalendar calendar){
+//        data = calendar.getTime();
+//    }
 
     public String getOraInizio() {
         return oraInizio;
