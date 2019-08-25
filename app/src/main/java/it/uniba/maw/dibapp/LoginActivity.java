@@ -65,6 +65,8 @@ public class LoginActivity extends AppCompatActivity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
+//        generateLessonsInDatabase();
+
         //forzo la disconnessione ad ogni avvio per prova app
         mAuth.signOut();
 

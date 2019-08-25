@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.model.Document;
 import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar;
@@ -38,7 +39,7 @@ public class CalendarFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
-
+    private List<Lezione> lezioni;
 
     public CalendarFragment() {
         // Required empty public constructor
@@ -80,12 +81,13 @@ public class CalendarFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         Lezione lezione = new Lezione();
-        List<Lezione> lezioni = new ArrayList<>();
+        lezioni = new ArrayList<>();
 
-        lezioni = lezione.getLezioniProva();
+//        lezioni = lezione.getLezioniProva();
+        lezioni = getLezioni();
 
         for(Lezione l: lezioni) {
-            collapsibleCalendar.addEventTag(l.getData().get(Calendar.YEAR), l.getData().get(Calendar.MONTH), l.getData().get(Calendar.DAY_OF_MONTH));
+            collapsibleCalendar.addEventTag(l.getGregorianData().get(Calendar.YEAR), l.getGregorianData().get(Calendar.MONTH), l.getGregorianData().get(Calendar.DAY_OF_MONTH));
         }
 
 
@@ -101,26 +103,24 @@ public class CalendarFragment extends Fragment {
                 int year = collapsibleCalendar.getSelectedDay().getYear();
 
                 Lezione lezione = new Lezione();
-                List<Lezione> lezioni = new ArrayList<>();
                 List<Lezione> lezioniPerData = new ArrayList<>();
 
-                lezioni = lezione.getLezioniProva();
-
-
-
-            for(Lezione l: lezioni) {
-                    if(l.getData().get(Calendar.DAY_OF_MONTH) == day &&
-                            l.getData().get(Calendar.MONTH) == month &&
-                            l.getData().get(Calendar.YEAR) == year){
+                for(Lezione l: lezioni) {
+                    if(l.getGregorianData().get(Calendar.DAY_OF_MONTH) == day &&
+                            l.getGregorianData().get(Calendar.MONTH) == month &&
+                            l.getGregorianData().get(Calendar.YEAR) == year){
                         lezioniPerData.add(l);
                     }
                 }
 
-                Log.w("List", lezioni.toString());
-
                 // specify an adapter
                 mAdapter = new LezioniAdapter(lezioniPerData);
                 recyclerView.setAdapter(mAdapter);
+
+               // Log.w("List", lezioni.toString());
+
+
+
             }
 
             @Override
@@ -148,6 +148,7 @@ public class CalendarFragment extends Fragment {
         return view;
     }
 
+
     private List<Lezione> getLezioni(){
         final List<Lezione> lezioni = new ArrayList<>();
 
@@ -158,7 +159,10 @@ public class CalendarFragment extends Fragment {
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         Log.w(DEBUG_TAG,"Retrieve Lezioni");
                         for(DocumentSnapshot document : queryDocumentSnapshots.getDocuments()){
-                            lezioni.add(document.toObject(Lezione.class));
+                            Lezione l = document.toObject(Lezione.class);
+                            //Log.w(DEBUG_TAG,"Lezione: "+l.toString());
+                            lezioni.add(l);
+                            collapsibleCalendar.addEventTag(l.getGregorianData().get(Calendar.YEAR), l.getGregorianData().get(Calendar.MONTH), l.getGregorianData().get(Calendar.DAY_OF_MONTH));
                         }
                     }
                 });
