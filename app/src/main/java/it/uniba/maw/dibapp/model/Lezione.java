@@ -16,15 +16,15 @@ public class Lezione implements Serializable {
 
     private int numPresenze;
     //TODO cambiare GregorianCalendar con classe Data
-    //private Data data;
-    private GregorianCalendar data;
+    private long data;
+//    private GregorianCalendar data;
     private String oraInizio, oraFine;
     private String argomento;
     private String insegnamento;
 
     public Lezione(int numPresenze, GregorianCalendar data, String oraInizio, String oraFine, String argomento, String insegnamento) {
         this.numPresenze = numPresenze;
-        this.data = data;
+        this.data = data.getTimeInMillis();
         this.oraInizio = oraInizio;
         this.oraFine = oraFine;
         this.argomento = argomento;
@@ -42,14 +42,31 @@ public class Lezione implements Serializable {
         this.numPresenze = numPresenze;
     }
 
+    public long getData(){
+        return this.data;
+    }
+//    @Exclude
+//    public GregorianCalendar getData() {
+//        return data;
+//    }
+
     @Exclude
-    public GregorianCalendar getData() {
-        return data;
+    public GregorianCalendar getGregorianData(){
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTimeInMillis(data);
+        return calendar;
     }
 
-    public void setData(GregorianCalendar data) {
+    public void setData(long data){
         this.data = data;
     }
+//    public void setData(GregorianCalendar data) {
+//        this.data = data;
+//    }
+
+//    public void setData(GregorianCalendar calendar){
+//        data = calendar.getTimeInMillis();
+//    }
 
     public String getOraInizio() {
         return oraInizio;
@@ -83,21 +100,21 @@ public class Lezione implements Serializable {
     }
 
 
-    public List<Lezione> getLezioniProva() {
-
-        List<Lezione> lezioni = new ArrayList<>();
-
-        for(int i = 0; i < 20; i++) {
-            GregorianCalendar calendar = new GregorianCalendar();
-            calendar.add(Calendar.DATE, i);
-            lezioni.add(new Lezione(0, calendar, "10:00", "12:00",
-                                        "argomento", "insegnamento" + (i+1)));
-        }
-
-
-        return lezioni;
-
-    }
+//    public List<Lezione> getLezioniProva() {
+//
+//        List<Lezione> lezioni = new ArrayList<>();
+//
+//        for(int i = 0; i < 20; i++) {
+//            GregorianCalendar calendar = new GregorianCalendar();
+//            calendar.add(Calendar.DATE, i);
+//            lezioni.add(new Lezione(0, calendar, "10:00", "12:00",
+//                                        "argomento", "insegnamento" + (i+1)));
+//        }
+//
+//
+//        return lezioni;
+//
+//    }
 
     @Override
     public String toString() {
