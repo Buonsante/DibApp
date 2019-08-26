@@ -6,13 +6,17 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -48,6 +52,9 @@ public class LoginActivity extends AppCompatActivity {
     EditText usernameEditText, passwordEditText;
     TextInputLayout usernameLayout, passwordLayout;
 
+//    AlertDialog progressDialog;
+    ProgressBar progressBar;
+
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     FirebaseFirestore db;
@@ -82,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
         signInButon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressCommand();
                 submitForm();
             }
         });
@@ -118,6 +126,10 @@ public class LoginActivity extends AppCompatActivity {
                             usernameLayout.setError(getString(R.string.authentication_failed));
                             passwordLayout.setError(getString(R.string.authentication_failed));
                             requestFocus(passwordEditText);
+//                            progressDialog.dismiss();
+                            progressBar.setVisibility(View.GONE);
+                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
                         }
 
                         // ...
@@ -160,6 +172,8 @@ public class LoginActivity extends AppCompatActivity {
     private void startStudent(){
         Log.d(DEBUG_TAG, "Student");
         Intent mainActivityIntent = new Intent(this,MainActivity.class);
+//        progressDialog.dismiss();
+//        progressBar.setVisibility(View.GONE);
         startActivity(mainActivityIntent);
     }
 
@@ -167,6 +181,8 @@ public class LoginActivity extends AppCompatActivity {
         //TODO cambiare activity
         Log.d(DEBUG_TAG, "Prof");
         Intent mainActivityIntent = new Intent(this,MainActivity.class);
+//        progressDialog.dismiss();
+//        progressBar.setVisibility(View.GONE);
         startActivity(mainActivityIntent);
     }
     /**
@@ -280,5 +296,28 @@ public class LoginActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         });
+    }
+
+    public void progressCommand() {
+        progressBar = findViewById(R.id.login_progress);
+        progressBar.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+//        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+//        LayoutInflater inflater = LayoutInflater.from(this);
+//        View view = inflater.inflate(R.layout.progress_dialog, null);
+//        ((ProgressBar) view.findViewById(R.id.progress)).setIndeterminate(true);
+//        alertDialogBuilder.setView(view);
+//        progressDialog = alertDialogBuilder.create();
+//        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//
+//        //set the dimension of the dialog
+//        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+//        lp.copyFrom(progressDialog.getWindow().getAttributes());
+//        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+//        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+//
+//        progressDialog.show();
+//        progressDialog.getWindow().setAttributes(lp);
+//        progressDialog.setCancelable(false);
     }
 }

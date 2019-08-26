@@ -7,13 +7,19 @@
     tools:context=".fragment.CalendarFragment">
 
 
-    <com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
+    <it.uniba.maw.collapsiblecalendar.widget.CollapsibleCalendar
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar>
+        app:layout_constraintTop_toTopOf="parent"
+        app:todayItem_textColor="@color/primaryDarkColor"
+        app:buttonLeft_drawableTintColor="@color/primaryDarkColor"
+        app:buttonRight_drawableTintColor="@color/primaryDarkColor"
+        app:expandIconColor="@color/primaryDarkColor"
+        app:eventColor="@color/primaryDarkColor">
+    </it.uniba.maw.collapsiblecalendar.widget.CollapsibleCalendar>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lezioni_recycler_view"

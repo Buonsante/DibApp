@@ -19,11 +19,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.model.Document;
-import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar;
+import it.uniba.maw.collapsiblecalendar.widget.CollapsibleCalendar;
+
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
+
 import java.util.List;
 
 import it.uniba.maw.dibapp.R;
@@ -65,7 +66,6 @@ public class CalendarFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
-
 
 
 

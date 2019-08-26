@@ -18,6 +18,7 @@ public class Lezione implements Serializable {
     //TODO cambiare GregorianCalendar con classe Data
     private long data;
 //    private GregorianCalendar data;
+
     private String oraInizio, oraFine;
     private String argomento;
     private String insegnamento;
