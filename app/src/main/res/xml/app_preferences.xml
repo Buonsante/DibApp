@@ -6,13 +6,15 @@
 
 
     <PreferenceCategory
-        android:title="Category 1">
+        android:title=" ">
 
         <SwitchPreference
+            android:id="@+id/not_pref"
+            android:defaultValue="true"
             android:key="key1"
-            android:title="Switch Preference"
-            android:summary="Switch Summary"
-            android:defaultValue="true" />
+            android:summaryOff="Attiva notifiche push"
+            android:summaryOn="Disattiva notifiche push"
+            android:title="Notifiche" />
 
         <EditTextPreference
             android:key="key2"
