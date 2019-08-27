@@ -6,6 +6,8 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 
 public class Util {
 
@@ -56,6 +58,7 @@ public class Util {
                     .setContentText(body)
                     .setSmallIcon(android.R.drawable.stat_notify_more)
                     .setAutoCancel(true);
+
         }
     }
 
