@@ -50,7 +50,6 @@ public class Day implements Parcelable{
     public boolean isSunday(){
         GregorianCalendar c = new GregorianCalendar();
         c.set(mYear,mMonth,mDay);
-        Log.w(DEBUG_TAG, "DAY: "+c.get(Calendar.DAY_OF_WEEK)+"    -----    "+Calendar.SUNDAY);
         if(c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
             return true;
         else

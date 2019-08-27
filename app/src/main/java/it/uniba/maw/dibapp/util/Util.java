@@ -9,9 +9,15 @@ import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 
+import java.util.List;
+
+import it.uniba.maw.dibapp.model.Lezione;
+
 public class Util {
 
     public static final String DEBUG_TAG = "dibAppDebug";
+    public static final String SHARED_NAME = "dibAppPref";
+    public static List<Lezione> lezioniList;
 
 
     public static void createNotification (Context c) {

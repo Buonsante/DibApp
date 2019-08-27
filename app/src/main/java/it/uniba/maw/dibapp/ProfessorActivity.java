@@ -2,39 +2,25 @@ package it.uniba.maw.dibapp;
 
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
 import it.uniba.maw.dibapp.fragment.CalendarFragment;
 import it.uniba.maw.dibapp.fragment.SettingsFragment;
 import it.uniba.maw.dibapp.model.Lezione;
-import it.uniba.maw.dibapp.util.Util;
 
-import static it.uniba.maw.dibapp.util.Util.DEBUG_TAG;
-import static it.uniba.maw.dibapp.util.Util.lezioniList;
-
-public class MainActivity extends AppCompatActivity {
+public class ProfessorActivity extends AppCompatActivity {
 
     private ActionBar toolbar;
     public List<Lezione> lezioni;
@@ -51,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 // definisco l'intenzione
-                Intent openLesson = new Intent(MainActivity.this,LessonActivity.class);
+                Intent openLesson = new Intent(ProfessorActivity.this,LessonActivity.class);
                 // passo all'attivazione dell'activity Lesson.java
                 startActivity(openLesson);
             }
