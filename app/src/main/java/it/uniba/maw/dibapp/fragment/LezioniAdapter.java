@@ -3,6 +3,7 @@ package it.uniba.maw.dibapp.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,9 @@ import it.uniba.maw.dibapp.LessonActivity;
 import it.uniba.maw.dibapp.R;
 import it.uniba.maw.dibapp.model.Lezione;
 
-public class LezioniAdapter extends RecyclerView.Adapter<LezioniAdapter.LezioniViewHolder> {
+import static it.uniba.maw.dibapp.util.Util.DEBUG_TAG;
+
+public class LezioniAdapter extends RecyclerView.Adapter<LezioniAdapter.LezioniViewHolder>{
 
     private List<Lezione> lezioni;
 
