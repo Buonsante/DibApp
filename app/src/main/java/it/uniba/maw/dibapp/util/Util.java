@@ -26,6 +26,7 @@ public class Util {
         String ANDROID_CHANNEL_NAME = "ANDROID CHANNEL";
 
         createChannels(c, ANDROID_CHANNEL_ID, ANDROID_CHANNEL_NAME);
+        //TODO modificare title e body della notifica
         Notification.Builder nb = getAndroidChannelNotification("Nuova lezione disponibile", "Autore: nomeDocente", ANDROID_CHANNEL_ID, c);
 
         getManager(c).notify(107, nb.build());
@@ -64,7 +65,6 @@ public class Util {
                     .setContentText(body)
                     .setSmallIcon(android.R.drawable.stat_notify_more)
                     .setAutoCancel(true);
-
         }
     }
 
