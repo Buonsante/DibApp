@@ -1,21 +1,29 @@
 package it.uniba.maw.dibapp.fragment;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.card.MaterialCardView;
+
 import java.util.List;
 
+import it.uniba.maw.dibapp.LessonActivity;
 import it.uniba.maw.dibapp.R;
 import it.uniba.maw.dibapp.model.Lezione;
 
 public class LezioniAdapter extends RecyclerView.Adapter<LezioniAdapter.LezioniViewHolder>{
 
     private List<Lezione> lezioni;
+
+    private Context context;
 
     public LezioniAdapter(List<Lezione> lezioni){
         this.lezioni = lezioni;
@@ -25,8 +33,10 @@ public class LezioniAdapter extends RecyclerView.Adapter<LezioniAdapter.LezioniV
     @Override
     public LezioniViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
+        context = parent.getContext();
+
         // create a new view
-        TextView v = (TextView) LayoutInflater.from(parent.getContext())
+        View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.lezione_adapter_row, parent, false);
 
         LezioniViewHolder vh = new LezioniViewHolder(v);
@@ -36,7 +46,11 @@ public class LezioniAdapter extends RecyclerView.Adapter<LezioniAdapter.LezioniV
 
     @Override
     public void onBindViewHolder(@NonNull LezioniViewHolder lezioniViewHolder, int i) {
-        lezioniViewHolder.textView.setText(lezioni.get(i).getInsegnamento());
+        lezioniViewHolder.textViewLessonTitle.setText(lezioni.get(i).getInsegnamento());
+        lezioniViewHolder.textViewLessonTeacher.setText(lezioni.get(i).getProfessore());
+        lezioniViewHolder.textViewLessonTimeStart.setText(lezioni.get(i).getOraInizio());
+        lezioniViewHolder.textViewLessonTeacher.setText(lezioni.get(i).getOraFine());
+
     }
 
     @Override
@@ -49,12 +63,28 @@ public class LezioniAdapter extends RecyclerView.Adapter<LezioniAdapter.LezioniV
     // you provide access to all the views for a data item in a view holder
     public static class LezioniViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView textView;
+        public MaterialCardView materialCardView;
+        public TextView textViewLessonTitle;
+        public TextView textViewLessonTeacher;
+        public TextView textViewLessonTimeStart;
+        public TextView textViewLessonTimeFinish;
 
-        public LezioniViewHolder(TextView v) {
+        public LezioniViewHolder(View v) {
             super(v);
-            textView = v;
+            materialCardView = v.findViewById(R.id.materialCardLesson);
+            textViewLessonTitle = v.findViewById(R.id.textViewLessonTitle);
+            textViewLessonTeacher = v.findViewById(R.id.textViewLessonTeacher);
+            textViewLessonTimeStart = v.findViewById(R.id.textViewLessonTimeStart);
+            textViewLessonTimeFinish = v.findViewById(R.id.textViewLessonTimeFinish);
+
         }
+
+
     }
+
+    void startActivity(){
+        Intent intent = new Intent(context, LessonActivity.class);
+    }
+
 
 }
