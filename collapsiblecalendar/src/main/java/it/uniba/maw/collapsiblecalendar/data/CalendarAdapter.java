@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,12 +26,14 @@ public class CalendarAdapter {
     private int mFirstDayOfWeek = 0;
     private Calendar mCal;
     private LayoutInflater mInflater;
+    Animation animation;
 
     List<Day> mItemList = new ArrayList<>();
     List<View> mViewList = new ArrayList<>();
     List<Event> mEventList = new ArrayList<>();
 
     public CalendarAdapter(Context context, Calendar cal) {
+        animation = AnimationUtils.loadAnimation(context,R.anim.fade_anim);
         this.mCal = (Calendar) cal.clone();
         this.mCal.set(Calendar.DAY_OF_MONTH, 1);
 
@@ -128,6 +132,7 @@ public class CalendarAdapter {
                 if (day.getYear() == event.getYear()
                         && day.getMonth() == event.getMonth()
                         && day.getDay() == event.getDay()) {
+                    imgEventTag.startAnimation(animation);
                     imgEventTag.setVisibility(View.VISIBLE);
                     imgEventTag.setColorFilter(event.getColor(),PorterDuff.Mode.SRC_ATOP);
                 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -94,8 +95,7 @@ public class CalendarFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
 
@@ -116,13 +116,8 @@ public class CalendarFragment extends Fragment {
 //        }catch (NullPointerException e){
 //            Log.w(DEBUG_TAG,"lezioni null");
 //        }
-        if(lezioniList == null){
-            getLezioni();
-        }else{
-            for (Lezione l: lezioniList){
-                addEvent(l);
-            }
-        }
+
+
 
         collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
             @Override
@@ -168,6 +163,12 @@ public class CalendarFragment extends Fragment {
             }
         });
 
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+               getLezioni();
+            }
+        });
         // Inflate the layout for this fragment
         return view;
     }

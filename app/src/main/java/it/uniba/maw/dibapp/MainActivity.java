@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActionBar toolbar;
     public List<Lezione> lezioni;
+    private Fragment activeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        //transaction.addToBackStack("fragmentStack");
+        //transaction.addToBackStack(null);
         transaction.commit();
     }
 
