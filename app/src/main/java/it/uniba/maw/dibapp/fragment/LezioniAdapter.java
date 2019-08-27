@@ -53,7 +53,6 @@ public class LezioniAdapter extends RecyclerView.Adapter<LezioniAdapter.LezioniV
         lezioniViewHolder.textViewLessonTeacher.setText(lezioni.get(i).getProfessore());
         lezioniViewHolder.textViewLessonTimeStart.setText(lezioni.get(i).getOraInizio());
         lezioniViewHolder.textViewLessonTimeFinish.setText(lezioni.get(i).getOraFine());
-
     }
 
     @Override
@@ -80,21 +79,25 @@ public class LezioniAdapter extends RecyclerView.Adapter<LezioniAdapter.LezioniV
             textViewLessonTimeStart = v.findViewById(R.id.textViewLessonTimeStart);
             textViewLessonTimeFinish = v.findViewById(R.id.textViewLessonTimeFinish);
 
+            materialCardView.setOnClickListener(this);
         }
-
 
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
+            Log.w(DEBUG_TAG+"t",lezioni.get(position).toString());
             startDetailActivity(lezioni.get(position));
+
+        }
+
+        void startDetailActivity(Lezione lezione){
+            Intent intent = new Intent(context, LessonActivity.class);
+            intent.putExtra("lezione", lezione);
+            context.startActivity(intent);
         }
     }
 
-    void startDetailActivity(Lezione lezione){
-        Intent intent = new Intent(context, LessonActivity.class);
-        intent.putExtra("lezione", lezione);
-        context.startActivity(intent);
-    }
+
 
 
 }

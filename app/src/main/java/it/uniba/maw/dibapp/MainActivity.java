@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         // load the store fragment by default
-        toolbar.setTitle("Shop");
+        toolbar.setTitle("DibApp");
         loadFragment(new SettingsFragment());
     }
 
