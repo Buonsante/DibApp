@@ -3,6 +3,7 @@ package it.uniba.maw.dibapp.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import java.util.List;
 import it.uniba.maw.dibapp.LessonActivity;
 import it.uniba.maw.dibapp.R;
 import it.uniba.maw.dibapp.model.Lezione;
+
+import static it.uniba.maw.dibapp.util.Util.DEBUG_TAG;
 
 public class LezioniAdapter extends RecyclerView.Adapter<LezioniAdapter.LezioniViewHolder>{
 
@@ -36,8 +39,7 @@ public class LezioniAdapter extends RecyclerView.Adapter<LezioniAdapter.LezioniV
         context = parent.getContext();
 
         // create a new view
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.lezione_adapter_row, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.lezione_adapter_row, parent, false);
 
         LezioniViewHolder vh = new LezioniViewHolder(v);
         return vh;
@@ -48,8 +50,9 @@ public class LezioniAdapter extends RecyclerView.Adapter<LezioniAdapter.LezioniV
     public void onBindViewHolder(@NonNull LezioniViewHolder lezioniViewHolder, int i) {
         lezioniViewHolder.textViewLessonTitle.setText(lezioni.get(i).getInsegnamento());
         lezioniViewHolder.textViewLessonTeacher.setText(lezioni.get(i).getProfessore());
+        //Log.w(DEBUG_TAG+"t","PROF: "+lezioni.get(i).getProfessore());
         lezioniViewHolder.textViewLessonTimeStart.setText(lezioni.get(i).getOraInizio());
-        lezioniViewHolder.textViewLessonTeacher.setText(lezioni.get(i).getOraFine());
+        lezioniViewHolder.textViewLessonTimeFinish.setText(lezioni.get(i).getOraFine());
 
     }
 

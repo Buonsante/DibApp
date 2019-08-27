@@ -143,15 +143,19 @@ public class Lezione implements Serializable {
 //
 //    }
 
+
     @Override
     public String toString() {
         return "Lezione{" +
                 "numPresenze=" + numPresenze +
+                ", professore='" + professore + '\'' +
+                ", professoreLink='" + professoreLink + '\'' +
                 ", data=" + data +
                 ", oraInizio='" + oraInizio + '\'' +
                 ", oraFine='" + oraFine + '\'' +
                 ", argomento='" + argomento + '\'' +
                 ", insegnamento='" + insegnamento + '\'' +
+                ", insegnamentoLink='" + insegnamentoLink + '\'' +
                 '}';
     }
 }

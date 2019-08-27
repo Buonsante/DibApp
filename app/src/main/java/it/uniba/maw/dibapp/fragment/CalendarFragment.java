@@ -85,7 +85,7 @@ public class CalendarFragment extends Fragment {
                         Log.w(DEBUG_TAG,"Retrieve Lezioni");
                         for(DocumentSnapshot document : queryDocumentSnapshots.getDocuments()){
                             Lezione l = document.toObject(Lezione.class);
-                            //Log.w(DEBUG_TAG,"Lezione: "+l.toString());
+                            Log.w(DEBUG_TAG,"Lezione: "+l.toString());
                             Util.lezioniList.add(l);
                             addEvent(l);
                         }
