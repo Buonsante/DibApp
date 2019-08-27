@@ -19,7 +19,7 @@ import it.uniba.maw.dibapp.LessonActivity;
 import it.uniba.maw.dibapp.R;
 import it.uniba.maw.dibapp.model.Lezione;
 
-public class LezioniAdapter extends RecyclerView.Adapter<LezioniAdapter.LezioniViewHolder>{
+public class LezioniAdapter extends RecyclerView.Adapter<LezioniAdapter.LezioniViewHolder> {
 
     private List<Lezione> lezioni;
 
@@ -49,7 +49,7 @@ public class LezioniAdapter extends RecyclerView.Adapter<LezioniAdapter.LezioniV
         lezioniViewHolder.textViewLessonTitle.setText(lezioni.get(i).getInsegnamento());
         lezioniViewHolder.textViewLessonTeacher.setText(lezioni.get(i).getProfessore());
         lezioniViewHolder.textViewLessonTimeStart.setText(lezioni.get(i).getOraInizio());
-        lezioniViewHolder.textViewLessonTeacher.setText(lezioni.get(i).getOraFine());
+        lezioniViewHolder.textViewLessonTimeFinish.setText(lezioni.get(i).getOraFine());
 
     }
 
@@ -61,7 +61,7 @@ public class LezioniAdapter extends RecyclerView.Adapter<LezioniAdapter.LezioniV
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class LezioniViewHolder extends RecyclerView.ViewHolder {
+    public class LezioniViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         // each data item is just a string in this case
         public MaterialCardView materialCardView;
         public TextView textViewLessonTitle;
@@ -80,10 +80,17 @@ public class LezioniAdapter extends RecyclerView.Adapter<LezioniAdapter.LezioniV
         }
 
 
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+            startDetailActivity(lezioni.get(position));
+        }
     }
 
-    void startActivity(){
+    void startDetailActivity(Lezione lezione){
         Intent intent = new Intent(context, LessonActivity.class);
+        intent.putExtra("lezione", lezione);
+        context.startActivity(intent);
     }
 
 
