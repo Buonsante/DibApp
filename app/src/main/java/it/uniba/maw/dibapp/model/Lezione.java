@@ -15,21 +15,24 @@ import java.util.List;
 public class Lezione implements Serializable {
 
     private int numPresenze;
-    //TODO cambiare GregorianCalendar con classe Data
+    private String professore;
+    private String professoreLink;
     private long data;
-//    private GregorianCalendar data;
-
     private String oraInizio, oraFine;
     private String argomento;
     private String insegnamento;
+    private String insegnamentoLink;
 
-    public Lezione(int numPresenze, GregorianCalendar data, String oraInizio, String oraFine, String argomento, String insegnamento) {
+    public Lezione(int numPresenze, String professore, String professoreLink, GregorianCalendar data, String oraInizio, String oraFine, String argomento, String insegnamento, String insegnamentoLink) {
         this.numPresenze = numPresenze;
+        this.professore = professore;
+        this.professoreLink = professoreLink;
         this.data = data.getTimeInMillis();
         this.oraInizio = oraInizio;
         this.oraFine = oraFine;
         this.argomento = argomento;
         this.insegnamento = insegnamento;
+        this.insegnamentoLink = insegnamentoLink;
     }
 
     public Lezione() {
@@ -100,8 +103,31 @@ public class Lezione implements Serializable {
         return insegnamento;
     }
 
+    public String getProfessore() {
+        return professore;
+    }
 
-//    public List<Lezione> getLezioniProva() {
+    public void setProfessore(String professore) {
+        this.professore = professore;
+    }
+
+    public String getProfessoreLink() {
+        return professoreLink;
+    }
+
+    public void setProfessoreLink(String professoreLink) {
+        this.professoreLink = professoreLink;
+    }
+
+    public String getInsegnamentoLink() {
+        return insegnamentoLink;
+    }
+
+    public void setInsegnamentoLink(String insegnamentoLink) {
+        this.insegnamentoLink = insegnamentoLink;
+    }
+
+    //    public List<Lezione> getLezioniProva() {
 //
 //        List<Lezione> lezioni = new ArrayList<>();
 //

@@ -7,9 +7,15 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 
+import java.util.List;
+
+import it.uniba.maw.dibapp.model.Lezione;
+
 public class Util {
 
     public static final String DEBUG_TAG = "dibAppDebug";
+    public static final String SHARED_PREFERENCE_NAME = "dibAppPref";
+    public static List<Lezione> lezioniList;
 
 
     public static void createNotification (Context c) {

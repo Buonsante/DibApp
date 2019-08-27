@@ -1,6 +1,10 @@
 package it.uniba.maw.dibapp.fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -10,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,15 +27,19 @@ import com.google.firebase.firestore.model.Document;
 import it.uniba.maw.collapsiblecalendar.widget.CollapsibleCalendar;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import java.util.List;
 
+import it.uniba.maw.dibapp.MainActivity;
 import it.uniba.maw.dibapp.R;
 import it.uniba.maw.dibapp.model.Lezione;
+import it.uniba.maw.dibapp.util.Util;
 
 import static it.uniba.maw.dibapp.util.Util.DEBUG_TAG;
+import static it.uniba.maw.dibapp.util.Util.lezioniList;
 
 
 public class CalendarFragment extends Fragment {
@@ -40,7 +49,9 @@ public class CalendarFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    private SharedPreferences pref;
     private List<Lezione> lezioni;
+    private Bundle savedState;
 
     public CalendarFragment() {
         // Required empty public constructor
@@ -56,18 +67,37 @@ public class CalendarFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-            String str = getArguments().getString("stringa");
-            Log.w(DEBUG_TAG, str);
+        //setRetainInstance(true);
+    }
 
+    void addEvent(Lezione l){
+        collapsibleCalendar.addEventTag(l.getGregorianData().get(Calendar.YEAR), l.getGregorianData().get(Calendar.MONTH), l.getGregorianData().get(Calendar.DAY_OF_MONTH));
+    }
+
+    private void getLezioni(){
+        lezioniList = new ArrayList<>();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collectionGroup("lezioni").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        Log.w(DEBUG_TAG,"Retrieve Lezioni");
+                        for(DocumentSnapshot document : queryDocumentSnapshots.getDocuments()){
+                            Lezione l = document.toObject(Lezione.class);
+                            //Log.w(DEBUG_TAG,"Lezione: "+l.toString());
+                            Util.lezioniList.add(l);
+                            addEvent(l);
+                        }
+                        Log.w(DEBUG_TAG,"LESSONS RETRIEVED");
+                    }
+                });
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
-
-
 
         collapsibleCalendar = view.findViewById(R.id.calendarView);
         recyclerView = view.findViewById(R.id.lezioni_recycler_view);
@@ -80,19 +110,13 @@ public class CalendarFragment extends Fragment {
         layoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        Lezione lezione = new Lezione();
-        lezioni = new ArrayList<>();
+//        try {
+//            //lezioni = (List<Lezione>) getArguments().getSerializable("lezioniList");
+//            Log.w(DEBUG_TAG,lezioniList.toString());
+//        }catch (NullPointerException e){
+//            Log.w(DEBUG_TAG,"lezioni null");
+//        }
 
-//        lezioni = lezione.getLezioniProva();
-        lezioni = getLezioni();
-
-        for(Lezione l: lezioni) {
-            collapsibleCalendar.addEventTag(l.getGregorianData().get(Calendar.YEAR), l.getGregorianData().get(Calendar.MONTH), l.getGregorianData().get(Calendar.DAY_OF_MONTH));
-        }
-
-
-//        collapsibleCalendar.addEventTag(lezioni.get(3).getData().get(Calendar.YEAR), lezioni.get(3).getData().get(Calendar.MONTH),
-//                                        lezioni.get(3).getData().get(Calendar.DAY_OF_MONTH));
 
 
         collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
@@ -102,10 +126,9 @@ public class CalendarFragment extends Fragment {
                 int month = collapsibleCalendar.getSelectedDay().getMonth();
                 int year = collapsibleCalendar.getSelectedDay().getYear();
 
-                Lezione lezione = new Lezione();
                 List<Lezione> lezioniPerData = new ArrayList<>();
 
-                for(Lezione l: lezioni) {
+                for(Lezione l: lezioniList) {
                     if(l.getGregorianData().get(Calendar.DAY_OF_MONTH) == day &&
                             l.getGregorianData().get(Calendar.MONTH) == month &&
                             l.getGregorianData().get(Calendar.YEAR) == year){
@@ -116,10 +139,6 @@ public class CalendarFragment extends Fragment {
                 // specify an adapter
                 mAdapter = new LezioniAdapter(lezioniPerData);
                 recyclerView.setAdapter(mAdapter);
-
-               // Log.w("List", lezioni.toString());
-
-
 
             }
 
@@ -144,30 +163,19 @@ public class CalendarFragment extends Fragment {
             }
         });
 
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+               getLezioni();
+            }
+        });
         // Inflate the layout for this fragment
         return view;
     }
 
 
-    private List<Lezione> getLezioni(){
-        final List<Lezione> lezioni = new ArrayList<>();
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collectionGroup("lezioni").get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        Log.w(DEBUG_TAG,"Retrieve Lezioni");
-                        for(DocumentSnapshot document : queryDocumentSnapshots.getDocuments()){
-                            Lezione l = document.toObject(Lezione.class);
-                            //Log.w(DEBUG_TAG,"Lezione: "+l.toString());
-                            lezioni.add(l);
-                            collapsibleCalendar.addEventTag(l.getGregorianData().get(Calendar.YEAR), l.getGregorianData().get(Calendar.MONTH), l.getGregorianData().get(Calendar.DAY_OF_MONTH));
-                        }
-                    }
-                });
 
-        return lezioni;
-    }
+
 
 }
