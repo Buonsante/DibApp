@@ -1,6 +1,7 @@
 package it.uniba.maw.dibapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -35,6 +36,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.model.Document;
+import com.google.firebase.firestore.model.value.ReferenceValue;
 
 
 import java.util.Calendar;
@@ -42,6 +44,7 @@ import java.util.GregorianCalendar;
 import java.util.Random;
 
 import it.uniba.maw.dibapp.model.Lezione;
+import it.uniba.maw.dibapp.util.Util;
 
 import static it.uniba.maw.dibapp.util.Util.DEBUG_TAG;
 
@@ -58,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     FirebaseFirestore db;
+    SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,15 +71,16 @@ public class LoginActivity extends AppCompatActivity {
         //Initialize Firebase Firestore
         db = FirebaseFirestore.getInstance();
 
-
+        //Initialize Shared preference
+        pref = getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-//        generateLessonsInDatabase();
+        //generateLessonsInDatabase();
 
         //forzo la disconnessione ad ogni avvio per prova app
-        mAuth.signOut();
+        //mAuth.signOut();
 
         usernameEditText = findViewById(R.id.input_email);
         usernameLayout = findViewById(R.id.input_layout_email);
@@ -268,26 +273,36 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         Log.w(DEBUG_TAG, "Insegamenti");
-                        for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                        for (final DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
 //                            Log.w(DEBUG_TAG,"Document Collection: "+document.getReference().getParent().getParent().get().getResult().toString());
                             final String insegnamentoPath = document.getReference().getPath();
-                            Random random = new Random();
-                            GregorianCalendar calendar;
-                            for(int i=0;i<10;i++) {
-                                calendar = new GregorianCalendar();
-                                calendar.add(Calendar.DATE, random.nextInt(6));
-                                int oraInizioInt = 8+random.nextInt(5);
-                                String oraInizio = String.valueOf(oraInizioInt);
-                                String oraFine = String.valueOf(oraInizioInt + 3);
-                                document.getReference().collection("lezioni")
-                                        .add(new Lezione(0, calendar,oraInizio,oraFine,"argomento"+i,insegnamentoPath))
-                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                            @Override
-                                            public void onSuccess(DocumentReference documentReference) {
-                                                Log.w(DEBUG_TAG,"Document in "+insegnamentoPath+" - "+documentReference.getPath()+" created");
-                                            }
-                                        });
-                            }
+                            final String nomeInsegnamento = document.getString("nome");
+                            final String[] nomeDocente = new String[1];
+                            final DocumentReference profReference = (DocumentReference) document.get("docente");
+                            profReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    nomeDocente[0] = documentSnapshot.get("cognome")+" "+documentSnapshot.get("nome");
+                                    Random random = new Random();
+                                    GregorianCalendar calendar;
+                                    for(int i=0;i<10;i++) {
+                                        calendar = new GregorianCalendar();
+                                        calendar.add(Calendar.DATE, random.nextInt(6));
+                                        int oraInizioInt = 8+random.nextInt(5);
+                                        String oraInizio = String.valueOf(oraInizioInt);
+                                        String oraFine = String.valueOf(oraInizioInt + 3);
+                                        document.getReference().collection("lezioni")
+                                                .add(new Lezione(0,nomeDocente[0],profReference.getPath(), calendar,oraInizio,oraFine,"argomento"+i,nomeInsegnamento,insegnamentoPath ))
+                                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                                    @Override
+                                                    public void onSuccess(DocumentReference documentReference) {
+                                                        Log.w(DEBUG_TAG,"Document in "+insegnamentoPath+" - "+documentReference.getPath()+" created");
+                                                    }
+                                                });
+                                    }
+                                }
+                            });
+
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {

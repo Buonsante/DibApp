@@ -37,7 +37,6 @@ import static it.uniba.maw.dibapp.util.Util.lezioniList;
 public class MainActivity extends AppCompatActivity {
 
     private ActionBar toolbar;
-    public List<Lezione> lezioni;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,21 +45,11 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = getSupportActionBar();
 
-        Button btnHome=(Button)findViewById(R.id.Button1);
-        btnHome.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View arg0) {
-                // definisco l'intenzione
-                Intent openLesson = new Intent(MainActivity.this,LessonActivity.class);
-                // passo all'attivazione dell'activity Lesson.java
-                startActivity(openLesson);
-            }
-        });
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         // load the store fragment by default
-        toolbar.setTitle("Shop");
+        toolbar.setTitle("DibApp");
         loadFragment(new SettingsFragment());
     }
 
@@ -95,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        //transaction.addToBackStack("fragmentStack");
+        //transaction.addToBackStack(null);
         transaction.commit();
     }
 
