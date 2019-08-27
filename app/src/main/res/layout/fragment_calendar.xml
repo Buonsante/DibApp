@@ -6,20 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".fragment.CalendarFragment">
 
-
-    <it.uniba.maw.collapsiblecalendar.widget.CollapsibleCalendar
-        android:id="@+id/calendarView"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:cardElevation="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:todayItem_textColor="@color/primaryDarkColor"
-        app:buttonLeft_drawableTintColor="@color/primaryDarkColor"
-        app:buttonRight_drawableTintColor="@color/primaryDarkColor"
-        app:expandIconColor="@color/primaryDarkColor"
-        app:eventColor="@color/primaryDarkColor">
-    </it.uniba.maw.collapsiblecalendar.widget.CollapsibleCalendar>
+        app:layout_constraintTop_toTopOf="parent">
+
+        <it.uniba.maw.collapsiblecalendar.widget.CollapsibleCalendar
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="5dp"
+            app:buttonLeft_drawableTintColor="@color/primaryDarkColor"
+            app:buttonRight_drawableTintColor="@color/primaryDarkColor"
+            app:eventColor="@color/primaryDarkColor"
+            app:expandIconColor="@color/primaryDarkColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:todayItem_textColor="@color/primaryDarkColor"></it.uniba.maw.collapsiblecalendar.widget.CollapsibleCalendar>
+    </com.google.android.material.card.MaterialCardView>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lezioni_recycler_view"
@@ -29,5 +39,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

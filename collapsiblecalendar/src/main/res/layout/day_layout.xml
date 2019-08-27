@@ -10,10 +10,11 @@
         android:id="@+id/txt_day"
         android:layout_width="@dimen/day_circle_width"
         android:layout_height="@dimen/day_circle_height"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/montserrat"
         android:gravity="center"
-        android:textSize="13sp"
         android:textColor="@android:color/black"
-        android:background="@android:color/transparent" />
+        android:textSize="13sp" />
 
     <LinearLayout
         android:layout_width="match_parent"

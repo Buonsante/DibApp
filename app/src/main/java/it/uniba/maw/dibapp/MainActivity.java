@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         // load the store fragment by default
         toolbar.setTitle("DibApp");
-        loadFragment(new SettingsFragment());
+        loadFragment(new CalendarFragment());
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener

@@ -51,8 +51,16 @@ public class LezioniAdapter extends RecyclerView.Adapter<LezioniAdapter.LezioniV
     public void onBindViewHolder(@NonNull LezioniViewHolder lezioniViewHolder, int i) {
         lezioniViewHolder.textViewLessonTitle.setText(lezioni.get(i).getInsegnamento());
         lezioniViewHolder.textViewLessonTeacher.setText(lezioni.get(i).getProfessore());
-        lezioniViewHolder.textViewLessonTimeStart.setText(lezioni.get(i).getOraInizio());
-        lezioniViewHolder.textViewLessonTimeFinish.setText(lezioni.get(i).getOraFine());
+
+        lezioniViewHolder.textViewLessonTimeStart.setText(formattaOra(lezioni.get(i).getOraInizio()));
+        lezioniViewHolder.textViewLessonTimeFinish.setText(formattaOra(lezioni.get(i).getOraFine()));
+    }
+
+    private String formattaOra(String ora){
+        if(ora.length() == 1)
+            return "0"+ora+":00";
+        else
+            return ora+":00";
     }
 
     @Override
