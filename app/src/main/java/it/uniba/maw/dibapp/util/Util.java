@@ -6,6 +6,8 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 
 import java.util.List;
 
@@ -24,6 +26,7 @@ public class Util {
         String ANDROID_CHANNEL_NAME = "ANDROID CHANNEL";
 
         createChannels(c, ANDROID_CHANNEL_ID, ANDROID_CHANNEL_NAME);
+        //TODO modificare title e body della notifica
         Notification.Builder nb = getAndroidChannelNotification("Nuova lezione disponibile", "Autore: nomeDocente", ANDROID_CHANNEL_ID, c);
 
         getManager(c).notify(107, nb.build());
