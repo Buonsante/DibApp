@@ -37,6 +37,9 @@ import static it.uniba.maw.dibapp.util.Util.lezioniList;
 public class MainActivity extends AppCompatActivity {
 
     private ActionBar toolbar;
+    CalendarFragment calendarFragment;
+    SettingsFragment settingsFragment;
+    Fragment fragmentVuoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +53,18 @@ public class MainActivity extends AppCompatActivity {
 
         // load the store fragment by default
         toolbar.setTitle("DibApp");
-        loadFragment(new CalendarFragment());
+
+        calendarFragment = new CalendarFragment();
+        settingsFragment = new SettingsFragment();
+        fragmentVuoto = new Fragment();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.frame_container,calendarFragment,"calendar")
+                .add(R.id.frame_container,settingsFragment,"settings")
+                .hide(settingsFragment)
+                .add(R.id.frame_container,fragmentVuoto,"vuoto")
+                .hide(fragmentVuoto)
+                .commit();
+        //loadFragment(calendarFragment);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -62,18 +76,15 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.calendar:
                     toolbar.setTitle("Calendar");
-                    fragment = new CalendarFragment();
-                    loadFragment(fragment);
+                    loadFragment(calendarFragment);
                     return true;
                 case R.id.navigation_gifts:
-                    toolbar.setTitle("My Gifts");
-                    fragment = new Fragment();
-                    loadFragment(fragment);
+                    toolbar.setTitle("Lezioni di oggi");
+                    loadFragment(fragmentVuoto);
                     return true;
                 case R.id.settings:
                     toolbar.setTitle("Settings");
-                    fragment = new SettingsFragment();
-                    loadFragment(fragment);
+                    loadFragment(settingsFragment);
                     return true;
             }
             return false;
@@ -82,11 +93,50 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment);
+        transaction.hide(fragmentVuoto);
+        transaction.hide(settingsFragment);
+        transaction.hide(calendarFragment);
+        transaction.show(fragment);
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        //transaction.addToBackStack(null);
         transaction.commit();
     }
+
+
+//    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+//            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+//
+//        @Override
+//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//            Fragment fragment;
+//            switch (item.getItemId()) {
+//                case R.id.calendar:
+//                    toolbar.setTitle("Calendar");
+//                    fragment = new CalendarFragment();
+//                    loadFragment(fragment);
+//                    return true;
+//                case R.id.navigation_gifts:
+//                    toolbar.setTitle("My Gifts");
+//                    fragment = new Fragment();
+//                    loadFragment(fragment);
+//                    return true;
+//                case R.id.settings:
+//                    toolbar.setTitle("Settings");
+//                    fragment = new SettingsFragment();
+//                    loadFragment(fragment);
+//                    return true;
+//            }
+//            return false;
+//        }
+//    };
+
+//    private void loadFragment(Fragment fragment) {
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.frame_container, fragment);
+//        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+//        //transaction.addToBackStack(null);
+//        transaction.commit();
+//    }
+
 
 
 }

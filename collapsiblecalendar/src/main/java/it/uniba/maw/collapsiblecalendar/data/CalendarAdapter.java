@@ -3,6 +3,8 @@ package it.uniba.maw.collapsiblecalendar.data;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -83,7 +85,11 @@ public class CalendarAdapter {
 
         // generate day list
         int offset = 0 - (firstDayOfWeek - mFirstDayOfWeek) + 1;
-        int length = (int) Math.ceil((float) (lastDayOfMonth - offset + 1) / 7) * 7;
+        int length = 42;
+        if(offset > 0)
+            offset += -7;
+
+        Log.w("calendarSetting","Month: "+month+"   offset: "+offset+"   lenght: "+length);
         for (int i = offset; i < length + offset; i++) {
             int numYear;
             int numMonth;

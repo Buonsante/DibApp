@@ -72,11 +72,9 @@ public class LoginActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         //Initialize Shared preference
-        pref = getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
-
         //generateLessonsInDatabase();
 
         //forzo la disconnessione ad ogni avvio per prova app
@@ -101,7 +99,12 @@ public class LoginActivity extends AppCompatActivity {
 
        user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            startMainActivity();
+            pref = getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
+            String tipoUtente = pref.getString("tipo","");
+            if(tipoUtente.equals("S"))
+                startStudent();
+            if(tipoUtente.equals("D"))
+                startProf();
         } else {
             // No user is signed in
         }
@@ -157,10 +160,14 @@ public class LoginActivity extends AppCompatActivity {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Log.d(DEBUG_TAG, "User: "+document.toString() );
                             String tipo = document.getString("tipo");
-                            if(tipo.equals("S"))
+                            if(tipo.equals("S")) {
+                                pref.edit().putString("tipo", "S").apply();
                                 startStudent();
-                            if(tipo.equals("D"))
+                            }
+                            if(tipo.equals("D")) {
+                                pref.edit().putString("tipo", "D").apply();
                                 startProf();
+                            }
                         }
                     } else {
                         Log.d(DEBUG_TAG, "Error getting documents: ", task.getException());

@@ -13,11 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -78,18 +81,25 @@ public class CalendarFragment extends Fragment {
         lezioniList = new ArrayList<>();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collectionGroup("lezioni").get()
+        db.collectionGroup("lezioni").whereEqualTo("professore","Denaro Roberto").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         Log.w(DEBUG_TAG,"Retrieve Lezioni");
                         for(DocumentSnapshot document : queryDocumentSnapshots.getDocuments()){
                             Lezione l = document.toObject(Lezione.class);
-                            Log.w(DEBUG_TAG,"Lezione: "+l.toString());
+                            //Log.w(DEBUG_TAG,"Lezione: "+l.toString());
                             Util.lezioniList.add(l);
                             addEvent(l);
                         }
                         Log.w(DEBUG_TAG,"LESSONS RETRIEVED");
+                    }
+
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(DEBUG_TAG+"err",e.getMessage());
                     }
                 });
     }
@@ -163,19 +173,22 @@ public class CalendarFragment extends Fragment {
             }
         });
 
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-               getLezioni();
-            }
-        });
         // Inflate the layout for this fragment
+
         return view;
     }
 
-
-
-
-
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if(lezioniList == null)
+            getLezioni();
+        else{
+            Log.w(DEBUG_TAG,"Ricarica lezioni già importate");
+            for(Lezione l : lezioniList){
+                addEvent(l);
+            }
+        }
+    }
 
 }
