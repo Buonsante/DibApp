@@ -5,6 +5,8 @@ import androidx.viewpager.widget.ViewPager;
 import it.uniba.maw.dibapp.fragment.CommentiFragment;
 import it.uniba.maw.dibapp.fragment.DettagliFragment;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TableLayout;
