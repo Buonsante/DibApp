@@ -20,7 +20,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
+
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import it.uniba.maw.dibapp.R;
 
@@ -161,7 +167,13 @@ public class DettagliFragment extends Fragment {
             Log.w(DEBUG_TAG+"ii", "OnScanResult");
 
             if(result.getDevice().getName().equals("1234")) {
-                Log.w(DEBUG_TAG+"ii", "Registrazione avvenuta");
+                Log.w(DEBUG_TAG+"ii", "Registrazione effettuata");
+                Toast.makeText(getContext(), "Regitrazione effettuata!", Toast.LENGTH_SHORT).show();
+                bluetoothLeScanner.stopScan(scanCallback);
+                Log.w(DEBUG_TAG+"ii", "StopScan");
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("/cdl/gkqRBEtn1BOETsNoWAe2/insegnamenti/ins1/lezioni").document("IVlR1i8d06apSwZwg9Ga")
+                        .update("numPresenze", FieldValue.increment(1));
             }
 
         }
