@@ -29,22 +29,17 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import it.uniba.maw.dibapp.R;
+import it.uniba.maw.dibapp.model.Lezione;
 
 import static it.uniba.maw.dibapp.util.Util.DEBUG_TAG;
 
 
 public class DettagliFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private Button buttonRegister;
+    //contiene il nome del server ble relativo alla lezione
+    private String nameServerBle = "1234";
+    private Lezione lezione;
 
     //BLE
     private static final int REQUEST_ENABLE_BT = 1;
@@ -59,20 +54,9 @@ public class DettagliFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DettagliFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static DettagliFragment newInstance(String param1, String param2) {
         DettagliFragment fragment = new DettagliFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -80,10 +64,7 @@ public class DettagliFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
@@ -100,6 +81,8 @@ public class DettagliFragment extends Fragment {
             }
         });
 
+        //recupera lezione da LessonActivity
+        lezione = (Lezione) getArguments().getSerializable("lezione");
 
         return view;
     }
@@ -111,7 +94,7 @@ public class DettagliFragment extends Fragment {
         // recuperiamo un riferimento all'adapter Bluetooth
         bluetoothAdapter = bluetoothManager.getAdapter();
 
-        //richiede permesso per accesso alla posizione
+        //richiede permesso per accesso alla posizione (senza tale permesso non è in grado di rilevare dispositivi ble)
         requestPermissions(new String[] {Manifest.permission.ACCESS_COARSE_LOCATION}, 456);
 
         // verifichiamo che Bluetooth sia attivo nel dispositivo
@@ -167,13 +150,15 @@ public class DettagliFragment extends Fragment {
 
             Log.w(DEBUG_TAG+"ii", "OnScanResult");
 
-            if(result.getDevice().getName().equals("1234")) {
+            nameServerBle = lezione.getNameServerBle();
+
+            if(result.getDevice().getName().equals(nameServerBle)) {
                 Log.w(DEBUG_TAG+"ii", "Registrazione effettuata");
                 Toast.makeText(getContext(), "Regitrazione effettuata!", Toast.LENGTH_SHORT).show();
                 bluetoothLeScanner.stopScan(scanCallback);
                 Log.w(DEBUG_TAG+"ii", "StopScan");
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("/cdl/gkqRBEtn1BOETsNoWAe2/insegnamenti/ins1/lezioni").document("IVlR1i8d06apSwZwg9Ga")
+                db.collection("lezioni").document(lezione.getLinkLezione())
                         .update("numPresenze", FieldValue.increment(1));
             }
 

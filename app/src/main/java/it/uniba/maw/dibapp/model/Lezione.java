@@ -22,6 +22,8 @@ public class Lezione implements Serializable {
     private String argomento;
     private String insegnamento;
     private String insegnamentoLink;
+    private String nameServerBle;
+    private String linkLezione;
 
     public Lezione(int numPresenze, String professore, String professoreLink, GregorianCalendar data, String oraInizio, String oraFine, String argomento, String insegnamento, String insegnamentoLink) {
         this.numPresenze = numPresenze;
@@ -123,9 +125,21 @@ public class Lezione implements Serializable {
         return insegnamentoLink;
     }
 
-    public void setInsegnamentoLink(String insegnamentoLink) {
-        this.insegnamentoLink = insegnamentoLink;
+    public void setInsegnamentoLink(String insegnamentoLink) { this.insegnamentoLink = insegnamentoLink; }
+
+    public String getNameServerBle() { return nameServerBle; }
+
+    @Exclude
+    public String getLinkLezione() {
+        return linkLezione;
     }
+
+    @Exclude
+    public void setLinkLezione(String linkLezione) {
+        this.linkLezione = linkLezione;
+    }
+
+    public void setNameServerBle(String nameServerBle) { this.nameServerBle = nameServerBle; }
 
     //    public List<Lezione> getLezioniProva() {
 //
