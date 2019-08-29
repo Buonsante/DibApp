@@ -275,6 +275,7 @@ public class LoginActivity extends AppCompatActivity {
     private void generateLessonsInDatabase(){
         //algoritmo per la creazione di 10 lezioni per ogni insegnamento generate in modo casauale
         Log.w(DEBUG_TAG,"Retrieving collection group");
+
         db.collectionGroup("insegnamenti").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -285,10 +286,12 @@ public class LoginActivity extends AppCompatActivity {
                             final String insegnamentoPath = document.getReference().getPath();
                             final String nomeInsegnamento = document.getString("nome");
                             final String[] nomeDocente = new String[1];
+                            final String cdl = document.getString("cdl");
                             final DocumentReference profReference = (DocumentReference) document.get("docente");
                             profReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                 @Override
                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
+
                                     nomeDocente[0] = documentSnapshot.get("cognome")+" "+documentSnapshot.get("nome");
                                     Random random = new Random();
                                     GregorianCalendar calendar;

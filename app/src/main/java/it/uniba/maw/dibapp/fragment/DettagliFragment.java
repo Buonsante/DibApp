@@ -100,6 +100,7 @@ public class DettagliFragment extends Fragment {
             }
         });
 
+
         return view;
     }
 
