@@ -158,7 +158,7 @@ public class DettagliFragment extends Fragment {
                 bluetoothLeScanner.stopScan(scanCallback);
                 Log.w(DEBUG_TAG+"ii", "StopScan");
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("lezioni").document(lezione.getLinkLezione())
+                db.document(lezione.getLinkLezione())
                         .update("numPresenze", FieldValue.increment(1));
             }
 
