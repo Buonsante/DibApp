@@ -1,15 +1,9 @@
 package it.uniba.maw.dibapp;
 
 
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -17,19 +11,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 
 import it.uniba.maw.dibapp.fragment.CalendarFragment;
+import it.uniba.maw.dibapp.fragment.LezioniDelGiornoFragment;
 import it.uniba.maw.dibapp.fragment.SettingsFragment;
 import it.uniba.maw.dibapp.model.Lezione;
 import it.uniba.maw.dibapp.util.Util;
@@ -42,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private ActionBar toolbar;
     CalendarFragment calendarFragment;
     SettingsFragment settingsFragment;
-    Fragment fragmentVuoto;
+    LezioniDelGiornoFragment lezioniDelGiornoFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,17 +49,9 @@ public class MainActivity extends AppCompatActivity {
         // load the store fragment by default
         toolbar.setTitle("DibApp");
 
-        calendarFragment = new CalendarFragment();
-        settingsFragment = new SettingsFragment();
-        fragmentVuoto = new Fragment();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.frame_container,calendarFragment,"calendar")
-                .add(R.id.frame_container,settingsFragment,"settings")
-                .hide(settingsFragment)
-                .add(R.id.frame_container,fragmentVuoto,"vuoto")
-                .hide(fragmentVuoto)
-                .commit();
-        //loadFragment(calendarFragment);
+        getLezioni();
+
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -83,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_gifts:
                     toolbar.setTitle("Lezioni di oggi");
-                    loadFragment(fragmentVuoto);
+                    loadFragment(lezioniDelGiornoFragment);
                     return true;
                 case R.id.settings:
                     toolbar.setTitle("Settings");
@@ -96,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.hide(fragmentVuoto);
+        transaction.hide(lezioniDelGiornoFragment);
         transaction.hide(settingsFragment);
         transaction.hide(calendarFragment);
         transaction.show(fragment);
@@ -140,6 +124,49 @@ public class MainActivity extends AppCompatActivity {
 //        //transaction.addToBackStack(null);
 //        transaction.commit();
 //    }
+
+    private void getLezioni(){
+        lezioniList = new ArrayList<>();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collectionGroup("lezioni").whereEqualTo("professore","Denaro Roberto").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        Log.w(DEBUG_TAG,"Retrieve Lezioni");
+                        for(DocumentSnapshot document : queryDocumentSnapshots.getDocuments()){
+                            Lezione l = document.toObject(Lezione.class);
+                            l.setLinkLezione(document.getReference().getPath());
+                            //Log.w(DEBUG_TAG,"Lezione: "+l.toString());
+                            Util.lezioniList.add(l);
+                        }
+                        Log.w(DEBUG_TAG,"LESSONS RETRIEVED");
+
+                        initializeFragment();
+                    }
+
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(DEBUG_TAG+"err",e.getMessage());
+                    }
+                });
+    }
+
+    void initializeFragment() {
+        calendarFragment = new CalendarFragment();
+        settingsFragment = new SettingsFragment();
+        lezioniDelGiornoFragment = new LezioniDelGiornoFragment();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.frame_container,calendarFragment,"calendar")
+                .add(R.id.frame_container,settingsFragment,"settings")
+                .hide(settingsFragment)
+                .add(R.id.frame_container, lezioniDelGiornoFragment,"lezioniDelGiorno")
+                .hide(lezioniDelGiornoFragment)
+                .commit();
+        //loadFragment(calendarFragment);
+    }
 
 
 
