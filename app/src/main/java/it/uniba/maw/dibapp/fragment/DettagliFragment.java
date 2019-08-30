@@ -38,7 +38,7 @@ public class DettagliFragment extends Fragment {
 
     private Button buttonRegister;
     //contiene il nome del server ble relativo alla lezione
-    private String nameServerBle = "1234";
+    private String nameServerBle;
     private Lezione lezione;
 
     //BLE
@@ -152,15 +152,22 @@ public class DettagliFragment extends Fragment {
 
             nameServerBle = lezione.getNameServerBle();
 
-            if(result.getDevice().getName().equals(nameServerBle)) {
-                Log.w(DEBUG_TAG+"ii", "Registrazione effettuata");
-                Toast.makeText(getContext(), "Regitrazione effettuata!", Toast.LENGTH_SHORT).show();
-                bluetoothLeScanner.stopScan(scanCallback);
-                Log.w(DEBUG_TAG+"ii", "StopScan");
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.document(lezione.getLinkLezione())
-                        .update("numPresenze", FieldValue.increment(1));
+            //questo if è provvisorio per il test 
+            if(nameServerBle == null) {
+                nameServerBle = "1234";
             }
+            if(result.getDevice().getName() != null) {
+                if(result.getDevice().getName().equals(nameServerBle)) {
+                    Log.w(DEBUG_TAG+"ii", "Registrazione effettuata");
+                    Toast.makeText(getContext(), "Regitrazione effettuata!", Toast.LENGTH_SHORT).show();
+                    bluetoothLeScanner.stopScan(scanCallback);
+                    Log.w(DEBUG_TAG+"ii", "StopScan");
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    db.document(lezione.getLinkLezione())
+                            .update("numPresenze", FieldValue.increment(1));
+                }
+            }
+
 
         }
     };
