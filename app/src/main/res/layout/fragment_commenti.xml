@@ -1,11 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragment.CommentiFragment">
 
 
+<!--<androidx.recyclerview.widget.RecyclerView-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:scrollbars="vertical"-->
+<!--    android:id="@+id/recyclerView"-->
+<!--    tools:context=".MainActivity">-->
 
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
 
-</FrameLayout>
+        <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/ratingBar"
+            style="?android:attr/ratingBarStyleIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:rating="3.5"
+            android:scaleX=".5"
+            android:scaleY=".5"
+            android:transformPivotY="0dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ratingBar"
+            android:layout_alignBaseline="@id/ratingBar"
+            android:layout_marginLeft="-78dp"
+            android:layout_marginTop="-37dp"
+            android:layout_toRightOf="@id/ratingBar"
+            android:fontFamily="@font/montserrat"
+            android:text="29/08/2018"
+            android:textColor="#0A0A0A"
+            android:textSize="12sp"></TextView>
+
+        <TextView
+            android:id="@+id/tv_text_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ratingBar"
+            android:layout_alignLeft="@id/ratingBar"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:fontFamily="@font/montserrat"
+            android:text="trmoooooooooooooooooooooooooooooooooooooooooooooooooo" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_text_comment"
+            android:layout_alignLeft="@id/ratingBar"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+        </TextView>
+
+    </RelativeLayout>
+
+<!--</androidx.recyclerview.widget.RecyclerView>-->
+
