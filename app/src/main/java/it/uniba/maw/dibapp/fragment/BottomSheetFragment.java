@@ -7,16 +7,28 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RatingBar;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import it.uniba.maw.dibapp.R;
+import it.uniba.maw.dibapp.model.Lezione;
 
 public class BottomSheetFragment extends BottomSheetDialogFragment {
+
+    private Lezione lezione;
+
+    EditText editTextCommento;
+    Button buttonValuta;
+    RatingBar ratingBar;
 
     public BottomSheetFragment() {
 
@@ -30,6 +42,35 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_bottom_sheet, container, false);
+        View view = inflater.inflate(R.layout.fragment_bottom_sheet, container, false);
+
+        editTextCommento = view.findViewById(R.id.edit_text_commento);
+        buttonValuta = view.findViewById(R.id.btn_valuta);
+        ratingBar = view.findViewById(R.id.rating_bar);
+
+        buttonValuta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                valutaLezione();
+            }
+        });
+
+        //recupera lezione da LessonActivity
+        lezione = (Lezione) getArguments().getSerializable("lezione");
+
+        return view;
+    }
+
+    private void valutaLezione() {
+        float rating = ratingBar.getRating();
+        String commento = editTextCommento.getText().toString();
+
+        //TODO: scrivere il commento e la valutazione all'interno del database
+
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction trans = manager.beginTransaction();
+        trans.remove(this);
+        trans.commit();
+
     }
 }

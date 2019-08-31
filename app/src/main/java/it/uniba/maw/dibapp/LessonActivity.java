@@ -76,6 +76,12 @@ public class LessonActivity extends AppCompatActivity {
 
         // using BottomSheetDialogFragment
         BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
+
+        //passa la lezione corrente al bottom sheet fragment
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("lezione", getIntent().getSerializableExtra("lezione"));
+        bottomSheetFragment.setArguments(bundle);
+
         bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
     }
 }

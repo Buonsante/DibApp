@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -37,6 +38,12 @@ import static it.uniba.maw.dibapp.util.Util.DEBUG_TAG;
 public class DettagliFragment extends Fragment {
 
     private Button buttonRegister;
+    private TextView textViewInsegnamento;
+    private TextView textViewDocente;
+    private TextView textViewOraInizio;
+    private TextView textViewOraFine;
+    private TextView textViewArgomento;
+
     //contiene il nome del server ble relativo alla lezione
     private String nameServerBle;
     private Lezione lezione;
@@ -74,6 +81,12 @@ public class DettagliFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_dettagli, container, false);
 
         buttonRegister = view.findViewById(R.id.buttonRegister);
+        textViewInsegnamento = view.findViewById(R.id.text_view_insegnamento);
+        textViewDocente = view.findViewById(R.id.text_view_docente);
+        textViewOraInizio = view.findViewById(R.id.text_view_ora_inizio);
+        textViewOraFine = view.findViewById(R.id.text_view_ora_fine);
+        textViewArgomento = view.findViewById(R.id.text_view_argomento);
+
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,6 +96,12 @@ public class DettagliFragment extends Fragment {
 
         //recupera lezione da LessonActivity
         lezione = (Lezione) getArguments().getSerializable("lezione");
+
+        textViewInsegnamento.setText(lezione.getInsegnamento());
+        textViewDocente.setText(lezione.getProfessore());
+        textViewOraInizio.setText(lezione.getOraInizio());
+        textViewOraFine.setText(lezione.getOraFine());
+        textViewArgomento.setText(lezione.getArgomento());
 
         return view;
     }

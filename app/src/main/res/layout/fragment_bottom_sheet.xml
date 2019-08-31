@@ -30,9 +30,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Dandelion Chocolate"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="Valuta Lezione"
                 android:textColor="#000000"
-                android:textSize="24sp"
+                android:textSize="30sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -42,37 +43,15 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatRatingBar
-                    style="@style/Base.Widget.AppCompat.RatingBar.Small"
+                    android:id="@+id/rating_bar"
+                    style="@style/Base.Widget.AppCompat.RatingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:numStars="5"
-                    android:rating="4" />
+                    android:numStars="5" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="4.7" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:text="(51)" />
 
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
-                android:background="#5d5d5d" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="12 min away"
-                android:textColor="#5692F5" />
 
             <View
                 android:layout_width="match_parent"
@@ -85,33 +64,20 @@
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/edit_text_commento"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:drawablePadding="16dp"
-        android:text="740 Valencia St, San Fracisco, CA" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:drawablePadding="16dp"
-        android:text="(415) 349-0942" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:drawablePadding="16dp"
-        android:text="Wed, 10 AM - 9 PM" />
+        android:hint="Inserisci commento" />
 
     <Button
+        android:id="@+id/btn_valuta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="#000"
-        android:text="PROCEED PAYMENT"
+        android:fontFamily="@font/montserrat"
+        android:text="Valuta"
         android:textColor="#fff" />
 
 </LinearLayout>
