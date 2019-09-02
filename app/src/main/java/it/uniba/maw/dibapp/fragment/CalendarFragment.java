@@ -77,33 +77,33 @@ public class CalendarFragment extends Fragment {
         collapsibleCalendar.addEventTag(l.getGregorianData().get(Calendar.YEAR), l.getGregorianData().get(Calendar.MONTH), l.getGregorianData().get(Calendar.DAY_OF_MONTH));
     }
 
-    private void getLezioni(){
-        lezioniList = new ArrayList<>();
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collectionGroup("lezioni").whereEqualTo("professore","Denaro Roberto").get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        Log.w(DEBUG_TAG,"Retrieve Lezioni");
-                        for(DocumentSnapshot document : queryDocumentSnapshots.getDocuments()){
-                            Lezione l = document.toObject(Lezione.class);
-                            l.setLinkLezione(document.getReference().getPath());
-                            //Log.w(DEBUG_TAG,"Lezione: "+l.toString());
-                            Util.lezioniList.add(l);
-                            addEvent(l);
-                        }
-                        Log.w(DEBUG_TAG,"LESSONS RETRIEVED");
-                    }
-
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(DEBUG_TAG+"err",e.getMessage());
-                    }
-                });
-    }
+//    private void getLezioni(){
+//        lezioniList = new ArrayList<>();
+//
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        db.collectionGroup("lezioni").whereEqualTo("professore","Denaro Roberto").get()
+//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                        Log.w(DEBUG_TAG,"Retrieve Lezioni");
+//                        for(DocumentSnapshot document : queryDocumentSnapshots.getDocuments()){
+//                            Lezione l = document.toObject(Lezione.class);
+//                            l.setLinkLezione(document.getReference().getPath());
+//                            //Log.w(DEBUG_TAG,"Lezione: "+l.toString());
+//                            Util.lezioniList.add(l);
+//                            addEvent(l);
+//                        }
+//                        Log.w(DEBUG_TAG,"LESSONS RETRIEVED");
+//                    }
+//
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.w(DEBUG_TAG+"err",e.getMessage());
+//                    }
+//                });
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -182,14 +182,12 @@ public class CalendarFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if(lezioniList == null)
-            getLezioni();
-        else{
-            Log.w(DEBUG_TAG,"Ricarica lezioni già importate");
-            for(Lezione l : lezioniList){
-                addEvent(l);
-            }
+
+        Log.w(DEBUG_TAG,"Ricarica lezioni già importate");
+        for(Lezione l : lezioniList){
+            addEvent(l);
         }
+
     }
 
 }

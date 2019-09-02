@@ -22,7 +22,7 @@
                 android:paddingBottom="24dp">
 
                 <TextView
-                    android:id="@+id/name"
+                    android:id="@+id/text_view_insegnamento"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -34,10 +34,10 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/designation"
+                    android:id="@+id/text_view_docente"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/name"
+                    android:layout_below="@+id/text_view_insegnamento"
                     android:layout_centerHorizontal="true"
                     android:fontFamily="@font/montserrat"
                     android:layout_marginTop="10dp"
@@ -93,7 +93,7 @@
 
                 <TextView
                     android:fontFamily="@font/montserrat"
-                    android:id="@+id/blood_group"
+                    android:id="@+id/text_view_ora_inizio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -106,7 +106,7 @@
 
                 <TextView
                     android:fontFamily="@font/montserrat"
-                    android:id="@+id/occupation"
+                    android:id="@+id/text_view_argomento"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -128,7 +128,7 @@
                     android:clickable="true"
                     android:text="prova@uniba.it"
                     app:layout_constraintLeft_toRightOf="@+id/textView22"
-                    app:layout_constraintTop_toBottomOf="@+id/occupation" />
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_argomento" />
 
                 <TextView
                     android:fontFamily="@font/montserrat"
@@ -146,7 +146,7 @@
 
                 <TextView
                     android:fontFamily="@font/montserrat"
-                    android:id="@+id/education"
+                    android:id="@+id/text_view_ora_fine"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
