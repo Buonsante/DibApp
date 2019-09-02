@@ -27,7 +27,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         if (sharedPreferences.getBoolean(not_pref.getKey(), true)) {
 
-            Util.createNotification(getContext());
+            //Util.createNotification(getContext());
 //            Intent setNotification = new Intent(getActivity(), Util.class);
 //            // passo all'attivazione delle notifiche nella classe NotificationUtils
 //            startActivity(setNotification);
