@@ -301,8 +301,9 @@ public class LoginActivity extends AppCompatActivity {
                                         int oraInizioInt = 8+random.nextInt(5);
                                         String oraInizio = String.valueOf(oraInizioInt);
                                         String oraFine = String.valueOf(oraInizioInt + 3);
+                                        String nameBle = String.valueOf(random.nextInt(256870));
                                         document.getReference().collection("lezioni")
-                                                .add(new Lezione(0,nomeDocente[0],profReference.getPath(), calendar,oraInizio,oraFine,"argomento"+i,nomeInsegnamento,insegnamentoPath ))
+                                                .add(new Lezione(0,nomeDocente[0],profReference.getPath(), calendar,oraInizio,oraFine,"argomento"+i,nomeInsegnamento,insegnamentoPath, nameBle))
                                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                                     @Override
                                                     public void onSuccess(DocumentReference documentReference) {
