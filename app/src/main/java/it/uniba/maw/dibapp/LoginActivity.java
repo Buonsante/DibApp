@@ -37,6 +37,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.model.Document;
 import com.google.firebase.firestore.model.value.ReferenceValue;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 
 import java.util.Calendar;
@@ -68,8 +71,17 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        FirebaseMessaging.getInstance().subscribeToTopic("newLesson");
         //Initialize Firebase Firestore
         db = FirebaseFirestore.getInstance();
+
+        Bundle notification = getIntent().getExtras();
+        if(notification != null){
+            Log.w(DEBUG_TAG,"Notification: "+notification.getString("nameServerBle"));
+            Toast.makeText(this,"Lezione disponibile con server: "+notification.getString("nameServerBle"),Toast.LENGTH_LONG);
+        }else{
+            Log.w(DEBUG_TAG,"Intent null");
+        }
 
         //Initialize Shared preference
 
