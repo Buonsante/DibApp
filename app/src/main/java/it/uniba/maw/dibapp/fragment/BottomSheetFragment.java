@@ -18,6 +18,10 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import it.uniba.maw.dibapp.R;
 import it.uniba.maw.dibapp.model.Lezione;
@@ -65,7 +69,11 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         float rating = ratingBar.getRating();
         String commento = editTextCommento.getText().toString();
 
-        //TODO: scrivere il commento e la valutazione all'interno del database
+        Map<String,String> commentoMap = new HashMap<>();
+        commentoMap.put("rating",String.valueOf(rating));
+        commentoMap.put("commento",commento);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.document(lezione.getLinkLezione()).collection("commenti").add(commentoMap);
 
         FragmentManager manager = getFragmentManager();
         FragmentTransaction trans = manager.beginTransaction();
