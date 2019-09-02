@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import it.uniba.maw.dibapp.fragment.BottomSheetFragment;
+import it.uniba.maw.dibapp.fragment.CommentiAdapter;
 import it.uniba.maw.dibapp.fragment.CommentiFragment;
 import it.uniba.maw.dibapp.fragment.DettagliFragment;
 
@@ -59,11 +60,13 @@ public class LessonActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager){
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
         DettagliFragment dettagliFragment = new DettagliFragment();
+        CommentiFragment commentiFragment = new CommentiFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("lezione", getIntent().getSerializableExtra("lezione"));
         dettagliFragment.setArguments(bundle);
+        commentiFragment.setArguments(bundle);
         adapter.addFragment(dettagliFragment, "DETTAGLI");
-        adapter.addFragment(new CommentiFragment(), "COMMENTI");
+        adapter.addFragment(commentiFragment, "COMMENTI");
         viewPager.setAdapter(adapter);
     }
 

@@ -5,14 +5,14 @@ import java.util.Date;
 
 public class Valutazione {
 
-    private int id, voto, lezione;
+    private int  lezione;
+    private float voto;
     private String commento;
     private boolean visibilita;
     private Date data;
     private LocalTime ora;
 
-    public Valutazione(int id, int voto, int lezione, String commento, boolean visibilita, Date data, LocalTime ora) {
-        this.id = id;
+    public Valutazione(float voto, int lezione, String commento, boolean visibilita, Date data, LocalTime ora) {
         this.voto = voto;
         this.lezione = lezione;
         this.commento = commento;
@@ -25,19 +25,12 @@ public class Valutazione {
 
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getVoto() {
+    public float getVoto() {
         return voto;
     }
 
-    public void setVoto(int voto) {
+    public void setVoto(float voto) {
         this.voto = voto;
     }
 
