@@ -14,12 +14,16 @@
         <item name="colorAccent">@color/secondaryColor</item>
     </style>
 
-    <style name="commentButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+
+    <style name="commentButton" parent="Widget.MaterialComponents.Button">
         <item name="android:backgroundTint">@color/primaryColor</item>
-        <!--<item name="cornerFamilyTopLeft">rounded</item>-->
-        <!--<item name="cornerSize">8dp</item>-->
-        <item name="cornerRadius">50dp</item>
+        <!--<item name="shapeAppearanceOverlay">@style/MyShapeAppearance</item>-->
     </style>
+    <style name="MyShapeAppearance">
+        <!--<item name="cornerFamilyTopLeft">rounded</item>-->
+        <!--<item name="cornerSize">50dp</item>-->
+    </style>
+
 <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
 <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

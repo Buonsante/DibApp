@@ -47,35 +47,39 @@
                     style="@style/Base.Widget.AppCompat.RatingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:numStars="5" />
+                    android:numStars="5"
+                    android:progressTint="@color/primaryColor" />
 
 
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
-                android:background="#5d5d5d" />
-
         </LinearLayout>
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="#5d5d5d" />
 
     <EditText
         android:id="@+id/edit_text_commento"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
         android:hint="Inserisci commento" />
+
 
     <Button
         android:id="@+id/btn_valuta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="#000"
+        android:background="@color/primaryColor"
+        android:backgroundTint="@color/primaryColor"
         android:fontFamily="@font/montserrat"
         android:text="Valuta"
         android:textColor="#fff" />
