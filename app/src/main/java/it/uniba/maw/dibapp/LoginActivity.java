@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -67,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
         FirebaseMessaging.getInstance().subscribeToTopic("newLesson");
         //Initialize Firebase Firestore
         db = FirebaseFirestore.getInstance();
@@ -83,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+
         //generateLessonsInDatabase();
 
         //forzo la disconnessione ad ogni avvio per prova app
@@ -105,7 +108,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-       user = FirebaseAuth.getInstance().getCurrentUser();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
+        FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+        bundle.putString("user_display_name", "opened by "+user.getDisplayName());
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
+
         if (user != null) {
             pref = getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
             String tipoUtente = pref.getString("tipo","");
