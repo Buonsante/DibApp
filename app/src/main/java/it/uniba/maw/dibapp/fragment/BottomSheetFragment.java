@@ -9,6 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.transition.Transition;
+import androidx.transition.TransitionManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +37,6 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     RatingBar ratingBar;
 
     public BottomSheetFragment() {
-
     }
 
     @Override
@@ -52,6 +53,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         buttonValuta = view.findViewById(R.id.btn_valuta);
         ratingBar = view.findViewById(R.id.rating_bar);
 
+
         buttonValuta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,8 +64,10 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         //recupera lezione da LessonActivity
         lezione = (Lezione) getArguments().getSerializable("lezione");
 
+
         return view;
     }
+
 
     private void valutaLezione() {
         float rating = ratingBar.getRating();

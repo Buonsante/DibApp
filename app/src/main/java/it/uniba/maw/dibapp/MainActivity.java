@@ -1,12 +1,19 @@
 package it.uniba.maw.dibapp;
 
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -35,13 +42,16 @@ public class MainActivity extends AppCompatActivity {
     CalendarFragment calendarFragment;
     SettingsFragment settingsFragment;
     LezioniDelGiornoFragment lezioniDelGiornoFragment;
-
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         toolbar = getSupportActionBar();
+
+        progressBar = findViewById(R.id.mainProgressBar);
+        progressShow();
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -163,11 +173,16 @@ public class MainActivity extends AppCompatActivity {
                 .add(R.id.frame_container,settingsFragment,"settings")
                 .hide(settingsFragment)
                 .add(R.id.frame_container, lezioniDelGiornoFragment,"lezioniDelGiorno")
-                .hide(lezioniDelGiornoFragment)
-                .commit();
+                .hide(calendarFragment)
+                .commitNow();
         //loadFragment(calendarFragment);
+        progressBar.setVisibility(View.GONE);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
-
+    public void progressShow() {
+        progressBar.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    }
 
 }
