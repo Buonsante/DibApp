@@ -41,24 +41,26 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/container"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabs" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_bottom_sheet"
-        android:layout_width="wrap_content"
-        android:layout_height="42dp"
-        android:layout_gravity="bottom|center_horizontal"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
         android:backgroundTint="@color/primaryColor"
         android:fontFamily="@font/montserrat"
         android:insetBottom="0dp"
         android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:text="Valuta lezione"
+        android:paddingTop="8dp"
+        android:paddingRight="20dp"
+        app:icon="@drawable/ic_comment_black_24dp"
+        app:iconSize="@android:dimen/app_icon_size"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/container"></Button>
+        app:layout_constraintEnd_toEndOf="@+id/container"></com.google.android.material.button.MaterialButton>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
