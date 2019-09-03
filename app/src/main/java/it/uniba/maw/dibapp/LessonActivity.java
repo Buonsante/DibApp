@@ -1,6 +1,7 @@
 package it.uniba.maw.dibapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -8,6 +9,7 @@ import it.uniba.maw.dibapp.fragment.BottomSheetFragment;
 import it.uniba.maw.dibapp.fragment.CommentiAdapter;
 import it.uniba.maw.dibapp.fragment.CommentiFragment;
 import it.uniba.maw.dibapp.fragment.DettagliFragment;
+import it.uniba.maw.dibapp.util.Util;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
@@ -44,6 +46,11 @@ public class LessonActivity extends AppCompatActivity {
                 showBottomSheetDialog();
             }
         });
+
+        //se l'utente è un docente nasconde il pulsante di aggiunta commenti
+        if(getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE).getString("tipo", "").equals("D")){
+            buttonDialog.setVisibility(View.INVISIBLE);
+        }
 
 
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
