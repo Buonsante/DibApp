@@ -61,7 +61,9 @@
                 android:paddingTop="20dp"
                 android:paddingRight="5dp"
 
-                android:paddingBottom="20dp">
+                android:paddingBottom="20dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
 
                 <TextView
                     android:fontFamily="@font/montserrat"
@@ -104,47 +106,35 @@
                     app:layout_constraintLeft_toRightOf="@+id/textView10"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:fontFamily="@font/montserrat"
-                    android:id="@+id/text_view_argomento"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="8dp"
-                    android:clickable="true"
-                    android:text="Business"
-                    app:layout_constraintLeft_toRightOf="@+id/textView7"
-                    app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
                 <EditText
-                    android:fontFamily="@font/montserrat"
                     android:id="@+id/edit_text_argomento"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="32dp"
                     android:clickable="true"
-                    app:layout_constraintLeft_toRightOf="@+id/textView7"
-                    app:layout_constraintTop_toBottomOf="@+id/textView5"/>
+                    android:fontFamily="@font/montserrat"
+                    android:hint="Inserisci argomento"
+                    app:layout_constraintStart_toEndOf="@+id/textView7"
+                    app:layout_constraintTop_toTopOf="@+id/textView7" />
 
                 <TextView
-                    android:fontFamily="@font/montserrat"
-                    android:id="@+id/mobileNumber"
+                    android:id="@+id/text_view_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="21dp"
                     android:clickable="true"
+                    android:fontFamily="@font/montserrat"
                     android:text="prova@uniba.it"
-                    app:layout_constraintLeft_toRightOf="@+id/textView22"
-                    app:layout_constraintTop_toBottomOf="@+id/text_view_argomento" />
+                    app:layout_constraintLeft_toRightOf="@+id/text_view_label_email"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:fontFamily="@font/montserrat"
-                    android:id="@+id/textView22"
+                    android:id="@+id/text_view_label_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -157,14 +147,13 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
                 <TextView
-                    android:fontFamily="@font/montserrat"
                     android:id="@+id/text_view_ora_fine"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:clickable="true"
+                    android:fontFamily="@font/montserrat"
                     android:text="12:00"
                     app:layout_constraintLeft_toRightOf="@+id/textView5"
                     app:layout_constraintTop_toBottomOf="@+id/textView10" />

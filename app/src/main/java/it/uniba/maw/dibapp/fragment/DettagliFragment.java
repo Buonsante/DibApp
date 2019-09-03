@@ -45,8 +45,9 @@ public class DettagliFragment extends Fragment {
     private TextView textViewDocente;
     private TextView textViewOraInizio;
     private TextView textViewOraFine;
-    private TextView textViewArgomento;
     private EditText editTextArgomento;
+    private TextView textViewEmail;
+    private TextView textViewLabelEmail;
 
     //contiene il nome del server ble relativo alla lezione
     private String nameServerBle;
@@ -89,32 +90,40 @@ public class DettagliFragment extends Fragment {
         textViewDocente = view.findViewById(R.id.text_view_docente);
         textViewOraInizio = view.findViewById(R.id.text_view_ora_inizio);
         textViewOraFine = view.findViewById(R.id.text_view_ora_fine);
-        textViewArgomento = view.findViewById(R.id.text_view_argomento);
         editTextArgomento = view.findViewById(R.id.edit_text_argomento);
+        textViewEmail = view.findViewById(R.id.text_view_email);
+        textViewLabelEmail = view.findViewById(R.id.text_view_label_email);
 
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                registerStudent(view);
+                if(getContext().getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE).getString("tipo", "").equals("D")){
+                    registerStudent(view);
+                } else {
+                    
+                }
             }
         });
 
-        if(getContext().getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE).getString("tipo", "").equals("D")){
-            textViewArgomento.setVisibility(View.INVISIBLE);
-            editTextArgomento.setVisibility(View.VISIBLE);
-        } else {
-            editTextArgomento.setVisibility(View.INVISIBLE);
-            textViewArgomento.setVisibility(View.VISIBLE);
-        }
-
         //recupera lezione da LessonActivity
         lezione = (Lezione) getArguments().getSerializable("lezione");
+
+        if(getContext().getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE).getString("tipo", "").equals("D")){
+            editTextArgomento.setEnabled(true);
+            textViewEmail.setVisibility(View.INVISIBLE);
+            textViewLabelEmail.setVisibility(View.INVISIBLE);
+            buttonRegister.setText("Attiva lezione");
+
+        } else {
+            editTextArgomento.setText(lezione.getArgomento());
+            editTextArgomento.setEnabled(false);
+        }
 
         textViewInsegnamento.setText(lezione.getInsegnamento());
         textViewDocente.setText(lezione.getProfessore());
         textViewOraInizio.setText(lezione.getOraInizio());
         textViewOraFine.setText(lezione.getOraFine());
-        textViewArgomento.setText(lezione.getArgomento());
+
 
         //TODO aggiungere il caricamento dell'argomento dalla editTextArgomento nel caso in cui l'utente è un docente
 
