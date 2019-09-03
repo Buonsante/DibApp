@@ -109,15 +109,17 @@
 
                 <EditText
                     android:id="@+id/edit_text_argomento"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:layout_marginStart="32dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:clickable="true"
                     android:fontFamily="@font/montserrat"
                     android:hint="Inserisci argomento"
-                    app:layout_constraintStart_toEndOf="@+id/textView7"
-                    app:layout_constraintTop_toTopOf="@+id/textView7" />
+                    app:layout_constraintEnd_toStartOf="@+id/button_salva"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
                 <TextView
                     android:id="@+id/text_view_email"
@@ -133,18 +135,17 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:fontFamily="@font/montserrat"
                     android:id="@+id/text_view_label_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginTop="5dp"
                     android:clickable="true"
+                    android:fontFamily="@font/montserrat"
                     android:text="Email docente: "
                     android:textStyle="bold"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView7" />
+                    app:layout_constraintTop_toBottomOf="@+id/edit_text_argomento" />
 
                 <TextView
                     android:id="@+id/text_view_ora_fine"
@@ -183,6 +184,16 @@
                     android:text="Registrati"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/button_salva"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="80dp"
+                    android:layout_marginEnd="8dp"
+                    app:icon="@drawable/ic_mode_edit_black_24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -48,6 +49,7 @@ public class DettagliFragment extends Fragment {
     private EditText editTextArgomento;
     private TextView textViewEmail;
     private TextView textViewLabelEmail;
+    private Button buttonSalva;
 
     //contiene il nome del server ble relativo alla lezione
     private String nameServerBle;
@@ -93,32 +95,26 @@ public class DettagliFragment extends Fragment {
         editTextArgomento = view.findViewById(R.id.edit_text_argomento);
         textViewEmail = view.findViewById(R.id.text_view_email);
         textViewLabelEmail = view.findViewById(R.id.text_view_label_email);
+        buttonSalva = view.findViewById(R.id.button_salva);
 
-        buttonRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(getContext().getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE).getString("tipo", "").equals("D")){
-                    registerStudent(view);
-                } else {
-                    
-                }
-            }
-        });
+        buttonRegister.setOnClickListener(buttonRegisterListener);
+        buttonSalva.setOnClickListener(buttonSalvaListener);
 
         //recupera lezione da LessonActivity
         lezione = (Lezione) getArguments().getSerializable("lezione");
 
         if(getContext().getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE).getString("tipo", "").equals("D")){
-            editTextArgomento.setEnabled(true);
+            editTextArgomento.setEnabled(false);
             textViewEmail.setVisibility(View.INVISIBLE);
             textViewLabelEmail.setVisibility(View.INVISIBLE);
             buttonRegister.setText("Attiva lezione");
 
         } else {
-            editTextArgomento.setText(lezione.getArgomento());
             editTextArgomento.setEnabled(false);
+            buttonSalva.setVisibility(View.INVISIBLE);
         }
 
+        editTextArgomento.setText(lezione.getArgomento());
         textViewInsegnamento.setText(lezione.getInsegnamento());
         textViewDocente.setText(lezione.getProfessore());
         textViewOraInizio.setText(lezione.getOraInizio());
@@ -129,6 +125,33 @@ public class DettagliFragment extends Fragment {
 
         return view;
     }
+
+    View.OnClickListener buttonRegisterListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if(getContext().getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE).getString("tipo", "").equals("D")){
+                registerStudent(view);
+            } else {
+
+            }
+        }
+    };
+
+    View.OnClickListener buttonSalvaListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if(editTextArgomento.isEnabled()){
+                String argomento = editTextArgomento.getText().toString();
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.document(lezione.getLinkLezione()).update("argomento", argomento);
+                editTextArgomento.onEditorAction(EditorInfo.IME_ACTION_DONE);
+                editTextArgomento.setEnabled(false);
+            } else {
+                editTextArgomento.setEnabled(true);
+            }
+
+        }
+    };
 
     private void registerStudent(View view) {
 
