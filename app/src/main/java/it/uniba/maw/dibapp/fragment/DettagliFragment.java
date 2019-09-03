@@ -50,6 +50,9 @@ public class DettagliFragment extends Fragment {
     private TextView textViewEmail;
     private Button buttonSalva;
 
+    //tipologia di utente (S, D)
+    private String utente;
+
     //contiene il nome del server ble relativo alla lezione
     private String nameServerBle;
     private Lezione lezione;
@@ -101,7 +104,10 @@ public class DettagliFragment extends Fragment {
         //recupera lezione da LessonActivity
         lezione = (Lezione) getArguments().getSerializable("lezione");
 
-        if(getContext().getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE).getString("tipo", "").equals("D")){
+        //recupera tipologia di utente
+        utente = getContext().getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE).getString("tipo", "");
+
+        if(utente.equals("D")){
             editTextArgomento.setEnabled(false);
             textViewEmail.setVisibility(View.GONE);
             buttonRegister.setText("Attiva lezione");
@@ -126,7 +132,7 @@ public class DettagliFragment extends Fragment {
     View.OnClickListener buttonRegisterListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if(getContext().getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE).getString("tipo", "").equals("D")){
+            if(utente.equals("S")){
                 registerStudent(view);
             } else {
 
