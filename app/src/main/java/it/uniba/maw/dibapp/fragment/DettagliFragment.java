@@ -48,7 +48,6 @@ public class DettagliFragment extends Fragment {
     private TextView textViewOraFine;
     private EditText editTextArgomento;
     private TextView textViewEmail;
-    private TextView textViewLabelEmail;
     private Button buttonSalva;
 
     //contiene il nome del server ble relativo alla lezione
@@ -94,7 +93,6 @@ public class DettagliFragment extends Fragment {
         textViewOraFine = view.findViewById(R.id.text_view_ora_fine);
         editTextArgomento = view.findViewById(R.id.edit_text_argomento);
         textViewEmail = view.findViewById(R.id.text_view_email);
-        textViewLabelEmail = view.findViewById(R.id.text_view_label_email);
         buttonSalva = view.findViewById(R.id.button_salva);
 
         buttonRegister.setOnClickListener(buttonRegisterListener);
@@ -105,8 +103,7 @@ public class DettagliFragment extends Fragment {
 
         if(getContext().getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE).getString("tipo", "").equals("D")){
             editTextArgomento.setEnabled(false);
-            textViewEmail.setVisibility(View.INVISIBLE);
-            textViewLabelEmail.setVisibility(View.INVISIBLE);
+            textViewEmail.setVisibility(View.GONE);
             buttonRegister.setText("Attiva lezione");
 
         } else {
