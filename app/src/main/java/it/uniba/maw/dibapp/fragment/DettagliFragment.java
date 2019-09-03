@@ -19,7 +19,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +33,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import it.uniba.maw.dibapp.R;
 import it.uniba.maw.dibapp.model.Lezione;
+import it.uniba.maw.dibapp.util.Util;
 
+import static android.content.Context.MODE_PRIVATE;
 import static it.uniba.maw.dibapp.util.Util.DEBUG_TAG;
 
 
@@ -42,7 +46,9 @@ public class DettagliFragment extends Fragment {
     private TextView textViewDocente;
     private TextView textViewOraInizio;
     private TextView textViewOraFine;
-    private TextView textViewArgomento;
+    private EditText editTextArgomento;
+    private TextView textViewEmail;
+    private Button buttonSalva;
 
     //contiene il nome del server ble relativo alla lezione
     private String nameServerBle;
@@ -85,26 +91,64 @@ public class DettagliFragment extends Fragment {
         textViewDocente = view.findViewById(R.id.text_view_docente);
         textViewOraInizio = view.findViewById(R.id.text_view_ora_inizio);
         textViewOraFine = view.findViewById(R.id.text_view_ora_fine);
-        textViewArgomento = view.findViewById(R.id.text_view_argomento);
+        editTextArgomento = view.findViewById(R.id.edit_text_argomento);
+        textViewEmail = view.findViewById(R.id.text_view_email);
+        buttonSalva = view.findViewById(R.id.button_salva);
 
-        buttonRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                registerStudent(view);
-            }
-        });
+        buttonRegister.setOnClickListener(buttonRegisterListener);
+        buttonSalva.setOnClickListener(buttonSalvaListener);
 
         //recupera lezione da LessonActivity
         lezione = (Lezione) getArguments().getSerializable("lezione");
 
+        if(getContext().getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE).getString("tipo", "").equals("D")){
+            editTextArgomento.setEnabled(false);
+            textViewEmail.setVisibility(View.GONE);
+            buttonRegister.setText("Attiva lezione");
+
+        } else {
+            editTextArgomento.setEnabled(false);
+            buttonSalva.setVisibility(View.INVISIBLE);
+        }
+
+        editTextArgomento.setText(lezione.getArgomento());
         textViewInsegnamento.setText(lezione.getInsegnamento());
         textViewDocente.setText(lezione.getProfessore());
         textViewOraInizio.setText(lezione.getOraInizio());
         textViewOraFine.setText(lezione.getOraFine());
-        textViewArgomento.setText(lezione.getArgomento());
+
+
+        //TODO aggiungere il caricamento dell'argomento dalla editTextArgomento nel caso in cui l'utente è un docente
 
         return view;
     }
+
+    View.OnClickListener buttonRegisterListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if(getContext().getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE).getString("tipo", "").equals("D")){
+                registerStudent(view);
+            } else {
+
+            }
+        }
+    };
+
+    View.OnClickListener buttonSalvaListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if(editTextArgomento.isEnabled()){
+                String argomento = editTextArgomento.getText().toString();
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.document(lezione.getLinkLezione()).update("argomento", argomento);
+                editTextArgomento.onEditorAction(EditorInfo.IME_ACTION_DONE);
+                editTextArgomento.setEnabled(false);
+            } else {
+                editTextArgomento.setEnabled(true);
+            }
+
+        }
+    };
 
     private void registerStudent(View view) {
 
