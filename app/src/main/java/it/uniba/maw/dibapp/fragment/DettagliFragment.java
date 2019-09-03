@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +32,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import it.uniba.maw.dibapp.R;
 import it.uniba.maw.dibapp.model.Lezione;
+import it.uniba.maw.dibapp.util.Util;
 
+import static android.content.Context.MODE_PRIVATE;
 import static it.uniba.maw.dibapp.util.Util.DEBUG_TAG;
 
 
@@ -43,6 +46,7 @@ public class DettagliFragment extends Fragment {
     private TextView textViewOraInizio;
     private TextView textViewOraFine;
     private TextView textViewArgomento;
+    private EditText editTextArgomento;
 
     //contiene il nome del server ble relativo alla lezione
     private String nameServerBle;
@@ -86,6 +90,7 @@ public class DettagliFragment extends Fragment {
         textViewOraInizio = view.findViewById(R.id.text_view_ora_inizio);
         textViewOraFine = view.findViewById(R.id.text_view_ora_fine);
         textViewArgomento = view.findViewById(R.id.text_view_argomento);
+        editTextArgomento = view.findViewById(R.id.edit_text_argomento);
 
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +98,14 @@ public class DettagliFragment extends Fragment {
                 registerStudent(view);
             }
         });
+
+        if(getContext().getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE).getString("tipo", "").equals("D")){
+            textViewArgomento.setVisibility(View.INVISIBLE);
+            editTextArgomento.setVisibility(View.VISIBLE);
+        } else {
+            editTextArgomento.setVisibility(View.INVISIBLE);
+            textViewArgomento.setVisibility(View.VISIBLE);
+        }
 
         //recupera lezione da LessonActivity
         lezione = (Lezione) getArguments().getSerializable("lezione");
@@ -102,6 +115,8 @@ public class DettagliFragment extends Fragment {
         textViewOraInizio.setText(lezione.getOraInizio());
         textViewOraFine.setText(lezione.getOraFine());
         textViewArgomento.setText(lezione.getArgomento());
+
+        //TODO aggiungere il caricamento dell'argomento dalla editTextArgomento nel caso in cui l'utente è un docente
 
         return view;
     }
