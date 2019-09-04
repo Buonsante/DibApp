@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -56,16 +57,12 @@ public class CalendarFragment extends Fragment {
     private List<Lezione> lezioni;
     private Bundle savedState;
 
+    private TextView noLessonsOnDateTextView;
+
     public CalendarFragment() {
         // Required empty public constructor
     }
 
-    public static CalendarFragment newInstance(String param1, String param2) {
-        CalendarFragment fragment = new CalendarFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -121,6 +118,8 @@ public class CalendarFragment extends Fragment {
         layoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
+        noLessonsOnDateTextView = view.findViewById(R.id.noLessonsCalendar);
+
 //        try {
 //            //lezioni = (List<Lezione>) getArguments().getSerializable("lezioniList");
 //            Log.w(DEBUG_TAG,lezioniList.toString());
@@ -151,6 +150,11 @@ public class CalendarFragment extends Fragment {
                 mAdapter = new LezioniAdapter(lezioniPerData);
                 recyclerView.setAdapter(mAdapter);
 
+                if(lezioniPerData.isEmpty()){
+                    noLessonsOnDateTextView.setVisibility(View.VISIBLE);
+                }else{
+                    noLessonsOnDateTextView.setVisibility(View.GONE);
+                }
             }
 
             @Override
