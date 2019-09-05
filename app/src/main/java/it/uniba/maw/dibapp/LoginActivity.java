@@ -109,22 +109,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         pref = getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user != null) {
-            FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-            Bundle bundle = new Bundle();
-            bundle.putString("user_display_name", "opened by " + user.getDisplayName());
-            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
 
-
-            String tipoUtente = pref.getString("tipo","");
-            if(tipoUtente.equals("S"))
-                startStudent();
-            if(tipoUtente.equals("D"))
-                startProf();
-        } else {
-            // No user is signed in
-        }
     }
 
     @Override
@@ -192,8 +177,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
             });
-
-
 
         }
     }
@@ -299,7 +282,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         Log.w(DEBUG_TAG, "Insegamenti");
                         for (final DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
-//                            Log.w(DEBUG_TAG,"Document Collection: "+document.getReference().getParent().getParent().get().getResult().toString());
+                            Log.w(DEBUG_TAG,"Document Collection: "+document.getReference().getPath().toString());
                             final String insegnamentoPath = document.getReference().getPath();
                             final String nomeInsegnamento = document.getString("nome");
                             final String[] nomeDocente = new String[1];
@@ -308,7 +291,7 @@ public class LoginActivity extends AppCompatActivity {
                             profReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                 @Override
                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
-
+                                    Log.w(DEBUG_TAG,documentSnapshot.toString());
                                     nomeDocente[0] = documentSnapshot.get("cognome")+" "+documentSnapshot.get("nome");
                                     Random random = new Random();
                                     GregorianCalendar calendar;
