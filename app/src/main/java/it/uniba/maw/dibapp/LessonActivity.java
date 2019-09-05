@@ -22,6 +22,8 @@ import android.widget.TableLayout;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayout;
 
+import static it.uniba.maw.dibapp.util.Util.DEBUG_TAG;
+
 public class LessonActivity extends AppCompatActivity {
 
     private static final String TAG = "LessonActivity";
@@ -36,31 +38,31 @@ public class LessonActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lesson);
-        Log.d(TAG, "onCreate: Starting");
+        Log.d(DEBUG_TAG, "onCreate: Starting");
 
         buttonDialog = findViewById(R.id.btn_bottom_sheet);
 
-        buttonDialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showBottomSheetDialog();
+            buttonDialog.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showBottomSheetDialog();
+                }
+            });
+
+            //se l'utente è un docente nasconde il pulsante di aggiunta commenti
+            if (getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE).getString("tipo", "").equals("D")) {
+                buttonDialog.setVisibility(View.INVISIBLE);
             }
-        });
-
-        //se l'utente è un docente nasconde il pulsante di aggiunta commenti
-        if(getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE).getString("tipo", "").equals("D")){
-            buttonDialog.setVisibility(View.INVISIBLE);
-        }
 
 
-        mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
+            mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
 
-        //Set up the ViewPager with the sections adapter
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        setupViewPager(mViewPager);
+            //Set up the ViewPager with the sections adapter
+            mViewPager = (ViewPager) findViewById(R.id.container);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
+            setupViewPager(mViewPager);
+            TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+            tabLayout.setupWithViewPager(mViewPager);
 
     }
 

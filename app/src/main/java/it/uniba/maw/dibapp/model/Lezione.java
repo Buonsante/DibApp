@@ -12,7 +12,23 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+
+
 public class Lezione implements Serializable {
+
+    //costanti per identificare lo stato della lezione
+    public static final int LEZIONE_NON_INIZIATA = 0;
+    public static final int LEZIONE_IN_REGISTRAZIONE = 1;
+    public static final int LEZIONE_TERMINATA = 2;
+
+    //costanti per identificare i campi della lezione
+    public static final String ARGOMENTO = "argomento";
+    public static final String INSEGNAMENTO = "insegnamento";
+    public static final String PROFESORE = "professore";
+    public static final String ORA_INIZIO = "oraInizio";
+    public static final String ORA_FINE = "oraFine";
+    public static final String STATO = "stato";
+    public static final String NAME_SERVER_BLE = "nameServerBle";
 
     private int numPresenze;
     private String professore;
@@ -24,6 +40,8 @@ public class Lezione implements Serializable {
     private String insegnamentoLink;
     private String nameServerBle;
     private String linkLezione;
+    private ArrayList<String> utentiRegistrati;
+    private int stato;
 
     public Lezione(int numPresenze, String professore, String professoreLink, GregorianCalendar data, String oraInizio, String oraFine, String argomento, String insegnamento, String insegnamentoLink, String nameServerBle) {
         this.numPresenze = numPresenze;
@@ -36,9 +54,29 @@ public class Lezione implements Serializable {
         this.insegnamento = insegnamento;
         this.insegnamentoLink = insegnamentoLink;
         this.nameServerBle = nameServerBle;
+        this.stato = LEZIONE_NON_INIZIATA;
+        this.utentiRegistrati = null;
     }
 
+
     public Lezione() {
+    }
+
+
+    public ArrayList<String> getUtentiRegistrati() {
+        return utentiRegistrati;
+    }
+
+    public void setUtentiRegistrati(ArrayList<String> utentiRegistrati) {
+        this.utentiRegistrati = utentiRegistrati;
+    }
+
+    public int getStato() {
+        return stato;
+    }
+
+    public void setStato(int stato) {
+        this.stato = stato;
     }
 
     public int getNumPresenze() {
@@ -52,10 +90,6 @@ public class Lezione implements Serializable {
     public long getData(){
         return this.data;
     }
-//    @Exclude
-//    public GregorianCalendar getData() {
-//        return data;
-//    }
 
     @Exclude
     public GregorianCalendar getGregorianData(){
@@ -67,13 +101,6 @@ public class Lezione implements Serializable {
     public void setData(long data){
         this.data = data;
     }
-//    public void setData(GregorianCalendar data) {
-//        this.data = data;
-//    }
-
-//    public void setData(GregorianCalendar calendar){
-//        data = calendar.getTimeInMillis();
-//    }
 
     public String getOraInizio() {
         return oraInizio;
@@ -141,23 +168,6 @@ public class Lezione implements Serializable {
     }
 
     public void setNameServerBle(String nameServerBle) { this.nameServerBle = nameServerBle; }
-
-    //    public List<Lezione> getLezioniProva() {
-//
-//        List<Lezione> lezioni = new ArrayList<>();
-//
-//        for(int i = 0; i < 20; i++) {
-//            GregorianCalendar calendar = new GregorianCalendar();
-//            calendar.add(Calendar.DATE, i);
-//            lezioni.add(new Lezione(0, calendar, "10:00", "12:00",
-//                                        "argomento", "insegnamento" + (i+1)));
-//        }
-//
-//
-//        return lezioni;
-//
-//    }
-
 
     @Override
     public String toString() {

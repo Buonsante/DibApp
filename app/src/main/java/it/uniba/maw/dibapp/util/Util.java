@@ -19,9 +19,11 @@ public class Util {
     //mail: dibappmaw@gmail.com
     //pass: 12345dib
 
+
     public static final String DEBUG_TAG = "dibAppDebug";
     public static final String SHARED_PREFERENCE_NAME = "dibAppPref";
     public static List<Lezione> lezioniList;
+
 
 
     public static void createNotification (Context c) {

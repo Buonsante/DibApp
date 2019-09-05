@@ -108,15 +108,15 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        pref = getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
         user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null) {
+            FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+            Bundle bundle = new Bundle();
+            bundle.putString("user_display_name", "opened by " + user.getDisplayName());
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
 
-        FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        Bundle bundle = new Bundle();
-        bundle.putString("user_display_name", "opened by "+user.getDisplayName());
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
 
-        if (user != null) {
-            pref = getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
             String tipoUtente = pref.getString("tipo","");
             if(tipoUtente.equals("S"))
                 startStudent();
@@ -318,9 +318,8 @@ public class LoginActivity extends AppCompatActivity {
                                         int oraInizioInt = 8+random.nextInt(5);
                                         String oraInizio = String.valueOf(oraInizioInt);
                                         String oraFine = String.valueOf(oraInizioInt + 3);
-                                        String nameBle = String.valueOf(random.nextInt(256870));
                                         document.getReference().collection("lezioni")
-                                                .add(new Lezione(0,nomeDocente[0],profReference.getPath(), calendar,oraInizio,oraFine,"argomento"+i,nomeInsegnamento,insegnamentoPath, nameBle))
+                                                .add(new Lezione(0,nomeDocente[0],profReference.getPath(), calendar,oraInizio,oraFine,"argomento"+i,nomeInsegnamento,insegnamentoPath, null))
                                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                                     @Override
                                                     public void onSuccess(DocumentReference documentReference) {

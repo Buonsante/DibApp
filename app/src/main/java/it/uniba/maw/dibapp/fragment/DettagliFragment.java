@@ -10,8 +10,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -27,15 +29,27 @@ import android.widget.Toast;
 
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.UUID;
+
+import io.opencensus.internal.StringUtils;
 import it.uniba.maw.dibapp.R;
 import it.uniba.maw.dibapp.model.Lezione;
+import it.uniba.maw.dibapp.services.BluetoothGattServerService;
 import it.uniba.maw.dibapp.util.Util;
 
 import static android.content.Context.MODE_PRIVATE;
+import static it.uniba.maw.dibapp.model.Lezione.*;
 import static it.uniba.maw.dibapp.util.Util.DEBUG_TAG;
 
 
@@ -52,10 +66,13 @@ public class DettagliFragment extends Fragment {
 
     //tipologia di utente (S, D)
     private String utente;
+    private FirebaseUser user;
 
     //contiene il nome del server ble relativo alla lezione
     private String nameServerBle;
+    private String linkLezione;
     private Lezione lezione;
+    boolean activated = false;
 
     //BLE
     private static final int REQUEST_ENABLE_BT = 1;
@@ -70,12 +87,6 @@ public class DettagliFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static DettagliFragment newInstance(String param1, String param2) {
-        DettagliFragment fragment = new DettagliFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -89,6 +100,10 @@ public class DettagliFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_dettagli, container, false);
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        //recupera tipologia di utente
+        utente = getContext().getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE).getString("tipo", "");
+
         buttonRegister = view.findViewById(R.id.buttonRegister);
         textViewInsegnamento = view.findViewById(R.id.text_view_insegnamento);
         textViewDocente = view.findViewById(R.id.text_view_docente);
@@ -98,14 +113,18 @@ public class DettagliFragment extends Fragment {
         textViewEmail = view.findViewById(R.id.text_view_email);
         buttonSalva = view.findViewById(R.id.button_salva);
 
-        buttonRegister.setOnClickListener(buttonRegisterListener);
+        if(utente.equals("D"))
+            buttonRegister.setOnClickListener(buttonRegisterListener);
         buttonSalva.setOnClickListener(buttonSalvaListener);
 
         //recupera lezione da LessonActivity
-        lezione = (Lezione) getArguments().getSerializable("lezione");
 
-        //recupera tipologia di utente
-        utente = getContext().getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE).getString("tipo", "");
+        lezione = (Lezione) getArguments().getSerializable("lezione");
+        linkLezione = lezione.getLinkLezione();
+
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.document(linkLezione).addSnapshotListener(lezioneDbListener);
 
         if(utente.equals("D")){
             editTextArgomento.setEnabled(false);
@@ -117,25 +136,74 @@ public class DettagliFragment extends Fragment {
             buttonSalva.setVisibility(View.INVISIBLE);
         }
 
-        editTextArgomento.setText(lezione.getArgomento());
-        textViewInsegnamento.setText(lezione.getInsegnamento());
-        textViewDocente.setText(lezione.getProfessore());
-        textViewOraInizio.setText(lezione.getOraInizio());
-        textViewOraFine.setText(lezione.getOraFine());
+
 
 
         //TODO aggiungere il caricamento dell'argomento dalla editTextArgomento nel caso in cui l'utente è un docente
 
+
         return view;
     }
 
+    EventListener<DocumentSnapshot> lezioneDbListener = new EventListener<DocumentSnapshot>() {
+        @Override
+        public void onEvent(@Nullable DocumentSnapshot document, @Nullable FirebaseFirestoreException e) {
+            editTextArgomento.setText(document.getString(ARGOMENTO));
+            textViewInsegnamento.setText(document.getString(INSEGNAMENTO));
+            textViewDocente.setText(document.getString(PROFESORE));
+            textViewOraInizio.setText(document.getString(ORA_INIZIO));
+            textViewOraFine.setText(document.getString(ORA_FINE));
+            if(utente.equals("S")) {
+                //se l'utente è uno studente
+                switch (document.getLong(STATO).intValue()) {
+                    case LEZIONE_NON_INIZIATA:
+                        buttonRegister.setOnClickListener(null);
+                        break;
+                    case LEZIONE_IN_REGISTRAZIONE:
+                        String nameServeBleStringReceived = document.getString("nameServerBle");
+                        if (!(((ArrayList<String>) document.get("utentiRegistrati")).contains(user.getUid()))) {
+                            lezione.setNameServerBle(nameServeBleStringReceived);
+                            buttonRegister.setText("Registrati");
+                            buttonRegister.setOnClickListener(buttonRegisterListener);
+                        } else {
+                            buttonRegister.setText("Registrazione effetutata");
+                            buttonRegister.setOnClickListener(null);
+                        }
+                        break;
+                    case LEZIONE_TERMINATA:
+                        if (!(((ArrayList<String>) document.get("utentiRegistrati")).contains(user.getUid()))) {
+                            buttonRegister.setText("Registrazioni interrotte");
+                            buttonRegister.setOnClickListener(null);
+                        } else {
+                            buttonRegister.setText("Registrazione effettuata");
+                            buttonRegister.setOnClickListener(null);
+                        }
+                        break;
+                }
+            }else{
+                //Se l'utente è un docente
+                switch (document.getLong(STATO).intValue()) {
+                    case LEZIONE_NON_INIZIATA:
+
+                        break;
+                    case LEZIONE_IN_REGISTRAZIONE:
+                        activated = true;
+                        buttonRegister.setText("Interrompi registrazione");
+                        break;
+                    case LEZIONE_TERMINATA:
+                        buttonRegister.setText("Riapri Registrazione");
+                        break;
+                }
+            }
+        }
+    };
     View.OnClickListener buttonRegisterListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             if(utente.equals("S")){
-                registerStudent(view);
-            } else {
-
+                registerStudent();
+            }else{
+                activateLesson();
             }
         }
     };
@@ -146,7 +214,7 @@ public class DettagliFragment extends Fragment {
             if(editTextArgomento.isEnabled()){
                 String argomento = editTextArgomento.getText().toString();
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.document(lezione.getLinkLezione()).update("argomento", argomento);
+                db.document(linkLezione).update(ARGOMENTO, argomento);
                 editTextArgomento.onEditorAction(EditorInfo.IME_ACTION_DONE);
                 editTextArgomento.setEnabled(false);
             } else {
@@ -156,10 +224,37 @@ public class DettagliFragment extends Fragment {
         }
     };
 
-    private void registerStudent(View view) {
+    private void activateLesson(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        if(!activated) {
+            activated = true;
+            String bleServerId = UUID.randomUUID().toString().substring(0, 7);
+
+            Intent intent = new Intent(getContext(), BluetoothGattServerService.class);
+            intent.putExtra("lezione", lezione);
+            intent.putExtra("idServer", bleServerId);
+
+
+            db.document(linkLezione).update(NAME_SERVER_BLE, bleServerId, STATO, LEZIONE_IN_REGISTRAZIONE);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                getContext().startForegroundService(intent);
+            } else {
+                getContext().startService(intent);
+            }
+            buttonRegister.setText("Interrompi registrazione");
+        }else{
+            Intent intent = new Intent(getContext(), BluetoothGattServerService.class);
+            getContext().stopService(intent);
+            buttonRegister.setText("Registrazione interrotta");
+            db.document(linkLezione).update(STATO, LEZIONE_TERMINATA);
+        }
+    }
+
+    private void registerStudent() {
 
         // recuperiamo un riferimento al BluetoothManager
-        BluetoothManager bluetoothManager = (BluetoothManager) view.getContext().getSystemService(Context.BLUETOOTH_SERVICE);
+        BluetoothManager bluetoothManager = (BluetoothManager) getContext().getSystemService(Context.BLUETOOTH_SERVICE);
         // recuperiamo un riferimento all'adapter Bluetooth
         bluetoothAdapter = bluetoothManager.getAdapter();
 
@@ -232,8 +327,9 @@ public class DettagliFragment extends Fragment {
                     bluetoothLeScanner.stopScan(scanCallback);
                     Log.w(DEBUG_TAG+"ii", "StopScan");
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    db.document(lezione.getLinkLezione())
-                            .update("numPresenze", FieldValue.increment(1));
+                    db.document(linkLezione).update(
+                            "numPresenze", FieldValue.increment(1),
+                            "utentiRegistrati",FieldValue.arrayUnion(user.getUid()));
                 }
             }
 
