@@ -27,8 +27,10 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -40,6 +42,7 @@ import it.uniba.maw.dibapp.model.Lezione;
 import it.uniba.maw.dibapp.util.Util;
 
 import static it.uniba.maw.dibapp.util.Util.DEBUG_TAG;
+import static it.uniba.maw.dibapp.util.Util.SHARED_PREFERENCE_NAME;
 import static it.uniba.maw.dibapp.util.Util.lezioniList;
 
 public class MainActivity extends AppCompatActivity {
@@ -165,7 +168,14 @@ public class MainActivity extends AppCompatActivity {
         lezioniList = new ArrayList<>();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collectionGroup("lezioni").whereEqualTo("professore","Denaro Roberto").get()
+
+        Query query;
+        if(getSharedPreferences(SHARED_PREFERENCE_NAME,MODE_PRIVATE).getString("tipo","").equals("D"))
+            query = db.collectionGroup("lezioni").whereEqualTo("professore","Denaro Roberto");
+        else
+            query = db.collectionGroup("lezioni");
+
+        query.get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {

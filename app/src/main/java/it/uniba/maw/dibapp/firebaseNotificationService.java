@@ -2,10 +2,16 @@ package it.uniba.maw.dibapp;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -13,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static it.uniba.maw.dibapp.util.Util.DEBUG_TAG;
+import static it.uniba.maw.dibapp.util.Util.SHARED_PREFERENCE_NAME;
 
 public class firebaseNotificationService extends FirebaseMessagingService {
     public firebaseNotificationService() {
@@ -55,15 +62,25 @@ public class firebaseNotificationService extends FirebaseMessagingService {
      * is initially generated so this is where you would retrieve the token.
      */
     @Override
-    public void onNewToken(String token) {
+    public void onNewToken(final String token) {
         Log.d(DEBUG_TAG, "Refreshed token: " + token);
+        SharedPreferences pref = getSharedPreferences(SHARED_PREFERENCE_NAME,MODE_PRIVATE);
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        Map<String,String> tokenMap = new HashMap<>();
-        tokenMap.put("id",token);
-        db.collection("token").add(tokenMap);
-        // If you want to send messages to this application instance or
-        // manage this apps subscriptions on the server side, send the
-        // Instance ID token to your app server.
-//        sendRegistrationToServer(token);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        //modifica il token dell'user nel database
+//        db.collection("user").whereEqualTo("mail",user.getEmail()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//            @Override
+//            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                queryDocumentSnapshots.getDocuments().get(0).getReference().update("token",token);
+//            }
+//        });
+
+        //aggiunge il nuovo token alle preference
+        pref.edit().putString("token",token);
+
     }
+
+
 }

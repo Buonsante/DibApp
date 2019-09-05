@@ -15,7 +15,7 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="45sp"
         android:background="@color/primaryColor"
         android:fontFamily="@font/montserrat_bold"
         android:foregroundGravity="center_vertical"
@@ -23,7 +23,7 @@
         android:text="Valuta Lezione"
         android:textAlignment="center"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
-        android:textSize="30sp"
+        android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,6 +54,7 @@
         android:layout_marginEnd="32dp"
         android:fontFamily="@font/montserrat"
         android:hint="Inserisci commento"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rating_bar" />
