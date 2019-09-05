@@ -74,11 +74,11 @@ public class LoginActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         Bundle notification = getIntent().getExtras();
-        if(notification != null){
-            Log.w(DEBUG_TAG,"Notification: "+notification.getString("nameServerBle"));
-            Toast.makeText(this,"Lezione disponibile con server: "+notification.getString("nameServerBle"),Toast.LENGTH_LONG);
-        }else{
-            Log.w(DEBUG_TAG,"Intent null");
+        if (notification != null) {
+            Log.w(DEBUG_TAG, "Notification: " + notification.getString("nameServerBle"));
+            Toast.makeText(this, "Lezione disponibile con server: " + notification.getString("nameServerBle"), Toast.LENGTH_LONG);
+        } else {
+            Log.w(DEBUG_TAG, "Intent null");
         }
 
         //Initialize Shared preference
@@ -282,7 +282,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         Log.w(DEBUG_TAG, "Insegamenti");
                         for (final DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
-                            Log.w(DEBUG_TAG,"Document Collection: "+document.getReference().getPath().toString());
+//                            Log.w(DEBUG_TAG,"Document Collection: "+document.getReference().getParent().getParent().get().getResult().toString());
                             final String insegnamentoPath = document.getReference().getPath();
                             final String nomeInsegnamento = document.getString("nome");
                             final String[] nomeDocente = new String[1];
@@ -291,7 +291,7 @@ public class LoginActivity extends AppCompatActivity {
                             profReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                 @Override
                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                    Log.w(DEBUG_TAG,documentSnapshot.toString());
+
                                     nomeDocente[0] = documentSnapshot.get("cognome")+" "+documentSnapshot.get("nome");
                                     Random random = new Random();
                                     GregorianCalendar calendar;
