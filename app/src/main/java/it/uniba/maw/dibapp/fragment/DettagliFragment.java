@@ -63,6 +63,7 @@ public class DettagliFragment extends Fragment {
     private EditText editTextArgomento;
     private TextView textViewEmail;
     private Button buttonSalva;
+    private Button btnBottomSheet;
 
     //tipologia di utente (S, D)
     private String utente;
@@ -103,6 +104,8 @@ public class DettagliFragment extends Fragment {
         user = FirebaseAuth.getInstance().getCurrentUser();
         //recupera tipologia di utente
         utente = getContext().getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE).getString("tipo", "");
+
+        btnBottomSheet = getActivity().findViewById(R.id.btn_bottom_sheet);
 
         buttonRegister = view.findViewById(R.id.buttonRegister);
         textViewInsegnamento = view.findViewById(R.id.text_view_insegnamento);
@@ -158,25 +161,30 @@ public class DettagliFragment extends Fragment {
                 switch (document.getLong(STATO).intValue()) {
                     case LEZIONE_NON_INIZIATA:
                         buttonRegister.setOnClickListener(null);
+                        getActivity().findViewById(R.id.btn_bottom_sheet).setVisibility(View.INVISIBLE);
                         break;
                     case LEZIONE_IN_REGISTRAZIONE:
                         String nameServeBleStringReceived = document.getString("nameServerBle");
-                        if (!(((ArrayList<String>) document.get("utentiRegistrati")).contains(user.getUid()))) {
+                        if (document.get("utentiRegistrati") == null || !(((ArrayList<String>) document.get("utentiRegistrati")).contains(user.getUid()))) {
                             lezione.setNameServerBle(nameServeBleStringReceived);
                             buttonRegister.setText("Registrati");
                             buttonRegister.setOnClickListener(buttonRegisterListener);
+                            btnBottomSheet.setVisibility(View.INVISIBLE);
                         } else {
                             buttonRegister.setText("Registrazione effetutata");
                             buttonRegister.setOnClickListener(null);
+                            btnBottomSheet.setVisibility(View.VISIBLE);
                         }
                         break;
                     case LEZIONE_TERMINATA:
-                        if (!(((ArrayList<String>) document.get("utentiRegistrati")).contains(user.getUid()))) {
+                        if (document.get("utentiRegistrati") == null || !(((ArrayList<String>) document.get("utentiRegistrati")).contains(user.getUid()))) {
                             buttonRegister.setText("Registrazioni interrotte");
                             buttonRegister.setOnClickListener(null);
+                            btnBottomSheet.setVisibility(View.INVISIBLE);
                         } else {
                             buttonRegister.setText("Registrazione effettuata");
                             buttonRegister.setOnClickListener(null);
+                            btnBottomSheet.setVisibility(View.VISIBLE);
                         }
                         break;
                 }

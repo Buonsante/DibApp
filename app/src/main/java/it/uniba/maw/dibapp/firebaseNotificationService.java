@@ -6,8 +6,12 @@ import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -58,21 +62,20 @@ public class firebaseNotificationService extends FirebaseMessagingService {
      * is initially generated so this is where you would retrieve the token.
      */
     @Override
-    public void onNewToken(String token) {
+    public void onNewToken(final String token) {
         Log.d(DEBUG_TAG, "Refreshed token: " + token);
         SharedPreferences pref = getSharedPreferences(SHARED_PREFERENCE_NAME,MODE_PRIVATE);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        //aggiunge il nuovo token all'array nel database
-        db.collection("token").document("token").update("token",FieldValue.arrayUnion(token));
-
-        //recupera il vecchio token dalle preference
-        String old_token = pref.getString("token",null);
-
-        //se il vecchio token non è nullo lo elimina dal database
-        if(old_token != null)
-            db.document("token/token").update("token",FieldValue.arrayRemove(old_token));
+        //modifica il token dell'user nel database
+//        db.collection("user").whereEqualTo("mail",user.getEmail()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//            @Override
+//            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                queryDocumentSnapshots.getDocuments().get(0).getReference().update("token",token);
+//            }
+//        });
 
         //aggiunge il nuovo token alle preference
         pref.edit().putString("token",token);

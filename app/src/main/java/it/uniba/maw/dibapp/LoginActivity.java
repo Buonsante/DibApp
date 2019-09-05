@@ -109,22 +109,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         pref = getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-            Bundle bundle = new Bundle();
-            bundle.putString("user_display_name", "opened by " + user.getDisplayName());
-            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
-
-
-            String tipoUtente = pref.getString("tipo", "");
-            if (tipoUtente.equals("S"))
-                startStudent();
-            if (tipoUtente.equals("D"))
-                startProf();
-        } else {
-            // No user is signed in
-        }
 
     }
 
@@ -193,8 +177,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
             });
-
-
 
         }
     }
