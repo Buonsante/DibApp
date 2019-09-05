@@ -244,9 +244,10 @@ public class DettagliFragment extends Fragment {
             }
             buttonRegister.setText("Interrompi registrazione");
         }else{
+            activated = false;
             Intent intent = new Intent(getContext(), BluetoothGattServerService.class);
             getContext().stopService(intent);
-            buttonRegister.setText("Registrazione interrotta");
+            buttonRegister.setText("Riapri registrazione");
             db.document(linkLezione).update(STATO, LEZIONE_TERMINATA);
         }
     }
