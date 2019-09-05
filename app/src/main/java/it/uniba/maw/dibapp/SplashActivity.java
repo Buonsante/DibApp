@@ -42,11 +42,13 @@ public class SplashActivity extends AppCompatActivity {
                     mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
 
                     Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                    finishAffinity();
                     startActivity(intent);
 
                 } else {
                     // No user is signed in
                     Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    finishAffinity();
                     startActivity(intent);
                 }
             }

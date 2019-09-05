@@ -148,7 +148,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void startMainActivity(){
-        if (user != null) {
             Log.w(DEBUG_TAG,"start main activty");
             String name = user.getDisplayName();
             String mail = user.getEmail();
@@ -164,11 +163,11 @@ public class LoginActivity extends AppCompatActivity {
                             String tipo = document.getString("tipo");
                             if(tipo.equals("S")) {
                                 pref.edit().putString("tipo", "S").apply();
-                                startStudent();
+                                startMain();
                             }
                             if(tipo.equals("D")) {
                                 pref.edit().putString("tipo", "D").apply();
-                                startProf();
+                                startMain();
                             }
                         }
                     } else {
@@ -177,26 +176,14 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
             });
-
-        }
     }
 
-    private void startStudent(){
-        Log.d(DEBUG_TAG, "Student");
+    private void startMain(){
         Intent mainActivityIntent = new Intent(this,MainActivity.class);
-//        progressDialog.dismiss();
-//        progressBar.setVisibility(View.GONE);
+        finishAffinity();
         startActivity(mainActivityIntent);
     }
 
-    private void startProf(){
-        //TODO cambiare activity
-        Log.d(DEBUG_TAG, "Prof");
-        Intent mainActivityIntent = new Intent(this,MainActivity.class);
-//        progressDialog.dismiss();
-//        progressBar.setVisibility(View.GONE);
-        startActivity(mainActivityIntent);
-    }
     /**
      * Validating form
      */
