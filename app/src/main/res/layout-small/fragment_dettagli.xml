@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/layout"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
@@ -5,12 +6,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/profile_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:background="@color/secondaryLightColor"
         android:elevation="4dp"
+        android:id="@+id/profile_layout"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
         android:paddingBottom="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +29,7 @@
             android:text="Programmazione 2"
             android:textAlignment="center"
             android:textColor="@color/primaryTextColor"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,25 +40,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:fontFamily="@font/montserrat"
             android:text="Nicola Fanizzi"
             android:textColor="@color/primaryTextColor"
-            android:textSize="18sp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_insegnamento" />
 
         <TextView
-            android:id="@+id/text_view_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="153dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="153dp"
             android:clickable="true"
             android:fontFamily="@font/montserrat"
+            android:id="@+id/text_view_email"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="153dp"
+            android:layout_marginStart="153dp"
+            android:layout_marginTop="4dp"
+            android:layout_width="wrap_content"
             android:text="prova@uniba.it"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,9 +74,9 @@
         android:layout_below="@+id/profile_layout"
         android:background="#fff"
         android:elevation="4dp"
+
         android:focusable="true"
         android:focusableInTouchMode="true"
-
         android:orientation="vertical"
         android:paddingLeft="5dp"
         android:paddingTop="20dp"
@@ -82,8 +84,10 @@
         android:paddingBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_layout">
+        app:layout_constraintTop_toBottomOf="@+id/profile_layout"
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:id="@+id/textView7"
@@ -96,7 +100,6 @@
             android:fontFamily="@font/montserrat"
             android:text="Argomento del giorno:"
             android:textStyle="bold"
-            android:visibility="gone"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -127,32 +130,22 @@
             app:layout_constraintLeft_toRightOf="@+id/textView10"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
+        <EditText
+            android:id="@+id/edit_text_argomento"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="8dp"
-            android:hint="Argomento del giorno"
-            app:hintEnabled="true"
-            app:layout_constraintBottom_toTopOf="@+id/buttonRegister"
+            android:layout_height="47dp"
+            android:layout_margin="5dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:clickable="true"
+            android:fontFamily="@font/montserrat"
+            android:hint="Inserisci argomento"
+            android:textSize="16dp"
             app:layout_constraintEnd_toStartOf="@+id/button_salva"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7">
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_text_argomento"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:clickable="true"
-                android:fontFamily="@font/montserrat"
-                android:gravity="top"
-                android:inputType="textMultiLine|text" />
-
-        </com.google.android.material.textfield.TextInputLayout>
         <TextView
             android:id="@+id/text_view_ora_fine"
             android:layout_width="wrap_content"
@@ -184,16 +177,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="150dp"
             android:layout_marginEnd="8dp"
             android:backgroundTint="@color/primaryColor"
             android:fontFamily="@font/montserrat"
             android:text="Lezione non iniziata"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.75" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_salva"

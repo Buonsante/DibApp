@@ -47,7 +47,7 @@ import static it.uniba.maw.dibapp.util.Util.lezioniList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ActionBar toolbar;
+    Toolbar toolbar;
     CalendarFragment calendarFragment;
     SettingsFragment settingsFragment;
     LezioniDelGiornoFragment lezioniDelGiornoFragment;
@@ -60,12 +60,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        toolbar = getSupportActionBar();
-
-        Toolbar drawer_toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         drawer = findViewById(R.id.drawer_layout);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, drawer_toolbar,
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
@@ -77,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         // load the store fragment by default
-        toolbar.setTitle("DibApp");
+        this.toolbar.setTitle("DibApp");
 
         getLezioni();
 
