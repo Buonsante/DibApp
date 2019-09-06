@@ -10,8 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SplashActivity"
-            android:theme="@style/SplashTheme">
+            android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -20,7 +19,8 @@
 
         <activity android:name=".model.gattServerSample" />
         <activity android:name=".LoginActivity"/>
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".MainActivity"/>
         <activity android:name=".LessonActivity" />
         <meta-data
             android:name="preloaded_fonts"

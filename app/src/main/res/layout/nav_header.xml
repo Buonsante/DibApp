@@ -18,11 +18,13 @@
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
         android:text="Nome Cognome"
-        android:textAppearance="@style/AppTheme"></TextView>
+        android:textAppearance="@style/AppTheme"
+        android:textColor="@color/secondaryLightColor"></TextView>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="prova@prova.com"></TextView>
+        android:text="prova@prova.com"
+        android:textColor="@color/secondaryLightColor"></TextView>
 
 </LinearLayout>

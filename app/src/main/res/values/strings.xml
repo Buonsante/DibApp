@@ -15,4 +15,5 @@
     <string name="provalezione">Prova Lezione</string>
     <string name="noLessonsToday">No planned lessons for today</string>
     <string name="noLessonsOnSelectedDate">No lessons on selected date</string>
+    <string name="string_logout">Logout</string>
 </resources>
