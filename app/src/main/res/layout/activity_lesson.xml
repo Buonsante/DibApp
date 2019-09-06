@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/lesson_toolbar">
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab1"
@@ -22,9 +22,9 @@
             android:layout_height="wrap_content"
             android:text="@string/details"
             tools:layout_conversion_absoluteHeight="0dp"
-            tools:layout_editor_absoluteY="0dp"
+            tools:layout_conversion_absoluteWidth="0dp"
             tools:layout_editor_absoluteX="0dp"
-            tools:layout_conversion_absoluteWidth="0dp" />
+            tools:layout_editor_absoluteY="0dp" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab2"
@@ -32,9 +32,9 @@
             android:layout_height="wrap_content"
             android:text="@string/comments"
             tools:layout_conversion_absoluteHeight="0dp"
-            tools:layout_editor_absoluteY="0dp"
+            tools:layout_conversion_absoluteWidth="0dp"
             tools:layout_editor_absoluteX="206dp"
-            tools:layout_conversion_absoluteWidth="0dp" />
+            tools:layout_editor_absoluteY="0dp" />
 
     </com.google.android.material.tabs.TabLayout>
 
@@ -62,5 +62,18 @@
         app:iconSize="@android:dimen/app_icon_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/container"></com.google.android.material.button.MaterialButton>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/lesson_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:elevation="5dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/left_icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

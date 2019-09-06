@@ -9,10 +9,12 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 
-    <style name="Theme.MyApp" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="AppTheme.ActionBar" parent="Theme.MaterialComponents.Light">
+        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorAccent">@color/secondaryColor</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 
     <style name="argomentoButtonUpdate" parent="Widget.MaterialComponents.Button.TextButton">

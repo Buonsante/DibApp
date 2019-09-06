@@ -9,7 +9,7 @@
         android:id="@+id/profile_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/secondaryLightColor"
+        android:background="@color/primaryColor"
         android:elevation="4dp"
         android:paddingBottom="24dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,8 +26,8 @@
             android:fontFamily="@font/montserrat"
             android:text="Programmazione 2"
             android:textAlignment="center"
-            android:textColor="@color/primaryTextColor"
-            android:textSize="24sp"
+            android:textColor="@android:color/background_light"
+            android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,12 +38,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:fontFamily="@font/montserrat"
             android:text="Nicola Fanizzi"
-            android:textColor="@color/primaryTextColor"
-            android:textSize="18sp"
+            android:textColor="@android:color/background_light"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_insegnamento" />
@@ -53,11 +53,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="153dp"
-            android:layout_marginTop="20dp"
             android:layout_marginEnd="153dp"
             android:clickable="true"
             android:fontFamily="@font/montserrat"
             android:text="prova@uniba.it"
+            android:textColor="@android:color/background_light"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_docente" />
@@ -76,14 +76,14 @@
         android:focusableInTouchMode="true"
 
         android:orientation="vertical"
-        android:paddingLeft="5dp"
-        android:paddingTop="20dp"
-        android:paddingRight="5dp"
+        android:paddingTop="0dp"
         android:paddingBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_layout">
+        app:layout_constraintTop_toBottomOf="@+id/profile_layout"
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:id="@+id/textView7"
@@ -104,40 +104,47 @@
             android:id="@+id/textView10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:clickable="true"
             android:fontFamily="@font/montserrat"
-            android:text="Ora inizio: "
+            android:text="Ora inizio"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/text_view_ora_inizio"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/text_view_ora_inizio"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/text_view_ora_inizio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="4dp"
             android:clickable="true"
             android:fontFamily="@font/montserrat"
             android:text="09:00"
-            app:layout_constraintLeft_toRightOf="@+id/textView10"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textAlignment="center"
+            android:textColor="@color/primaryColor"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
             android:hint="Argomento del giorno"
+            android:visibility="visible"
             app:hintEnabled="true"
             app:layout_constraintBottom_toTopOf="@+id/buttonRegister"
             app:layout_constraintEnd_toStartOf="@+id/button_salva"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7">
+            app:layout_constraintTop_toBottomOf="@+id/text_view_ora_inizio">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_argomento"
@@ -153,58 +160,74 @@
                 android:inputType="textMultiLine|text" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
         <TextView
             android:id="@+id/text_view_ora_fine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="48dp"
             android:clickable="true"
             android:fontFamily="@font/montserrat"
             android:text="12:00"
-            app:layout_constraintLeft_toRightOf="@+id/textView5"
-            app:layout_constraintTop_toBottomOf="@+id/textView10" />
+            android:textAlignment="center"
+            android:textColor="@color/primaryColor"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
         <TextView
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:clickable="true"
             android:fontFamily="@font/montserrat"
-            android:text="Ora fine:"
+            android:text="Ora fine"
             android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView10" />
+            app:layout_constraintEnd_toEndOf="@+id/text_view_ora_fine"
+            app:layout_constraintStart_toStartOf="@+id/text_view_ora_fine"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/buttonRegister"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="200dp"
-            android:layout_marginEnd="8dp"
+            android:layout_width="0dp"
+            android:layout_height="100sp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="4dp"
             android:backgroundTint="@color/primaryColor"
             android:fontFamily="@font/montserrat"
             android:text="Lezione non iniziata"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.75" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_salva"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:visibility="visible"
             app:icon="@drawable/ic_mode_edit_black_24dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/textInputLayout" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:tint="@color/primaryColor"
+            app:layout_constraintBottom_toBottomOf="@+id/text_view_ora_inizio"
+            app:layout_constraintEnd_toStartOf="@+id/text_view_ora_fine"
+            app:layout_constraintStart_toEndOf="@+id/text_view_ora_inizio"
+            app:layout_constraintTop_toTopOf="@+id/text_view_ora_inizio"
+            app:srcCompat="@drawable/ic_trending_flat_black_24dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

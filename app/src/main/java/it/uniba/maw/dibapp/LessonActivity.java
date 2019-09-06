@@ -1,8 +1,7 @@
 package it.uniba.maw.dibapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 import it.uniba.maw.dibapp.fragment.BottomSheetFragment;
@@ -13,6 +12,7 @@ import it.uniba.maw.dibapp.util.Util;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +30,8 @@ public class LessonActivity extends AppCompatActivity {
 
     private SectionsPageAdapter mSectionsPageAdapter;
 
+    private Toolbar toolbar;
+
     private ViewPager mViewPager;
 
     private Button buttonDialog;
@@ -39,6 +41,14 @@ public class LessonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lesson);
         Log.d(DEBUG_TAG, "onCreate: Starting");
+
+        toolbar = findViewById(R.id.lesson_toolbar);
+        toolbar.setTitle("Dettaglio Lezione");
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+
+
+
 
         buttonDialog = findViewById(R.id.btn_bottom_sheet);
 
@@ -65,6 +75,8 @@ public class LessonActivity extends AppCompatActivity {
             tabLayout.setupWithViewPager(mViewPager);
 
     }
+
+
 
     private void setupViewPager(ViewPager viewPager){
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());

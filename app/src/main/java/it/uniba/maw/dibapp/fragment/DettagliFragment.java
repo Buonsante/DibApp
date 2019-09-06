@@ -136,7 +136,7 @@ public class DettagliFragment extends Fragment {
 
         } else {
             editTextArgomento.setEnabled(false);
-            buttonSalva.setVisibility(View.INVISIBLE);
+            buttonSalva.setVisibility(View.GONE);
         }
 
 
@@ -154,8 +154,8 @@ public class DettagliFragment extends Fragment {
             editTextArgomento.setText(document.getString(ARGOMENTO));
             textViewInsegnamento.setText(document.getString(INSEGNAMENTO));
             textViewDocente.setText(document.getString(PROFESORE));
-            textViewOraInizio.setText(document.getString(ORA_INIZIO));
-            textViewOraFine.setText(document.getString(ORA_FINE));
+            textViewOraInizio.setText(formattaOra(document.getString(ORA_INIZIO)));
+            textViewOraFine.setText(formattaOra(document.getString(ORA_FINE)));
             if(utente.equals("S")) {
                 //se l'utente è uno studente
                 switch (document.getLong(STATO).intValue()) {
@@ -231,6 +231,13 @@ public class DettagliFragment extends Fragment {
 
         }
     };
+
+    private String formattaOra(String ora){
+        if(ora.length() == 1)
+            return "0"+ora+":00";
+        else
+            return ora+":00";
+    }
 
     private void activateLesson(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
