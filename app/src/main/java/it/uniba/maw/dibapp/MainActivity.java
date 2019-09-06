@@ -2,6 +2,8 @@ package it.uniba.maw.dibapp;
 
 
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -27,6 +29,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -45,9 +48,9 @@ import static it.uniba.maw.dibapp.util.Util.DEBUG_TAG;
 import static it.uniba.maw.dibapp.util.Util.SHARED_PREFERENCE_NAME;
 import static it.uniba.maw.dibapp.util.Util.lezioniList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ActionBar toolbar;
+    private Toolbar drawer_toolbar;
     CalendarFragment calendarFragment;
     SettingsFragment settingsFragment;
     LezioniDelGiornoFragment lezioniDelGiornoFragment;
@@ -59,16 +62,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
-        toolbar = getSupportActionBar();
-
-        Toolbar drawer_toolbar = findViewById(R.id.toolbar);
+        drawer_toolbar = findViewById(R.id.toolbar);
         drawer = findViewById(R.id.drawer_layout);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, drawer_toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         progressBar = findViewById(R.id.mainProgressBar);
         progressShow();
@@ -77,11 +80,42 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         // load the store fragment by default
-        toolbar.setTitle("DibApp");
+        drawer_toolbar.setTitle("DibApp");
 
         getLezioni();
+    }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch (menuItem.getItemId()){
+            case R.id.nav_logoout: showPopup();
 
+                break;
+        }
+
+        return true;
+    }
+
+    // first step helper function
+    private void showPopup() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+        alert.setMessage("Are you sure?")
+                .setPositiveButton("Logout", new DialogInterface.OnClickListener()                 {
+
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        logout(); // Last step. Logout function
+
+                    }
+                }).setNegativeButton("Cancel", null);
+
+        AlertDialog alert1 = alert.create();
+        alert1.show();
+    }
+
+    private void logout() {
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     @Override
@@ -101,15 +135,15 @@ public class MainActivity extends AppCompatActivity {
             Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.calendar:
-                    toolbar.setTitle("Calendar");
+                    drawer_toolbar.setTitle("Calendar");
                     loadFragment(calendarFragment);
                     return true;
                 case R.id.navigation_gifts:
-                    toolbar.setTitle("Lezioni di oggi");
+                    drawer_toolbar.setTitle("Lezioni di oggi");
                     loadFragment(lezioniDelGiornoFragment);
                     return true;
                 case R.id.settings:
-                    toolbar.setTitle("Settings");
+                    drawer_toolbar.setTitle("Settings");
                     loadFragment(settingsFragment);
                     return true;
             }

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:theme="@style/AppTheme">
 
     <ProgressBar
         android:id="@+id/mainProgressBar"
@@ -63,8 +64,8 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/primaryColor"
                 android:id="@+id/toolbar"
-                android:theme="@style/SplashTheme"
-                android:popupTheme="@style/SplashTheme"
+                android:theme="@style/AppTheme"
+                android:popupTheme="@style/AppTheme"
                 android:elevation="4dp">
             </androidx.appcompat.widget.Toolbar>
 
