@@ -60,14 +60,15 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/primaryColor"
-                android:id="@+id/toolbar"
-                android:theme="@style/AppTheme"
+                android:elevation="4dp"
                 android:popupTheme="@style/AppTheme"
-                android:elevation="4dp">
-            </androidx.appcompat.widget.Toolbar>
+                android:theme="@style/AppTheme"
+                app:subtitleTextColor="@color/secondaryLightColor"
+                app:titleTextColor="@color/secondaryLightColor"></androidx.appcompat.widget.Toolbar>
 
             <FrameLayout
                 android:id="@+id/fragment_container"
