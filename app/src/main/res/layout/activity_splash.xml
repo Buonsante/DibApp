@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryDarkColor"
+    android:background="@color/secondaryLightColor"
     tools:context=".SplashActivity">
     <LinearLayout
         android:gravity="center"
@@ -14,8 +14,8 @@
 
         <ImageView
             android:id="@+id/prova_logo"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:src="@mipmap/splash_image"
             android:contentDescription="TODO"></ImageView>
