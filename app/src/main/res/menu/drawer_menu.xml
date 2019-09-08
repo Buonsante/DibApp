@@ -4,9 +4,37 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_logoout"
-            android:icon="@drawable/ic_logout"
-            android:title="@string/string_logout" />
+            android:id="@+id/nav_account"
+            android:icon="@drawable/ic_account"
+            android:title="Account" />
+        <item
+            android:id="@+id/nav_calendar"
+            android:icon="@drawable/ic_calendar_white_24dp"
+            android:title="Calendar" />
+        <item
+            android:id="@+id/nav_lesson"
+            android:icon="@drawable/ic_lesson"
+            android:title="Lezioni" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings_white_24dp"
+            android:title="Settings" />
     </group>
 
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_faq"
+                android:icon="@drawable/ic_faq"
+                android:title="F.A.Q." />
+            <item
+                android:id="@+id/nav_info"
+                android:icon="@drawable/ic_info"
+                android:title="info" />
+            <item
+                android:id="@+id/nav_logoout"
+                android:icon="@drawable/ic_logout"
+                android:title="@string/string_logout" />
+        </menu>
+    </item>
 </menu>

@@ -88,11 +88,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
-            case R.id.nav_logoout: showPopup();
-
+            case R.id.nav_account: //TODO//
+                break;
+            case R.id.nav_calendar:
+                drawer_toolbar.setTitle("Calendar");
+                loadFragment(calendarFragment);
+                break;
+            case R.id.nav_lesson:
+                drawer_toolbar.setTitle("Lezioni di oggi");
+                loadFragment(lezioniDelGiornoFragment);
+                break;
+            case R.id.nav_settings:
+                drawer_toolbar.setTitle("Settings");
+                loadFragment(settingsFragment);
+                break;
+            case R.id.nav_faq: //TODO//
+                break;
+            case R.id.nav_info: //TODO//
+                break;
+            case R.id.nav_logoout:
+                showPopup();
                 break;
         }
 
+        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
