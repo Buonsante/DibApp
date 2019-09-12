@@ -154,15 +154,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.calendar:
-                    drawer_toolbar.setTitle("Calendar");
+                    drawer_toolbar.setTitle(R.string.calendar);
                     loadFragment(calendarFragment);
                     return true;
                 case R.id.navigation_gifts:
-                    drawer_toolbar.setTitle("Lezioni di oggi");
+                    drawer_toolbar.setTitle(R.string.lessons);
                     loadFragment(lezioniDelGiornoFragment);
                     return true;
                 case R.id.settings:
-                    drawer_toolbar.setTitle("Settings");
+                    drawer_toolbar.setTitle(R.string.settings);
                     loadFragment(settingsFragment);
                     return true;
             }

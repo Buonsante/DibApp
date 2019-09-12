@@ -43,7 +43,7 @@ public class LessonActivity extends AppCompatActivity {
         Log.d(DEBUG_TAG, "onCreate: Starting");
 
         toolbar = findViewById(R.id.lesson_toolbar);
-        toolbar.setTitle("Dettaglio Lezione");
+        toolbar.setTitle(R.string.lesson_detail);
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
 

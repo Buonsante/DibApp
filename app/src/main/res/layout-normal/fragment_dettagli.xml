@@ -107,7 +107,7 @@
             android:layout_marginTop="16dp"
             android:clickable="true"
             android:fontFamily="@font/montserrat"
-            android:text="Ora inizio"
+            android:text="@string/start_time"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/text_view_ora_inizio"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -157,6 +157,7 @@
                 android:clickable="true"
                 android:fontFamily="@font/montserrat"
                 android:gravity="top"
+                android:hint="@string/today_argument"
                 android:inputType="textMultiLine|text" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -184,7 +185,7 @@
             android:layout_marginTop="16dp"
             android:clickable="true"
             android:fontFamily="@font/montserrat"
-            android:text="Ora fine"
+            android:text="@string/end_time"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/text_view_ora_fine"
             app:layout_constraintStart_toStartOf="@+id/text_view_ora_fine"
