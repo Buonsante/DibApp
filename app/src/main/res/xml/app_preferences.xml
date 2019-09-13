@@ -3,30 +3,27 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <SwitchPreference
+        android:id="@+id/not_pref"
+        android:defaultValue="true"
+        android:key="key1"
+        android:summaryOff="Attiva notifiche push"
+        android:summaryOn="Disattiva notifiche push"
+        android:theme="@style/AppTheme"
+        android:title="Notifiche" />
 
+<!--        <EditTextPreference-->
+<!--            android:key="key2"-->
+<!--            android:title="EditText Preference"-->
+<!--            android:summary="EditText Summary"-->
+<!--            android:dialogMessage="Dialog Message"-->
+<!--            android:defaultValue="Default value" />-->
 
-    <PreferenceCategory
-        android:title=" ">
-
-        <SwitchPreference
-            android:id="@+id/not_pref"
-            android:defaultValue="true"
-            android:key="key1"
-            android:summaryOff="Attiva notifiche push"
-            android:summaryOn="Disattiva notifiche push"
-            android:title="Notifiche" />
-
-        <EditTextPreference
-            android:key="key2"
-            android:title="EditText Preference"
-            android:summary="EditText Summary"
-            android:dialogMessage="Dialog Message"
-            android:defaultValue="Default value" />
         <CheckBoxPreference
             android:key="key3"
-            android:title="CheckBox Preference"
-            android:summary="CheckBox Summary"
-            android:defaultValue="true"/>
-    </PreferenceCategory>
+            android:title="Mostra lezioni anni precedenti"
+            android:defaultValue="true"
+            android:theme="@style/AppTheme"/>
+
 
 </PreferenceScreen>
