@@ -588,57 +588,6 @@ public class CollapsibleCalendar extends UICalendar{
     }
 
 
-    private final class GestureListener extends GestureDetector.SimpleOnGestureListener {
-
-        private static final int SWIPE_MIN_DISTANCE = 150;
-        private static final int SWIPE_THRESHOLD_VELOCITY = 100;
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                onRightToLeft();
-                return true;
-            } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                onLeftToRight();
-                return true;
-            }
-
-            if (e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-                onBottomToTop();
-                return true;
-            } else if (e2.getY() - e1.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-                onTopToBottom();
-                return true;
-            }
-            return false;
-        }
-
-
-        public void onRightToLeft() {
-            if (expanded)
-                nextMonth();
-            else
-                nextWeek();
-        }
-
-        public void onLeftToRight() {
-            if (expanded)
-                prevMonth();
-            else
-                prevWeek();
-        }
-
-        public void onBottomToTop() {
-            if (expanded)
-                collapse(400);
-        }
-
-        public void onTopToBottom() {
-            if (!expanded)
-                expand(400);
-        }
-    }
-
     public interface CalendarListener {
 
         // triggered when a day is selected programmatically or clicked by user.

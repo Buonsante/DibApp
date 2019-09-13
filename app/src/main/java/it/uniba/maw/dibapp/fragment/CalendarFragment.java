@@ -70,7 +70,7 @@ public class CalendarFragment extends Fragment {
         //setRetainInstance(true);
     }
 
-    void addEvent(Lezione l){
+    public void addEvent(Lezione l){
         collapsibleCalendar.addEventTag(l.getGregorianData().get(Calendar.YEAR), l.getGregorianData().get(Calendar.MONTH), l.getGregorianData().get(Calendar.DAY_OF_MONTH));
     }
 
@@ -119,6 +119,9 @@ public class CalendarFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         noLessonsOnDateTextView = view.findViewById(R.id.noLessonsCalendar);
+
+        new AddEventToCalendar().doInBackground(this);
+
 
 //        try {
 //            //lezioni = (List<Lezione>) getArguments().getSerializable("lezioniList");
@@ -187,11 +190,20 @@ public class CalendarFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Log.w(DEBUG_TAG,"Ricarica lezioni già importate");
-        for(Lezione l : lezioniList){
-            addEvent(l);
-        }
 
+
+    }
+
+    private static class AddEventToCalendar extends AsyncTask<CalendarFragment,Void,Void>{
+        @Override
+        protected Void doInBackground(CalendarFragment... calendarFragment){
+            Log.w(DEBUG_TAG,"Ricarica lezioni già importate");
+            for(Lezione l : lezioniList){
+                Log.w(DEBUG_TAG,l.toString());
+                calendarFragment[0].addEvent(l);
+            }
+            return null;
+        }
     }
 
 }
