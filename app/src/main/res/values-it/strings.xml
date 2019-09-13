@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DibApp</string>
+    <string name="authentication_failed">Email o password non corrette</string>
+    <string name="calendar">Calendario</string>
+    <string name="comments">Commenti</string>
+    <string name="details">Dettagli</string>
+    <string name="end_time">Ora inizio</string>
+    <string name="err_msg_email">Ora fine</string>
+    <string name="err_msg_password">Inserisci la password</string>
+    <string name="evaluate">Valuta</string>
+    <string name="evaluate_lesson">Valuta la lezione</string>
+    <string name="insert_argument">Inserisci argomento</string>
+    <string name="insert_comment">Inserisci commento</string>
+    <string name="lesson_detail">Dettaglio lezione</string>
+    <string name="lesson_not_started">La lezione non è cominciata</string>
+    <string name="lessons">Lezioni</string>
+    <string name="noLessonsOnSelectedDate">Non ci sono lezioni per la data selezionata</string>
+    <string name="noLessonsToday">Non ci sono lezioni in data odierna</string>
+    <string name="open_registration">Apri registrazioni</string>
+    <string name="registration_stopped">Registrazioni terminate</string>
+    <string name="settings">Impostazioni</string>
+    <string name="start_time">Ora inizio</string>
+    <string name="stop_registration">Interrompi registrazioni</string>
+    <string name="today_argument">Argomento del giorno</string>
+    <string name="today_lessons">Lezioni del giorno</string>
+</resources>
