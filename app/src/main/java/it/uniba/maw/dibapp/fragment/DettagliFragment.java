@@ -64,6 +64,7 @@ public class DettagliFragment extends Fragment {
     private TextView textViewEmail;
     private Button buttonSalva;
     private Button btnBottomSheet;
+    private TextView textViewCounter;
 
     //tipologia di utente (S, D)
     private String utente;
@@ -83,6 +84,7 @@ public class DettagliFragment extends Fragment {
     private boolean scanning;
     private Handler handler = new Handler();
     private final static int SCAN_PERIOD = 20000;
+
 
     public DettagliFragment() {
         // Required empty public constructor
@@ -115,6 +117,7 @@ public class DettagliFragment extends Fragment {
         editTextArgomento = view.findViewById(R.id.edit_text_argomento);
         textViewEmail = view.findViewById(R.id.text_view_email);
         buttonSalva = view.findViewById(R.id.button_salva);
+        textViewCounter = view.findViewById(R.id.count);
 
         if(utente.equals("D"))
             buttonRegister.setOnClickListener(buttonRegisterListener);
@@ -156,6 +159,7 @@ public class DettagliFragment extends Fragment {
             textViewDocente.setText(document.getString(PROFESORE));
             textViewOraInizio.setText(formattaOra(document.getString(ORA_INIZIO)));
             textViewOraFine.setText(formattaOra(document.getString(ORA_FINE)));
+            textViewCounter.setText(String.valueOf(document.getLong(NUM_PRESENZE)));
             if(utente.equals("S")) {
                 //se l'utente è uno studente
                 switch (document.getLong(STATO).intValue()) {

@@ -1,4 +1,4 @@
-package it.uniba.maw.dibapp;
+package it.uniba.maw.dibapp.services;
 
 import android.app.Service;
 import android.content.Intent;
@@ -39,7 +39,7 @@ public class firebaseNotificationService extends FirebaseMessagingService {
 
             if (/* Check if data needs to be processed by long running job */ true) {
                 // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
-//                scheduleJob();
+                scheduleJob();
             } else {
                 // Handle message within 10 seconds
 //                handleNow();
@@ -54,6 +54,12 @@ public class firebaseNotificationService extends FirebaseMessagingService {
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
+    }
+
+    private void scheduleJob() {
+        Intent intent = new Intent();
+        intent.setAction("NEW_LESSON");
+        sendBroadcast(intent);
     }
 
     /**

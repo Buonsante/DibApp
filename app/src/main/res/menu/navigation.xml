@@ -8,7 +8,7 @@
 
 
     <item
-        android:id="@+id/navigation_gifts"
+        android:id="@+id/todayLessons"
         android:icon="@drawable/ic_24_book"
         android:title="@string/lessons" />
 

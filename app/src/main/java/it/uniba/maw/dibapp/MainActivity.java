@@ -1,52 +1,35 @@
 package it.uniba.maw.dibapp;
 
 
-import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.appcompat.widget.ToolbarWidgetWrapper;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.ArrayList;
 
 import it.uniba.maw.dibapp.fragment.CalendarFragment;
 import it.uniba.maw.dibapp.fragment.LezioniDelGiornoFragment;
 import it.uniba.maw.dibapp.fragment.SettingsFragment;
-import it.uniba.maw.dibapp.model.Lezione;
-import it.uniba.maw.dibapp.util.Util;
-
-import static it.uniba.maw.dibapp.util.Util.DEBUG_TAG;
-import static it.uniba.maw.dibapp.util.Util.SHARED_PREFERENCE_NAME;
-import static it.uniba.maw.dibapp.util.Util.lezioniList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -55,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     SettingsFragment settingsFragment;
     LezioniDelGiornoFragment lezioniDelGiornoFragment;
     ProgressBar progressBar;
+    BottomNavigationView navigation;
+
     private DrawerLayout drawer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,24 +59,59 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         progressBar = findViewById(R.id.mainProgressBar);
-        progressShow();
+        //progressShow();
 
-        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         // load the store fragment by default
-        drawer_toolbar.setTitle("DibApp");
+        drawer_toolbar.setTitle("Lezioni del giorno");
 
+        progressShow();
+        initializeFragment();
+    }
+
+    @Override
+    protected void onResume() {
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("NEW_LESSON");
+        registerReceiver(newLessonReceiver,intentFilter);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        unregisterReceiver(newLessonReceiver);
+        super.onPause();
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
-            case R.id.nav_logoout: showPopup();
-
+            case R.id.nav_account: //TODO//
+                break;
+            case R.id.nav_calendar:
+                drawer_toolbar.setTitle("Calendar");
+                loadFragment(calendarFragment);
+                break;
+            case R.id.nav_lesson:
+                drawer_toolbar.setTitle("Lezioni di oggi");
+                loadFragment(lezioniDelGiornoFragment);
+                break;
+            case R.id.nav_settings:
+                drawer_toolbar.setTitle("Settings");
+                loadFragment(settingsFragment);
+                break;
+            case R.id.nav_faq: //TODO//
+                break;
+            case R.id.nav_info: //TODO//
+                break;
+            case R.id.nav_logoout:
+                showPopup();
                 break;
         }
 
+        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
@@ -132,12 +152,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment fragment;
+
+            // check whether the item showing badge
+            if (navigation.getBadge(item.getItemId()) != null && navigation.getBadge(item.getItemId()).isVisible())
+                navigation.removeBadge(item.getItemId());  //  remove badge notification
+
             switch (item.getItemId()) {
                 case R.id.calendar:
                     drawer_toolbar.setTitle(R.string.calendar);
                     loadFragment(calendarFragment);
                     return true;
-                case R.id.navigation_gifts:
+                case R.id.todayLessons:
                     drawer_toolbar.setTitle(R.string.lessons);
                     loadFragment(lezioniDelGiornoFragment);
                     return true;
@@ -218,4 +243,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
+    BroadcastReceiver newLessonReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals("NEW_LESSON")) {
+                BadgeDrawable badge = navigation.showBadge(R.id.todayLessons);
+                if(!badge.hasNumber()){
+                    badge.setNumber(badge.getNumber()+1);
+                }else{
+                    badge.setNumber(1);
+                }
+            }
+        }
+    };
 }

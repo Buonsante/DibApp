@@ -29,6 +29,7 @@ public class Lezione implements Serializable {
     public static final String ORA_FINE = "oraFine";
     public static final String STATO = "stato";
     public static final String NAME_SERVER_BLE = "nameServerBle";
+    public static final String NUM_PRESENZE = "numPresenze";
 
     private int numPresenze;
     private String professore;

@@ -62,7 +62,7 @@ public class ProfessorActivity extends AppCompatActivity {
                     fragment = new CalendarFragment();
                     loadFragment(fragment);
                     return true;
-                case R.id.navigation_gifts:
+                case R.id.todayLessons:
                     toolbar.setTitle(R.string.lessons);
                     fragment = new Fragment();
                     loadFragment(fragment);
