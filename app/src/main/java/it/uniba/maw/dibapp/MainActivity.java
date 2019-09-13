@@ -82,36 +82,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // load the store fragment by default
         drawer_toolbar.setTitle("DibApp");
 
-        getLezioni();
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
-            case R.id.nav_account: //TODO//
-                break;
-            case R.id.nav_calendar:
-                drawer_toolbar.setTitle("Calendar");
-                loadFragment(calendarFragment);
-                break;
-            case R.id.nav_lesson:
-                drawer_toolbar.setTitle("Lezioni di oggi");
-                loadFragment(lezioniDelGiornoFragment);
-                break;
-            case R.id.nav_settings:
-                drawer_toolbar.setTitle("Settings");
-                loadFragment(settingsFragment);
-                break;
-            case R.id.nav_faq: //TODO//
-                break;
-            case R.id.nav_info: //TODO//
-                break;
-            case R.id.nav_logoout:
-                showPopup();
+            case R.id.nav_logoout: showPopup();
+
                 break;
         }
 
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
@@ -154,15 +134,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.calendar:
-                    drawer_toolbar.setTitle("Calendar");
+                    drawer_toolbar.setTitle(R.string.calendar);
                     loadFragment(calendarFragment);
                     return true;
                 case R.id.navigation_gifts:
-                    drawer_toolbar.setTitle("Lezioni di oggi");
+                    drawer_toolbar.setTitle(R.string.lessons);
                     loadFragment(lezioniDelGiornoFragment);
                     return true;
                 case R.id.settings:
-                    drawer_toolbar.setTitle("Settings");
+                    drawer_toolbar.setTitle(R.string.settings);
                     loadFragment(settingsFragment);
                     return true;
             }
@@ -216,42 +196,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        //transaction.addToBackStack(null);
 //        transaction.commit();
 //    }
-
-    private void getLezioni(){
-        lezioniList = new ArrayList<>();
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        Query query;
-        if(getSharedPreferences(SHARED_PREFERENCE_NAME,MODE_PRIVATE).getString("tipo","").equals("D"))
-            query = db.collectionGroup("lezioni").whereEqualTo("professore","Denaro Roberto");
-        else
-            query = db.collectionGroup("lezioni");
-
-        query.get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        Log.w(DEBUG_TAG,"Retrieve Lezioni");
-                        for(DocumentSnapshot document : queryDocumentSnapshots.getDocuments()){
-                            Lezione l = document.toObject(Lezione.class);
-                            l.setLinkLezione(document.getReference().getPath());
-                            //Log.w(DEBUG_TAG,"Lezione: "+l.toString());
-                            Util.lezioniList.add(l);
-                        }
-                        Log.w(DEBUG_TAG,"LESSONS RETRIEVED");
-
-                        initializeFragment();
-                    }
-
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(DEBUG_TAG+"err",e.getMessage());
-                    }
-                });
-    }
 
     void initializeFragment() {
         calendarFragment = new CalendarFragment();

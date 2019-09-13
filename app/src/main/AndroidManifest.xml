@@ -20,7 +20,9 @@
         <activity android:name=".LoginActivity"/>
         <activity
             android:name=".MainActivity"/>
-        <activity android:name=".LessonActivity" />
+        <activity android:name=".LessonActivity" android:windowSoftInputMode="adjustNothing">
+
+        </activity>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

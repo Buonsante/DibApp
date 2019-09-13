@@ -89,7 +89,7 @@ public class CalendarAdapter {
         if(offset > 0)
             offset += -7;
 
-        Log.w("calendarSetting","Month: "+month+"   offset: "+offset+"   lenght: "+length);
+
         for (int i = offset; i < length + offset; i++) {
             int numYear;
             int numMonth;

@@ -58,17 +58,17 @@ public class ProfessorActivity extends AppCompatActivity {
             Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.calendar:
-                    toolbar.setTitle("Calendar");
+                    toolbar.setTitle(R.string.calendar);
                     fragment = new CalendarFragment();
                     loadFragment(fragment);
                     return true;
                 case R.id.navigation_gifts:
-                    toolbar.setTitle("My Gifts");
+                    toolbar.setTitle(R.string.lessons);
                     fragment = new Fragment();
                     loadFragment(fragment);
                     return true;
                 case R.id.settings:
-                    toolbar.setTitle("Settings");
+                    toolbar.setTitle(R.string.settings);
                     fragment = new SettingsFragment();
                     loadFragment(fragment);
                     return true;

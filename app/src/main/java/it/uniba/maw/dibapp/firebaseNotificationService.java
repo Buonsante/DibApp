@@ -79,6 +79,7 @@ public class firebaseNotificationService extends FirebaseMessagingService {
 
         //aggiunge il nuovo token alle preference
         pref.edit().putString("token",token);
+        //TODO aggingere salvataggio token in database in login activity
 
     }
 
