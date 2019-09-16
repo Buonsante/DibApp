@@ -183,16 +183,18 @@ public class DettagliFragment extends Fragment {
                         }
                         break;
                     case LEZIONE_TERMINATA:
-                        if (document.get("utentiRegistrati") == null
-                                || !(((ArrayList<String>) document.get("utentiRegistrati")).contains(user.getUid()))
-                                || !(((ArrayList<String>) document.get("hadCommented")).contains(user.getUid()))) {
+                        if (document.get("utentiRegistrati") == null || !(((ArrayList<String>) document.get("utentiRegistrati")).contains(user.getUid()))) {
                             buttonRegister.setText("Registrazioni interrotte");
                             buttonRegister.setOnClickListener(null);
                             btnBottomSheet.setVisibility(View.INVISIBLE);
                         } else {
                             buttonRegister.setText("Registrazione effettuata");
                             buttonRegister.setOnClickListener(null);
-                            btnBottomSheet.setVisibility(View.VISIBLE);
+                            if(((document.get("hadCommented")) != null) && !(((ArrayList<String>) document.get("hadCommented")).contains(user.getUid()))){
+                                btnBottomSheet.setVisibility(View.INVISIBLE);
+                            }else{
+                                btnBottomSheet.setVisibility(View.VISIBLE);
+                            }
                         }
                         break;
                 }
