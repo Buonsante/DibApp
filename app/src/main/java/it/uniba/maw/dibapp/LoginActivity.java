@@ -147,6 +147,21 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     *     Esempio utente in database
+     *
+     *     annoImmatricolazione "2018/2019"
+     *     cdl "ITPS"
+     *     cognome "Rossi"
+     *     corso "A"
+     *     dataNascita "12101997"
+     *     mail "prova@prova.it"
+     *     matricola "667080"
+     *     nome "Mario"
+     *     sendNotification true
+     *     tipo "S"
+     *     token "dRwIX8KNU8g:APA91bGOXO_Yuke3gfflf6eKqKJqT6QHEwDch0izAuxJioCmGqfOnatwZhQEjxDxNeEf-pcEyAICo0n3ZdoEK9eaLxIf5t0GPnRZiSiMm59I7gVAhrovw2zZnulVBsMrgXWye5iX--85"
+     */
     private void startMainActivity(){
             Log.w(DEBUG_TAG,"start main activty");
             String name = user.getDisplayName();
