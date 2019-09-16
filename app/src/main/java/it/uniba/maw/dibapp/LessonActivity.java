@@ -32,8 +32,6 @@ public class LessonActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
 
-    private ViewPager mViewPager;
-
     private Button buttonDialog;
 
     @Override
@@ -62,13 +60,15 @@ public class LessonActivity extends AppCompatActivity {
             //se l'utente è un docente nasconde il pulsante di aggiunta commenti
             if (getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE).getString("tipo", "").equals("D")) {
                 buttonDialog.setVisibility(View.INVISIBLE);
+            }else{
+
             }
 
 
             mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
 
             //Set up the ViewPager with the sections adapter
-            mViewPager = (ViewPager) findViewById(R.id.container);
+        ViewPager mViewPager = (ViewPager) findViewById(R.id.container);
 
             setupViewPager(mViewPager);
             TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);

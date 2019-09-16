@@ -151,7 +151,7 @@ public class DettagliFragment extends Fragment {
         return view;
     }
 
-    EventListener<DocumentSnapshot> lezioneDbListener = new EventListener<DocumentSnapshot>() {
+    private EventListener<DocumentSnapshot> lezioneDbListener = new EventListener<DocumentSnapshot>() {
         @Override
         public void onEvent(@Nullable DocumentSnapshot document, @Nullable FirebaseFirestoreException e) {
             editTextArgomento.setText(document.getString(ARGOMENTO));
@@ -169,7 +169,9 @@ public class DettagliFragment extends Fragment {
                         break;
                     case LEZIONE_IN_REGISTRAZIONE:
                         String nameServeBleStringReceived = document.getString("nameServerBle");
-                        if (document.get("utentiRegistrati") == null || !(((ArrayList<String>) document.get("utentiRegistrati")).contains(user.getUid()))) {
+                        if (document.get("utentiRegistrati") == null
+                                || !(((ArrayList<String>) document.get("utentiRegistrati")).contains(user.getUid()))
+                                || !(((ArrayList<String>) document.get("hadCommented")).contains(user.getUid()))) {
                             lezione.setNameServerBle(nameServeBleStringReceived);
                             buttonRegister.setText("Registrati");
                             buttonRegister.setOnClickListener(buttonRegisterListener);
@@ -181,7 +183,9 @@ public class DettagliFragment extends Fragment {
                         }
                         break;
                     case LEZIONE_TERMINATA:
-                        if (document.get("utentiRegistrati") == null || !(((ArrayList<String>) document.get("utentiRegistrati")).contains(user.getUid()))) {
+                        if (document.get("utentiRegistrati") == null
+                                || !(((ArrayList<String>) document.get("utentiRegistrati")).contains(user.getUid()))
+                                || !(((ArrayList<String>) document.get("hadCommented")).contains(user.getUid()))) {
                             buttonRegister.setText("Registrazioni interrotte");
                             buttonRegister.setOnClickListener(null);
                             btnBottomSheet.setVisibility(View.INVISIBLE);

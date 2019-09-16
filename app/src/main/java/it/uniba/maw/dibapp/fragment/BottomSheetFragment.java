@@ -20,7 +20,11 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.auth.User;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -78,6 +82,12 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         commentoMap.put("commento",commento);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.document(lezione.getLinkLezione()).collection("commenti").add(commentoMap);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        db.document(lezione.getLinkLezione()).update(
+                "numCommenti", FieldValue.increment(1),
+                "hadCommented",FieldValue.arrayUnion(user.getUid()));
 
         FragmentManager manager = getFragmentManager();
         FragmentTransaction trans = manager.beginTransaction();
