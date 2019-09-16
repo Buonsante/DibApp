@@ -2,6 +2,7 @@ package it.uniba.maw.dibapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,27 +16,32 @@ public class UserActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private EditText editTextName;
     private EditText editTextEmail;
-    private EditText editTextUsername;
+    private EditText editTextMatricola;
 
-    Menu menu;
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
+        SharedPreferences prefs = getSharedPreferences("profile data", MODE_PRIVATE);
+
         editTextName = findViewById(R.id.editTextName);
         editTextEmail = findViewById(R.id.editTextEmail);
-        editTextUsername = findViewById(R.id.editTextUsername);
+        editTextMatricola = findViewById(R.id.editTextMatricola);
 
         toolbar = findViewById(R.id.toolbar_user_activity);
         setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.account);
         toolbar.setTitleTextColor(Color.WHITE);
 
+        editTextName.setText(prefs.getString("nome", "") + " " + prefs.getString("cognome", ""));
         editTextName.setEnabled(false);
+        editTextEmail.setText(prefs.getString("mail", ""));
         editTextEmail.setEnabled(false);
-        editTextUsername.setEnabled(false);
+        editTextMatricola.setText(prefs.getString("matricola", ""));
+        editTextMatricola.setEnabled(false);
     }
 
     @Override
@@ -66,12 +72,12 @@ public class UserActivity extends AppCompatActivity {
         if(editTextName.isEnabled()){
             editTextName.setEnabled(false);
             editTextEmail.setEnabled(false);
-            editTextUsername.setEnabled(false);
+            editTextMatricola.setEnabled(false);
             menu.findItem(R.id.action_edit).setTitle(R.string.edit);
         } else {
             editTextName.setEnabled(true);
             editTextEmail.setEnabled(true);
-            editTextUsername.setEnabled(true);
+            editTextMatricola.setEnabled(true);
             menu.findItem(R.id.action_edit).setTitle(R.string.save);
         }
     }

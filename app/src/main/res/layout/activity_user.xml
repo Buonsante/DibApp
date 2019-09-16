@@ -68,12 +68,12 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:fontFamily="@font/montserrat"
-        android:text="@string/username"
+        android:text="@string/registration_number"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
 
     <EditText
-        android:id="@+id/editTextUsername"
+        android:id="@+id/editTextMatricola"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

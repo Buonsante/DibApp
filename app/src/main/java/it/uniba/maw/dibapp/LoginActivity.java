@@ -175,6 +175,10 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Log.d(DEBUG_TAG, "User: "+document.toString() );
+
+                            //save values profile in shered preference
+                            saveProfileData(document);
+
                             String tipo = document.getString("tipo");
                             if(tipo.equals("S")) {
                                 pref.edit().putString("tipo", "S").apply();
@@ -191,6 +195,20 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
             });
+    }
+
+    private void saveProfileData(QueryDocumentSnapshot document) {
+        String nome = document.getString("nome");
+        String cognome = document.getString("cognome");
+        String mail = document.getString("mail");
+        String matricola = document.getString("matricola");
+
+        SharedPreferences.Editor editor = getSharedPreferences("profile data", MODE_PRIVATE).edit();
+        editor.putString("nome", nome);
+        editor.putString("cognome", cognome);
+        editor.putString("mail", mail);
+        editor.putString("matricola", matricola);
+        editor.apply();
     }
 
     private void startMain(){
