@@ -6,5 +6,6 @@
     <dimen name="dettagliText">30sp</dimen>
     <dimen name="dettagliText2">20sp</dimen>
     <dimen name="teacherText">12sp</dimen>
+    <dimen name="emailHeaderText">10sp</dimen>
 
 </resources>
