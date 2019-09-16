@@ -62,6 +62,8 @@ public class LessonActivity extends AppCompatActivity {
             //se l'utente è un docente nasconde il pulsante di aggiunta commenti
             if (getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE).getString("tipo", "").equals("D")) {
                 buttonDialog.setVisibility(View.INVISIBLE);
+            }else{
+
             }
 
 
