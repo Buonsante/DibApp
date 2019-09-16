@@ -247,7 +247,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         public void onReceive(Context context, Intent intent) {
             if(intent.getAction().equals("NEW_LESSON")) {
-                BadgeDrawable badge = navigation.showBadge(R.id.todayLessons);
+                BadgeDrawable badge = navigation.getOrCreateBadge(R.id.todayLessons);
+                badge.setVisible(true);
                 if(!badge.hasNumber()){
                     badge.setNumber(badge.getNumber()+1);
                 }else{

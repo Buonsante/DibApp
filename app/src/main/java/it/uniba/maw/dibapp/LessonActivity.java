@@ -32,8 +32,6 @@ public class LessonActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
 
-    private ViewPager mViewPager;
-
     private Button buttonDialog;
 
     @Override
@@ -70,7 +68,7 @@ public class LessonActivity extends AppCompatActivity {
             mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
 
             //Set up the ViewPager with the sections adapter
-            mViewPager = (ViewPager) findViewById(R.id.container);
+        ViewPager mViewPager = (ViewPager) findViewById(R.id.container);
 
             setupViewPager(mViewPager);
             TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
