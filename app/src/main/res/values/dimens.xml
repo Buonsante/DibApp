@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="loginTextFont">18sp</dimen>
+    <dimen name="stdText">14sp</dimen>
+    <dimen name="bottomSheetText">25sp</dimen>
+    <dimen name="dettagliText">30sp</dimen>
+    <dimen name="dettagliText2">20sp</dimen>
+    <dimen name="teacherText">12sp</dimen>
+    <dimen name="emailHeaderText">10sp</dimen>
+
+</resources>
