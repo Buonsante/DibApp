@@ -36,4 +36,6 @@
     <string name="communicate" translatable="false">Communicate</string>
     <string name="full_name">Full name</string>
     <string name="username">Username</string>
+    <string name="edit">Edit</string>
+    <string name="save">Save</string>
 </resources>
