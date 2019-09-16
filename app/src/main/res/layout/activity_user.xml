@@ -7,9 +7,9 @@
     tools:context=".UserActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar2"
+        android:id="@+id/toolbar_user_activity"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
@@ -26,10 +26,10 @@
         android:fontFamily="@font/montserrat"
         android:text="@string/full_name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_user_activity" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editTextName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -48,10 +48,10 @@
         android:fontFamily="@font/montserrat"
         android:text="@string/hint_email"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextName" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/editTextEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -70,10 +70,10 @@
         android:fontFamily="@font/montserrat"
         android:text="@string/username"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/editTextUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

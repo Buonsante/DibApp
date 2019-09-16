@@ -25,4 +25,6 @@
     <string name="today_argument">Argomento del giorno</string>
     <string name="today_lessons">Lezioni del giorno</string>
     <string name="full_name">Nome completo</string>
+    <string name="edit">Modifica</string>
+    <string name="save">Salva</string>
 </resources>
