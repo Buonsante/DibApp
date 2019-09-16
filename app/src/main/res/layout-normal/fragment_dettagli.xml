@@ -26,7 +26,7 @@
             android:text="Programmazione 2"
             android:textAlignment="center"
             android:textColor="@android:color/background_light"
-            android:textSize="30sp"
+            android:textSize="@dimen/dettagliText"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,7 @@
             android:fontFamily="@font/montserrat"
             android:text="Nicola Fanizzi"
             android:textColor="@android:color/background_light"
-            android:textSize="20sp"
+            android:textSize="@dimen/dettagliText2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_insegnamento" />
@@ -58,6 +58,7 @@
             android:fontFamily="@font/montserrat"
             android:text="prova@uniba.it"
             android:textColor="@android:color/background_light"
+            android:textSize="@dimen/stdText"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -130,6 +131,7 @@
             android:clickable="true"
             android:fontFamily="@font/montserrat"
             android:text="@string/start_time"
+            android:textSize="@dimen/stdText"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/text_view_ora_inizio"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -147,7 +149,7 @@
             android:text="09:00"
             android:textAlignment="center"
             android:textColor="@color/primaryColor"
-            android:textSize="30sp"
+            android:textSize="@dimen/dettagliText"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView10" />
@@ -180,7 +182,8 @@
                 android:clickable="true"
                 android:fontFamily="@font/montserrat"
                 android:gravity="top"
-                android:inputType="textMultiLine|text" />
+                android:inputType="textMultiLine|text"
+                android:textSize="@dimen/loginTextFont" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -195,7 +198,7 @@
             android:text="12:00"
             android:textAlignment="center"
             android:textColor="@color/primaryColor"
-            android:textSize="30sp"
+            android:textSize="@dimen/dettagliText"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -208,6 +211,7 @@
             android:clickable="true"
             android:fontFamily="@font/montserrat"
             android:text="@string/end_time"
+            android:textSize="@dimen/stdText"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/text_view_ora_fine"
             app:layout_constraintStart_toStartOf="@+id/text_view_ora_fine"
@@ -222,7 +226,7 @@
             android:backgroundTint="@color/primaryColor"
             android:fontFamily="@font/montserrat"
             android:text="Lezione non iniziata"
-            android:textSize="20sp"
+            android:textSize="@dimen/dettagliText2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
