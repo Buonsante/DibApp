@@ -76,12 +76,12 @@ public class firebaseNotificationService extends FirebaseMessagingService {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         //modifica il token dell'user nel database
-//        db.collection("user").whereEqualTo("mail",user.getEmail()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//            @Override
-//            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//                queryDocumentSnapshots.getDocuments().get(0).getReference().update("token",token);
-//            }
-//        });
+        db.collection("user").whereEqualTo("mail",user.getEmail()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                queryDocumentSnapshots.getDocuments().get(0).getReference().update("token",token);
+            }
+        });
 
         //aggiunge il nuovo token alle preference
         pref.edit().putString("token",token);
