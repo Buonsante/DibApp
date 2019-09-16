@@ -24,4 +24,5 @@
     <string name="stop_registration">Interrompi registrazioni</string>
     <string name="today_argument">Argomento del giorno</string>
     <string name="today_lessons">Lezioni del giorno</string>
+    <string name="full_name">Nome completo</string>
 </resources>

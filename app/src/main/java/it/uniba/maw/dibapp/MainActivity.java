@@ -26,6 +26,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.firestore.auth.User;
 
 import it.uniba.maw.dibapp.fragment.CalendarFragment;
 import it.uniba.maw.dibapp.fragment.LezioniDelGiornoFragment;
@@ -88,7 +89,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
-            case R.id.nav_account: //TODO//
+            case R.id.nav_account:
+                Intent userActivityIntent = new Intent(this, UserActivity.class);
+                startActivity(userActivityIntent);
                 break;
             case R.id.nav_calendar:
                 drawer_toolbar.setTitle("Calendar");
