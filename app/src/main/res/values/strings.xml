@@ -39,4 +39,8 @@
     <string name="edit">Edit</string>
     <string name="save">Save</string>
     <string name="registration_number">Registration number</string>
+    <string name="notifications">Notifications</string>
+    <string name="activate_push_notifications">Activate push notifications</string>
+    <string name="disactivate_push_notifications">Disactivate push notifications</string>
+    <string name="previous_years_lessons">Show previous years lessons</string>
 </resources>

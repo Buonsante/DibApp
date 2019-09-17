@@ -28,4 +28,8 @@
     <string name="edit">Modifica</string>
     <string name="save">Salva</string>
     <string name="registration_number">Matricola</string>
+    <string name="notifications">Notifiche</string>
+    <string name="activate_push_notifications">Attiva notifiche push</string>
+    <string name="disactivate_push_notifications">Disattiva notifiche push</string>
+    <string name="previous_years_lessons">Mostra lezioni anni precedenti</string>
 </resources>
