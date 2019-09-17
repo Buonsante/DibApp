@@ -189,7 +189,7 @@ public class CollapsibleCalendar extends UICalendar{
             mAdapter.refresh();
 
             // reset UI
-            SimpleDateFormat dateFormat = new SimpleDateFormat("MMM yyyy");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM yyyy");
             dateFormat.setTimeZone(mAdapter.getCalendar().getTimeZone());
             mTxtTitle.setText(dateFormat.format(mAdapter.getCalendar().getTime()));
             mTableHead.removeAllViews();
