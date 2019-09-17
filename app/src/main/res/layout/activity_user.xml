@@ -25,6 +25,7 @@
         android:layout_marginTop="32dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/full_name"
+        android:textSize="@dimen/stdText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_user_activity" />
 
@@ -36,6 +37,7 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textSize="@dimen/loginTextFont"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -47,6 +49,7 @@
         android:layout_marginTop="32dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/hint_email"
+        android:textSize="@dimen/stdText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextName" />
 
@@ -58,6 +61,7 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textSize="@dimen/loginTextFont"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -69,6 +73,7 @@
         android:layout_marginTop="32dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/registration_number"
+        android:textSize="@dimen/stdText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
 
@@ -80,6 +85,7 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textSize="@dimen/loginTextFont"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 </androidx.constraintlayout.widget.ConstraintLayout>
