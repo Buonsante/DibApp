@@ -28,4 +28,6 @@
     <string name="edit">Modifica</string>
     <string name="save">Salva</string>
     <string name="registration_number">Matricola</string>
+    <string name="name">Nome</string>
+    <string name="surname">Cognome</string>
 </resources>
