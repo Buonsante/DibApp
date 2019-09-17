@@ -39,4 +39,6 @@
     <string name="edit">Edit</string>
     <string name="save">Save</string>
     <string name="registration_number">Registration number</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
 </resources>
