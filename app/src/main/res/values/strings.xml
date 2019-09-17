@@ -45,4 +45,6 @@
     <string name="previous_years_lessons">Show previous years lessons</string>
     <string name="name">Name</string>
     <string name="surname">Surname</string>
+    <string name="logout_alert_string">Are you sure?</string>
+    <string name="cancel">Cancel</string>
 </resources>

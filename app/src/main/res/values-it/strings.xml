@@ -34,4 +34,6 @@
     <string name="previous_years_lessons">Mostra lezioni anni precedenti</string>
     <string name="name">Nome</string>
     <string name="surname">Cognome</string>
+    <string name="logout_alert_string">Sei sicuro?</string>
+    <string name="cancel">Cancella</string>
 </resources>
