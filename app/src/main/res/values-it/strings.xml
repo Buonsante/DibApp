@@ -32,4 +32,6 @@
     <string name="activate_push_notifications">Attiva notifiche push</string>
     <string name="disactivate_push_notifications">Disattiva notifiche push</string>
     <string name="previous_years_lessons">Mostra lezioni anni precedenti</string>
+    <string name="name">Nome</string>
+    <string name="surname">Cognome</string>
 </resources>

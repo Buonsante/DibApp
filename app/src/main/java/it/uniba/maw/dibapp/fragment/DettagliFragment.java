@@ -214,7 +214,11 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
                         } else {
                             buttonRegister.setText("Registrazione effetutata");
                             buttonRegister.setOnClickListener(null);
-                            btnBottomSheet.setVisibility(View.VISIBLE);
+                            if(((document.get("hadCommented")) != null) && !(((ArrayList<String>) document.get("hadCommented")).contains(user.getUid()))){
+                                btnBottomSheet.setVisibility(View.VISIBLE);
+                            }else{
+                                btnBottomSheet.setVisibility(View.INVISIBLE);
+                            }
                         }
                         break;
                     case LEZIONE_TERMINATA:
@@ -226,9 +230,9 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
                             buttonRegister.setText("Registrazione effettuata");
                             buttonRegister.setOnClickListener(null);
                             if(((document.get("hadCommented")) != null) && !(((ArrayList<String>) document.get("hadCommented")).contains(user.getUid()))){
-                                btnBottomSheet.setVisibility(View.INVISIBLE);
-                            }else{
                                 btnBottomSheet.setVisibility(View.VISIBLE);
+                            }else{
+                                btnBottomSheet.setVisibility(View.INVISIBLE);
                             }
                         }
                         break;
@@ -404,7 +408,7 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
         float y = event.values[1];
         float z = event.values[2];
 
-        Log.i(DEBUG_TAG+"/sensor",x+"   "+y+"   "+z);
+        //Log.i(DEBUG_TAG+"/sensor",x+"   "+y+"   "+z);
         float gX = x / SensorManager.GRAVITY_EARTH;
         float gY = y / SensorManager.GRAVITY_EARTH;
         float gZ = z / SensorManager.GRAVITY_EARTH;

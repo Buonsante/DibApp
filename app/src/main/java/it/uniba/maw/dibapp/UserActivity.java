@@ -17,6 +17,7 @@ public class UserActivity extends AppCompatActivity {
     private EditText editTextName;
     private EditText editTextEmail;
     private EditText editTextMatricola;
+    private EditText editTextSurname;
 
     private Menu menu;
 
@@ -30,14 +31,17 @@ public class UserActivity extends AppCompatActivity {
         editTextName = findViewById(R.id.editTextName);
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextMatricola = findViewById(R.id.editTextMatricola);
+        editTextSurname = findViewById(R.id.editTextSurname);
 
         toolbar = findViewById(R.id.toolbar_user_activity);
         setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.account);
         toolbar.setTitleTextColor(Color.WHITE);
 
-        editTextName.setText(prefs.getString("nome", "") + " " + prefs.getString("cognome", ""));
+        editTextName.setText(prefs.getString("nome", ""));
         editTextName.setEnabled(false);
+        editTextSurname.setText(prefs.getString("cognome", ""));
+        editTextSurname.setEnabled(false);
         editTextEmail.setText(prefs.getString("mail", ""));
         editTextEmail.setEnabled(false);
         editTextMatricola.setText(prefs.getString("matricola", ""));
@@ -73,11 +77,13 @@ public class UserActivity extends AppCompatActivity {
             editTextName.setEnabled(false);
             editTextEmail.setEnabled(false);
             editTextMatricola.setEnabled(false);
+            editTextSurname.setEnabled(false);
             menu.findItem(R.id.action_edit).setTitle(R.string.edit);
         } else {
             editTextName.setEnabled(true);
             editTextEmail.setEnabled(true);
             editTextMatricola.setEnabled(true);
+            editTextSurname.setEnabled(true);
             menu.findItem(R.id.action_edit).setTitle(R.string.save);
         }
     }
