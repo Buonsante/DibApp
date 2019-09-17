@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+
+
         // load the store fragment by default
         drawer_toolbar.setTitle("Lezioni del giorno");
 
@@ -239,6 +241,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //loadFragment(calendarFragment);
         progressBar.setVisibility(View.GONE);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+        navigation.setSelectedItemId(R.id.todayLessons);
     }
 
     public void progressShow() {

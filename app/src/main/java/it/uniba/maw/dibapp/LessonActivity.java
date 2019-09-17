@@ -12,14 +12,21 @@ import it.uniba.maw.dibapp.util.Util;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
+import android.content.Context;
 import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.util.FloatMath;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TableLayout;
-
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayout;
 
 import static it.uniba.maw.dibapp.util.Util.DEBUG_TAG;
@@ -34,6 +41,8 @@ public class LessonActivity extends AppCompatActivity {
 
     private Button buttonDialog;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +53,13 @@ public class LessonActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.lesson_detail);
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
 
 
@@ -73,6 +89,9 @@ public class LessonActivity extends AppCompatActivity {
             setupViewPager(mViewPager);
             TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
             tabLayout.setupWithViewPager(mViewPager);
+
+
+
 
     }
 
@@ -108,4 +127,9 @@ public class LessonActivity extends AppCompatActivity {
 
         bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
     }
+
+
+
+
+
 }

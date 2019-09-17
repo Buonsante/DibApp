@@ -181,6 +181,13 @@ public class CalendarFragment extends Fragment {
             }
         });
 
+        collapsibleCalendar.expand(100);
+
+
+        collapsibleCalendar.select(collapsibleCalendar.getSelectedDay());
+
+
+
         // Inflate the layout for this fragment
 
         return view;

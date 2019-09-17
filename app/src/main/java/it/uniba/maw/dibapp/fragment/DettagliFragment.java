@@ -8,6 +8,10 @@ import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -17,6 +21,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,7 +59,7 @@ import static it.uniba.maw.dibapp.model.Lezione.*;
 import static it.uniba.maw.dibapp.util.Util.DEBUG_TAG;
 
 
-public class DettagliFragment extends Fragment {
+public class DettagliFragment extends Fragment implements SensorEventListener {
 
     private Button buttonRegister;
     private TextView textViewInsegnamento;
@@ -84,6 +90,19 @@ public class DettagliFragment extends Fragment {
     private boolean scanning;
     private Handler handler = new Handler();
     private final static int SCAN_PERIOD = 20000;
+
+    // The following are used for the shake detection
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
+
+    /*
+     * The gForce that is necessary to register as shake.
+     * Must be greater than 1G (one earth gravity unit).
+     * You can install "G-Force", by Blake La Pierre
+     * from the Google Play Store and run it to see how
+     *  many G's it takes to register a shake
+     */
+    private static final float SHAKE_THRESHOLD_GRAVITY = 2.7F;
 
 
     public DettagliFragment() {
@@ -142,13 +161,29 @@ public class DettagliFragment extends Fragment {
             buttonSalva.setVisibility(View.GONE);
         }
 
-
+        // ShakeDetector initialization
+        mSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
 
         //TODO aggiungere il caricamento dell'argomento dalla editTextArgomento nel caso in cui l'utente è un docente
 
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Add the following line to register the Session Manager Listener onResume
+        mSensorManager.registerListener(this, mAccelerometer,SensorManager.SENSOR_DELAY_UI);
+    }
+
+    @Override
+    public void onPause() {
+        // Add the following line to unregister the Sensor Manager onPause
+        mSensorManager.unregisterListener(this);
+        super.onPause();
     }
 
     private EventListener<DocumentSnapshot> lezioneDbListener = new EventListener<DocumentSnapshot>() {
@@ -362,5 +397,41 @@ public class DettagliFragment extends Fragment {
 
         }
     };
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        float x = event.values[0];
+        float y = event.values[1];
+        float z = event.values[2];
+
+        Log.i(DEBUG_TAG+"/sensor",x+"   "+y+"   "+z);
+        float gX = x / SensorManager.GRAVITY_EARTH;
+        float gY = y / SensorManager.GRAVITY_EARTH;
+        float gZ = z / SensorManager.GRAVITY_EARTH;
+
+        // gForce will be close to 1 when there is no movement.
+        float gForce = (float) Math.sqrt(gX * gX + gY * gY + gZ * gZ);
+
+        if (gForce > SHAKE_THRESHOLD_GRAVITY) {
+
+            Vibrator v = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                v.vibrate(VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE));
+                buttonRegister.performClick();
+            } else {
+                //deprecated in API 26
+                v.vibrate(300);
+                buttonRegister.performClick();
+            }
+
+        }
+
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
 }
 
