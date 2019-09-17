@@ -42,7 +42,6 @@
     <string name="notifications">Notifications</string>
     <string name="activate_push_notifications">Activate push notifications</string>
     <string name="disactivate_push_notifications">Disactivate push notifications</string>
-    <string name="previous_years_lessons">Show previous years lessons</string>
     <string name="name">Name</string>
     <string name="surname">Surname</string>
     <string name="logout_alert_string">Are you sure?</string>

@@ -19,11 +19,5 @@
 <!--            android:dialogMessage="Dialog Message"-->
 <!--            android:defaultValue="Default value" />-->
 
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="key3"
-        android:theme="@style/AppTheme"
-        android:title="@string/previous_years_lessons" />
-
 
 </PreferenceScreen>
