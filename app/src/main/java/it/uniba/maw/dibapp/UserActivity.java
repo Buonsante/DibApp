@@ -34,9 +34,9 @@ public class UserActivity extends AppCompatActivity {
         editTextSurname = findViewById(R.id.editTextSurname);
 
         toolbar = findViewById(R.id.toolbar_user_activity);
-        setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.account);
         toolbar.setTitleTextColor(Color.WHITE);
+        setSupportActionBar(toolbar);
 
         editTextName.setText(prefs.getString("nome", ""));
         editTextName.setEnabled(false);

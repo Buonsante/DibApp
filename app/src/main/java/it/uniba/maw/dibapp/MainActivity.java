@@ -113,15 +113,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(userActivityIntent);
                 break;
             case R.id.nav_calendar:
-                drawer_toolbar.setTitle("Calendar");
+                drawer_toolbar.setTitle(R.string.calendar);
                 loadFragment(calendarFragment);
                 break;
             case R.id.nav_lesson:
-                drawer_toolbar.setTitle("Lezioni di oggi");
+                drawer_toolbar.setTitle(R.string.today_lessons);
                 loadFragment(lezioniDelGiornoFragment);
                 break;
             case R.id.nav_settings:
-                drawer_toolbar.setTitle("Settings");
+                drawer_toolbar.setTitle(R.string.settings);
                 loadFragment(settingsFragment);
                 break;
             case R.id.nav_faq: //TODO//
