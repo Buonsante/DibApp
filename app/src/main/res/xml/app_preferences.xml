@@ -7,10 +7,10 @@
         android:id="@+id/not_pref"
         android:defaultValue="true"
         android:key="key1"
-        android:summaryOff="Attiva notifiche push"
-        android:summaryOn="Disattiva notifiche push"
+        android:summaryOff="@string/activate_push_notifications"
+        android:summaryOn="@string/disactivate_push_notifications"
         android:theme="@style/AppTheme"
-        android:title="Notifiche" />
+        android:title="@string/notifications" />
 
 <!--        <EditTextPreference-->
 <!--            android:key="key2"-->
@@ -19,11 +19,11 @@
 <!--            android:dialogMessage="Dialog Message"-->
 <!--            android:defaultValue="Default value" />-->
 
-        <CheckBoxPreference
-            android:key="key3"
-            android:title="Mostra lezioni anni precedenti"
-            android:defaultValue="true"
-            android:theme="@style/AppTheme"/>
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="key3"
+        android:theme="@style/AppTheme"
+        android:title="@string/previous_years_lessons" />
 
 
 </PreferenceScreen>

@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:alpha="1"
         android:scaleType="fitStart"
         android:src="@mipmap/splash_image"
         app:layout_constraintBottom_toBottomOf="@+id/textViewFullNameNav"
