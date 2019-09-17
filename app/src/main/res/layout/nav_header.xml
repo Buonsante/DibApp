@@ -13,14 +13,14 @@
         android:layout_marginBottom="8dp"
         android:scaleType="fitStart"
         android:src="@mipmap/splash_image"
-        app:layout_constraintBottom_toBottomOf="@+id/textView2"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewFullNameNav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.26999998" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textViewFullNameNav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -30,11 +30,11 @@
         android:textAppearance="@style/AppTheme"
         android:textColor="@color/secondaryLightColor"
         android:textSize="@dimen/stdText"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintBottom_toTopOf="@+id/textViewEmailNav"
         app:layout_constraintStart_toStartOf="parent"></TextView>
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textViewEmailNav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"

@@ -6,11 +6,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -40,6 +42,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     LezioniDelGiornoFragment lezioniDelGiornoFragment;
     ProgressBar progressBar;
     BottomNavigationView navigation;
+    private TextView textViewFullNameNav;
+    private TextView textViewEmailNav;
+    NavigationView navigationView;
 
     private DrawerLayout drawer;
     @Override
@@ -56,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         progressBar = findViewById(R.id.mainProgressBar);
@@ -66,9 +71,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
 
-
         // load the store fragment by default
         drawer_toolbar.setTitle("Lezioni del giorno");
+
+        View headerView = navigationView.getHeaderView(0);
+
+        textViewFullNameNav = headerView.findViewById(R.id.textViewFullNameNav);
+        textViewEmailNav = headerView.findViewById(R.id.textViewEmailNav);
+
+//        textViewFullNameNav = findViewById(R.id.textViewFullNameNav);
+//        textViewEmailNav = findViewById(R.id.textViewEmailNav);
+
+        SharedPreferences prefs = getSharedPreferences("profile data", MODE_PRIVATE);
+
+        textViewFullNameNav.setText(prefs.getString("nome","") + " " + prefs.getString("cognome", " "));
+        textViewEmailNav.setText(prefs.getString("mail", ""));
 
         progressShow();
         initializeFragment();
