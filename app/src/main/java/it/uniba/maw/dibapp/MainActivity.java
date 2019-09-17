@@ -140,15 +140,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // first step helper function
     private void showPopup() {
         AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-        alert.setMessage("Are you sure?")
-                .setPositiveButton("Logout", new DialogInterface.OnClickListener()                 {
+        alert.setMessage(R.string.logout_alert_string)
+                .setPositiveButton(R.string.string_logout, new DialogInterface.OnClickListener()                 {
 
                     public void onClick(DialogInterface dialog, int which) {
 
                         logout(); // Last step. Logout function
 
                     }
-                }).setNegativeButton("Cancel", null);
+                }).setNegativeButton(R.string.cancel, null);
 
         AlertDialog alert1 = alert.create();
         alert1.show();
