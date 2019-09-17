@@ -76,15 +76,17 @@ public class firebaseNotificationService extends FirebaseMessagingService {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         //modifica il token dell'user nel database
-        db.collection("user").whereEqualTo("mail",user.getEmail()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                queryDocumentSnapshots.getDocuments().get(0).getReference().update("token",token);
-            }
-        });
-
+        if(!pref.getBoolean("firstRun",true)) {
+            db.collection("utenti").whereEqualTo("mail", user.getEmail()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    queryDocumentSnapshots.getDocuments().get(0).getReference().update("token", token);
+                }
+            });
+        }
         //aggiunge il nuovo token alle preference
-        pref.edit().putString("token",token);
+        pref.edit().putString("token",token).commit();
+
         //TODO aggingere salvataggio token in database in login activity
 
     }

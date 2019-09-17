@@ -47,6 +47,7 @@ import it.uniba.maw.dibapp.model.Lezione;
 import it.uniba.maw.dibapp.util.Util;
 
 import static it.uniba.maw.dibapp.util.Util.DEBUG_TAG;
+import static it.uniba.maw.dibapp.util.Util.SHARED_PREFERENCE_NAME;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -141,8 +142,6 @@ public class LoginActivity extends AppCompatActivity {
                             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
                         }
-
-                        // ...
                     }
                 });
     }
@@ -175,6 +174,10 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Log.d(DEBUG_TAG, "User: "+document.toString() );
+                            SharedPreferences pref = getSharedPreferences(SHARED_PREFERENCE_NAME,MODE_PRIVATE);
+                            pref.edit().putBoolean("firstRun",false).commit();
+                            String token = pref.getString("token", "");
+                            document.getReference().update("token", token);
 
                             //save values profile in shered preference
                             saveProfileData(document);

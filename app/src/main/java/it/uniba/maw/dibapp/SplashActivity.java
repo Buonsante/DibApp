@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.animation.Animation;
@@ -32,13 +33,15 @@ import static it.uniba.maw.dibapp.util.Util.lezioniList;
 public class SplashActivity extends AppCompatActivity {
 
     private ImageView prova_logo;
+    SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        pref = getSharedPreferences(SHARED_PREFERENCE_NAME,MODE_PRIVATE);
         getLezioni();
-        prova_logo=(ImageView) findViewById(R.id.prova_logo);
+        prova_logo = (ImageView) findViewById(R.id.prova_logo);
         Animation myanim = AnimationUtils.loadAnimation(this, R.anim.mytransition);
         prova_logo.startAnimation(myanim);
 
@@ -53,11 +56,11 @@ public class SplashActivity extends AppCompatActivity {
             public void onAnimationEnd(Animation animation) {
                 FirebaseUser user;
                 user = FirebaseAuth.getInstance().getCurrentUser();
-                if(user != null) {
-                    FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(SplashActivity.this);
+                boolean firstRun = pref.getBoolean("firstRun",true);
+                if(user != null && !firstRun) {
+                    Log.i(DEBUG_TAG,"USER: "+user.getEmail());
                     Bundle bundle = new Bundle();
                     bundle.putString("user_display_name", "opened by " + user.getDisplayName());
-                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
 
                     Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                     finishAffinity();
@@ -84,31 +87,28 @@ public class SplashActivity extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         Query query;
-        if(getSharedPreferences(SHARED_PREFERENCE_NAME,MODE_PRIVATE).getString("tipo","").equals("D"))
+        if(pref.getString("tipo","").equals("D"))
             query = db.collectionGroup("lezioni").whereEqualTo("professore","Denaro Roberto");
         else
             query = db.collectionGroup("lezioni");
 
         query.get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        Log.w(DEBUG_TAG,"Retrieve Lezioni");
-                        for(DocumentSnapshot document : queryDocumentSnapshots.getDocuments()){
-                            Lezione l = document.toObject(Lezione.class);
-                            l.setLinkLezione(document.getReference().getPath());
-                            //Log.w(DEBUG_TAG,"Lezione: "+l.toString());
-                            Util.lezioniList.add(l);
-                        }
-                        Log.w(DEBUG_TAG,"LESSONS RETRIEVED");
+            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    Log.w(DEBUG_TAG, "Retrieve Lezioni");
+                    for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                        Lezione l = document.toObject(Lezione.class);
+                        l.setLinkLezione(document.getReference().getPath());
+                        Util.lezioniList.add(l);
                     }
-
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(DEBUG_TAG+"err",e.getMessage());
-                    }
-                });
+                    Log.w(DEBUG_TAG, "LESSONS RETRIEVED");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.w(DEBUG_TAG+"err",e.getMessage());
+                }
+            });
     }
 }
