@@ -46,4 +46,9 @@
     <string name="surname">Surname</string>
     <string name="logout_alert_string">Are you sure?</string>
     <string name="cancel">Cancel</string>
+    <string name="visibility_on">Public</string>
+    <string name="visibility_off">Private</string>
+    <string name="activate_lesson">Activate lesson</string>
+    <string name="register">Register</string>
+    <string name="registration_done">Registration done</string>
 </resources>

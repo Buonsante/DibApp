@@ -156,7 +156,7 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
         if(utente.equals("D")){
             editTextArgomento.setEnabled(false);
             textViewEmail.setVisibility(View.GONE);
-            buttonRegister.setText("Attiva lezione");
+            buttonRegister.setText(R.string.activate_lesson);
 
         } else {
             editTextArgomento.setEnabled(false);
@@ -210,11 +210,11 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
                         String nameServeBleStringReceived = document.getString("nameServerBle");
                         if (document.get("utentiRegistrati") == null || !(((ArrayList<String>) document.get("utentiRegistrati")).contains(user.getUid()))) {
                             lezione.setNameServerBle(nameServeBleStringReceived);
-                            buttonRegister.setText("Registrati");
+                            buttonRegister.setText(R.string.register);
                             buttonRegister.setOnClickListener(buttonRegisterListener);
                             btnBottomSheet.setVisibility(View.INVISIBLE);
                         } else {
-                            buttonRegister.setText("Registrazione effetutata");
+                            buttonRegister.setText(R.string.registration_done);
                             buttonRegister.setOnClickListener(null);
                             if(((document.get("hadCommented")) != null) && !(((ArrayList<String>) document.get("hadCommented")).contains(user.getUid()))){
                                 btnBottomSheet.setVisibility(View.VISIBLE);
@@ -225,11 +225,11 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
                         break;
                     case LEZIONE_TERMINATA:
                         if (document.get("utentiRegistrati") == null || !(((ArrayList<String>) document.get("utentiRegistrati")).contains(user.getUid()))) {
-                            buttonRegister.setText("Registrazioni interrotte");
+                            buttonRegister.setText(R.string.registration_stopped);
                             buttonRegister.setOnClickListener(null);
                             btnBottomSheet.setVisibility(View.INVISIBLE);
                         } else {
-                            buttonRegister.setText("Registrazione effettuata");
+                            buttonRegister.setText(R.string.registration_done);
                             buttonRegister.setOnClickListener(null);
                             if(((document.get("hadCommented")) != null) && !(((ArrayList<String>) document.get("hadCommented")).contains(user.getUid()))){
                                 btnBottomSheet.setVisibility(View.VISIBLE);
@@ -247,10 +247,10 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
                         break;
                     case LEZIONE_IN_REGISTRAZIONE:
                         activated = true;
-                        buttonRegister.setText("Interrompi registrazione");
+                        buttonRegister.setText(R.string.stop_registration);
                         break;
                     case LEZIONE_TERMINATA:
-                        buttonRegister.setText("Riapri Registrazione");
+                        buttonRegister.setText(R.string.open_registration);
                         break;
                 }
             }
@@ -309,12 +309,12 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
             } else {
                 getContext().startService(intent);
             }
-            buttonRegister.setText("Interrompi registrazione");
+            buttonRegister.setText(R.string.stop_registration);
         }else{
             activated = false;
             Intent intent = new Intent(getContext(), BluetoothGattServerService.class);
             getContext().stopService(intent);
-            buttonRegister.setText("Riapri registrazione");
+            buttonRegister.setText(R.string.open_registration);
             db.document(linkLezione).update(STATO, LEZIONE_TERMINATA);
         }
     }
@@ -391,7 +391,7 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
             if(result.getDevice().getName() != null) {
                 if(result.getDevice().getName().equals(nameServerBle)) {
                     Log.w(DEBUG_TAG+"ii", "Registrazione effettuata");
-                    Toast.makeText(getContext(), "Regitrazione effettuata!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.registration_done, Toast.LENGTH_SHORT).show();
                     bluetoothLeScanner.stopScan(scanCallback);
                     Log.w(DEBUG_TAG+"ii", "StopScan");
                     FirebaseFirestore db = FirebaseFirestore.getInstance();

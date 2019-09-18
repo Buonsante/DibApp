@@ -35,4 +35,9 @@
     <string name="surname">Cognome</string>
     <string name="logout_alert_string">Sei sicuro?</string>
     <string name="cancel">Cancella</string>
+    <string name="visibility_off">Privato</string>
+    <string name="visibility_on">Pubblico</string>
+    <string name="activate_lesson">Attiva lezione</string>
+    <string name="register">Registrati</string>
+    <string name="registration_done">Registrazione effettuata</string>
 </resources>
