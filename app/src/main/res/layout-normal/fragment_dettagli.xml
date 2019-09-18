@@ -5,6 +5,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
+        android:indeterminate="true"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/profile_layout"
         android:layout_width="match_parent"
@@ -23,7 +35,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
             android:fontFamily="@font/montserrat"
-            android:text="Programmazione 2"
+            android:text=""
             android:textAlignment="center"
             android:textColor="@android:color/background_light"
             android:textSize="@dimen/dettagliText"
@@ -108,6 +120,78 @@
         app:layout_constraintTop_toBottomOf="@+id/profile_layout"
         app:layout_constraintVertical_bias="0.0">
 
+        <Button
+            android:id="@+id/buttonRegister"
+            android:layout_width="0dp"
+            android:layout_height="100sp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:backgroundTint="@color/primaryColor"
+            android:fontFamily="@font/montserrat"
+            android:text="Lezione non iniziata"
+            android:textSize="@dimen/dettagliText2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:tint="@color/primaryColor"
+            app:layout_constraintBottom_toBottomOf="@+id/text_view_ora_inizio"
+            app:layout_constraintEnd_toStartOf="@+id/text_view_ora_fine"
+            app:layout_constraintStart_toEndOf="@+id/text_view_ora_inizio"
+            app:layout_constraintTop_toTopOf="@+id/text_view_ora_inizio"
+            app:srcCompat="@drawable/ic_trending_flat_black_24dp" />
+
+        <TextView
+            android:id="@+id/text_view_ora_inizio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="4dp"
+            android:clickable="true"
+            android:fontFamily="@font/montserrat"
+            android:text="09:00"
+            android:textAlignment="center"
+            android:textColor="@color/primaryColor"
+            android:textSize="@dimen/dettagliText"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+        <TextView
+            android:id="@+id/text_view_ora_fine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="48dp"
+            android:clickable="true"
+            android:fontFamily="@font/montserrat"
+            android:text="12:00"
+            android:textAlignment="center"
+            android:textColor="@color/primaryColor"
+            android:textSize="@dimen/dettagliText"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/end_time"
+            android:textSize="@dimen/stdText"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/text_view_ora_fine"
+            app:layout_constraintStart_toStartOf="@+id/text_view_ora_fine"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
@@ -138,21 +222,17 @@
             app:layout_constraintStart_toStartOf="@+id/text_view_ora_inizio"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/text_view_ora_inizio"
-            android:layout_width="wrap_content"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_salva"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
-            android:layout_marginTop="4dp"
-            android:clickable="true"
-            android:fontFamily="@font/montserrat"
-            android:text="09:00"
-            android:textAlignment="center"
-            android:textColor="@color/primaryColor"
-            android:textSize="@dimen/dettagliText"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView10" />
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:visibility="visible"
+            app:icon="@drawable/ic_mode_edit_black_24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textInputLayout" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout"
@@ -186,74 +266,6 @@
                 android:textSize="@dimen/loginTextFont" />
 
         </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/text_view_ora_fine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="48dp"
-            android:clickable="true"
-            android:fontFamily="@font/montserrat"
-            android:text="12:00"
-            android:textAlignment="center"
-            android:textColor="@color/primaryColor"
-            android:textSize="@dimen/dettagliText"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:clickable="true"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/end_time"
-            android:textSize="@dimen/stdText"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/text_view_ora_fine"
-            app:layout_constraintStart_toStartOf="@+id/text_view_ora_fine"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/buttonRegister"
-            android:layout_width="0dp"
-            android:layout_height="100sp"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:backgroundTint="@color/primaryColor"
-            android:fontFamily="@font/montserrat"
-            android:text="Lezione non iniziata"
-            android:textSize="@dimen/dettagliText2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_salva"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:visibility="visible"
-            app:icon="@drawable/ic_mode_edit_black_24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textInputLayout" />
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="8dp"
-            android:tint="@color/primaryColor"
-            app:layout_constraintBottom_toBottomOf="@+id/text_view_ora_inizio"
-            app:layout_constraintEnd_toStartOf="@+id/text_view_ora_fine"
-            app:layout_constraintStart_toEndOf="@+id/text_view_ora_inizio"
-            app:layout_constraintTop_toTopOf="@+id/text_view_ora_inizio"
-            app:srcCompat="@drawable/ic_trending_flat_black_24dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
