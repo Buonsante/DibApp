@@ -46,7 +46,6 @@ public class ProfessorActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         // load the store fragment by default
-        toolbar.setTitle("Shop");
         loadFragment(new SettingsFragment());
     }
 
