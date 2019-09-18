@@ -72,7 +72,6 @@ public class CommentiFragment extends Fragment {
 
         lezione = (Lezione) getArguments().getSerializable("lezione");
 
-       //TODO recupero commenti db
         // commenti prova
         Log.w(DEBUG_TAG, "caricamento commenti");
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -90,7 +89,7 @@ public class CommentiFragment extends Fragment {
                     Log.w(DEBUG_TAG, d.toString());
                     if (d.getType() == DocumentChange.Type.ADDED) {
                         Valutazione v = d.getDocument().toObject(Valutazione.class);
-                        if(prefs.getString("type","").equals("S")) {
+                        if(prefs.getString("tipo","").equals("S")) {
                             if(v.isPublicComment())
                                 valutazioni.add(v);
                         }else{

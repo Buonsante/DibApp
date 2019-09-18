@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.Switch;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,6 +44,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     EditText editTextCommento;
     Button buttonValuta;
     RatingBar ratingBar;
+    Switch switchPublicComment;
 
     public BottomSheetFragment() {
     }
@@ -60,7 +62,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         editTextCommento = view.findViewById(R.id.edit_text_commento);
         buttonValuta = view.findViewById(R.id.btn_valuta);
         ratingBar = view.findViewById(R.id.rating_bar);
-
+        switchPublicComment = view.findViewById(R.id.switch_visibility);
 
         buttonValuta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +85,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
         String commento = editTextCommento.getText().toString();
 
-        boolean publicComment = true; //TODO
+        boolean publicComment = switchPublicComment.isChecked();
 
         SimpleDateFormat simpleDateFormat = new  SimpleDateFormat("dd-MM-yy");
         String data = simpleDateFormat.format(Calendar.getInstance().getTime());
