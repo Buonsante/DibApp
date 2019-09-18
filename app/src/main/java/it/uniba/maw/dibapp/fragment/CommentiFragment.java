@@ -1,7 +1,6 @@
 package it.uniba.maw.dibapp.fragment;
 
-import android.content.Context;
-import android.net.Uri;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -14,25 +13,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import it.uniba.maw.dibapp.R;
 import it.uniba.maw.dibapp.model.Lezione;
 import it.uniba.maw.dibapp.model.Valutazione;
 
+import static android.content.Context.MODE_PRIVATE;
 import static it.uniba.maw.dibapp.util.Util.DEBUG_TAG;
+import static it.uniba.maw.dibapp.util.Util.SHARED_PREFERENCE_NAME;
 
 
 public class CommentiFragment extends Fragment {
@@ -80,17 +76,8 @@ public class CommentiFragment extends Fragment {
         // commenti prova
         Log.w(DEBUG_TAG, "caricamento commenti");
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        db.collection(lezione.getLinkLezione()+"/commenti").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//            @Override
-//            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//                for(DocumentSnapshot d : queryDocumentSnapshots.getDocuments()) {
-//                    Log.w(DEBUG_TAG, d.toString());
-//                    valutazioni.add(new Valutazione(Float.parseFloat(d.getString("rating")), 0, d.getString("commento"), true, null, null));
-//
-//                }
-//                mAdapter.notifyDataSetChanged();
-//            }
-//        });
+
+        final SharedPreferences prefs = getActivity().getSharedPreferences(SHARED_PREFERENCE_NAME, MODE_PRIVATE);
 
         db.collection(lezione.getLinkLezione()+"/commenti").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -102,8 +89,13 @@ public class CommentiFragment extends Fragment {
                 for (DocumentChange d : snapshots.getDocumentChanges()) {
                     Log.w(DEBUG_TAG, d.toString());
                     if (d.getType() == DocumentChange.Type.ADDED) {
-                        Valutazione v = new Valutazione(Float.parseFloat(d.getDocument().getString("rating")), 0, d.getDocument().getString("commento"), true, null, null);
-                        valutazioni.add(v);
+                        Valutazione v = d.getDocument().toObject(Valutazione.class);
+                        if(prefs.getString("type","").equals("S")) {
+                            if(v.isPublicComment())
+                                valutazioni.add(v);
+                        }else{
+                            valutazioni.add(v);
+                        }
                     }
                 }
 

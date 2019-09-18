@@ -102,7 +102,9 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
      * from the Google Play Store and run it to see how
      *  many G's it takes to register a shake
      */
-    private static final float SHAKE_THRESHOLD_GRAVITY = 2.7F;
+    private static final float SHAKE_THRESHOLD_GRAVITY = 3F;
+    private static final int SHAKE_SLOP_TIME_MS = 500;
+    private static final int SHAKE_COUNT_RESET_TIME_MS = 3000;
 
 
     public DettagliFragment() {
@@ -189,12 +191,14 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
     private EventListener<DocumentSnapshot> lezioneDbListener = new EventListener<DocumentSnapshot>() {
         @Override
         public void onEvent(@Nullable DocumentSnapshot document, @Nullable FirebaseFirestoreException e) {
+
             editTextArgomento.setText(document.getString(ARGOMENTO));
             textViewInsegnamento.setText(document.getString(INSEGNAMENTO));
             textViewDocente.setText(document.getString(PROFESORE));
             textViewOraInizio.setText(formattaOra(document.getString(ORA_INIZIO)));
             textViewOraFine.setText(formattaOra(document.getString(ORA_FINE)));
             textViewCounter.setText(String.valueOf(document.getLong(NUM_PRESENZE)));
+
             if(utente.equals("S")) {
                 //se l'utente è uno studente
                 switch (document.getLong(STATO).intValue()) {
@@ -204,9 +208,7 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
                         break;
                     case LEZIONE_IN_REGISTRAZIONE:
                         String nameServeBleStringReceived = document.getString("nameServerBle");
-                        if (document.get("utentiRegistrati") == null
-                                || !(((ArrayList<String>) document.get("utentiRegistrati")).contains(user.getUid()))
-                                || !(((ArrayList<String>) document.get("hadCommented")).contains(user.getUid()))) {
+                        if (document.get("utentiRegistrati") == null || !(((ArrayList<String>) document.get("utentiRegistrati")).contains(user.getUid()))) {
                             lezione.setNameServerBle(nameServeBleStringReceived);
                             buttonRegister.setText("Registrati");
                             buttonRegister.setOnClickListener(buttonRegisterListener);
@@ -258,6 +260,7 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
         @Override
         public void onClick(View view) {
             if(utente.equals("S")){
+                buttonRegister.setOnClickListener(null);
                 registerStudent();
             }else{
                 activateLesson();
@@ -417,6 +420,17 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
         float gForce = (float) Math.sqrt(gX * gX + gY * gY + gZ * gZ);
 
         if (gForce > SHAKE_THRESHOLD_GRAVITY) {
+            final long now = System.currentTimeMillis();
+            // ignore shake events too close to each other (500ms)
+
+            long mShakeTimestamp = 0;
+
+            if (mShakeTimestamp + SHAKE_SLOP_TIME_MS > now) {
+
+                return;
+            }
+
+            mShakeTimestamp = now;
 
             Vibrator v = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
 

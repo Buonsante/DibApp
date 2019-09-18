@@ -1,8 +1,6 @@
 package it.uniba.maw.dibapp.fragment;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
 
-import it.uniba.maw.dibapp.LessonActivity;
 import it.uniba.maw.dibapp.model.Valutazione;
 
 import java.util.List;
 
 import it.uniba.maw.dibapp.R;
-import it.uniba.maw.dibapp.model.Lezione;
-
-import static it.uniba.maw.dibapp.util.Util.DEBUG_TAG;
 
 public class CommentiAdapter extends RecyclerView.Adapter<CommentiAdapter.CommentiViewHolder> {
 
@@ -51,8 +45,9 @@ public class CommentiAdapter extends RecyclerView.Adapter<CommentiAdapter.Commen
 
     @Override
     public void onBindViewHolder(@NonNull CommentiViewHolder holder, int position) {
-        holder.valutazione.setRating(commenti.get(position).getVoto());
+        holder.valutazione.setRating(commenti.get(position).getRating());
         holder.commento.setText(commenti.get(position).getCommento());
+        holder.data.setText(commenti.get(position).getData());
 //        holder.data.setText(commenti.get(position).getData().toString());
     }
 

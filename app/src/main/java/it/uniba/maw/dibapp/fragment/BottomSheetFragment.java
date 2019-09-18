@@ -26,11 +26,15 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.auth.User;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 import it.uniba.maw.dibapp.R;
 import it.uniba.maw.dibapp.model.Lezione;
+import it.uniba.maw.dibapp.model.Valutazione;
 
 public class BottomSheetFragment extends BottomSheetDialogFragment {
 
@@ -74,14 +78,20 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
 
     private void valutaLezione() {
+
         float rating = ratingBar.getRating();
+
         String commento = editTextCommento.getText().toString();
 
-        Map<String,String> commentoMap = new HashMap<>();
-        commentoMap.put("rating",String.valueOf(rating));
-        commentoMap.put("commento",commento);
+        boolean publicComment = true; //TODO
+
+        SimpleDateFormat simpleDateFormat = new  SimpleDateFormat("dd-MM-yy");
+        String data = simpleDateFormat.format(Calendar.getInstance().getTime());
+
+        Valutazione valutazione = new Valutazione(rating,commento,publicComment,data);
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.document(lezione.getLinkLezione()).collection("commenti").add(commentoMap);
+        db.document(lezione.getLinkLezione()).collection("commenti").add(valutazione);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 

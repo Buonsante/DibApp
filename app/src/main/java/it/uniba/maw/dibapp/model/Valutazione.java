@@ -1,24 +1,18 @@
 package it.uniba.maw.dibapp.model;
 
-import java.time.LocalTime;
-import java.util.Date;
-
 public class Valutazione {
 
-    private int  lezione;
-    private float voto;
+    private float rating;
     private String commento;
-    private boolean visibilita;
-    private Date data;
-    private LocalTime ora;
+    private boolean publicComment;
+    private String data;
 
-    public Valutazione(float voto, int lezione, String commento, boolean visibilita, Date data, LocalTime ora) {
-        this.voto = voto;
-        this.lezione = lezione;
+
+    public Valutazione(float rating, String commento, boolean publicComment, String data) {
+        this.rating = rating;
         this.commento = commento;
-        this.visibilita = visibilita;
+        this.publicComment = publicComment;
         this.data = data;
-        this.ora = ora;
     }
 
     public Valutazione() {
@@ -26,20 +20,12 @@ public class Valutazione {
     }
 
 
-    public float getVoto() {
-        return voto;
+    public float getRating() {
+        return rating;
     }
 
-    public void setVoto(float voto) {
-        this.voto = voto;
-    }
-
-    public int getLezione() {
-        return lezione;
-    }
-
-    public void setLezione(int lezione) {
-        this.lezione = lezione;
+    public void setRating(float rating) {
+        this.rating = rating;
     }
 
     public String getCommento() {
@@ -50,29 +36,23 @@ public class Valutazione {
         this.commento = commento;
     }
 
-    public boolean isVisibilita() {
-        return visibilita;
+    public boolean isPublicComment() {
+        return publicComment;
     }
 
-    public void setVisibilita(boolean visibilita) {
-        this.visibilita = visibilita;
+    public void setPublicComment(boolean publicComment) {
+        this.publicComment = publicComment;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 
-    public LocalTime getOra() {
-        return ora;
-    }
 
-    public void setOra(LocalTime ora) {
-        this.ora = ora;
-    }
 }
 
 

@@ -11,6 +11,8 @@ import android.widget.EditText;
 
 import androidx.appcompat.widget.Toolbar;
 
+import static it.uniba.maw.dibapp.util.Util.USER_INFO_PREFERENCE_NAME;
+
 public class UserActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
@@ -26,7 +28,7 @@ public class UserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
-        SharedPreferences prefs = getSharedPreferences("profile data", MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(USER_INFO_PREFERENCE_NAME, MODE_PRIVATE);
 
         editTextName = findViewById(R.id.editTextName);
         editTextEmail = findViewById(R.id.editTextEmail);
