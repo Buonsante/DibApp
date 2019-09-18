@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,15 +37,19 @@ public class SplashActivity extends AppCompatActivity {
 
     private ImageView prova_logo;
     SharedPreferences pref;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         pref = getSharedPreferences(SHARED_PREFERENCE_NAME,MODE_PRIVATE);
-        getLezioni();
-        prova_logo = (ImageView) findViewById(R.id.prova_logo);
+
+        progressBar = findViewById(R.id.splashDataDownload);
+        prova_logo = findViewById(R.id.prova_logo);
+
         Animation myanim = AnimationUtils.loadAnimation(this, R.anim.mytransition);
+
         prova_logo.startAnimation(myanim);
 
         myanim.setAnimationListener(new Animation.AnimationListener() {
@@ -54,24 +61,9 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                FirebaseUser user;
-                user = FirebaseAuth.getInstance().getCurrentUser();
-                boolean firstRun = pref.getBoolean("firstRun",true);
-                if(user != null && !firstRun) {
-                    Log.i(DEBUG_TAG,"USER: "+user.getEmail());
-                    Bundle bundle = new Bundle();
-                    bundle.putString("user_display_name", "opened by " + user.getDisplayName());
-
-                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                    finishAffinity();
-                    startActivity(intent);
-
-                } else {
-                    // No user is signed in
-                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                    finishAffinity();
-                    startActivity(intent);
-                }
+                progressBar.setVisibility(View.VISIBLE);
+                progressBar.setIndeterminate(true);
+                getLezioni();
             }
 
             @Override
@@ -81,7 +73,30 @@ public class SplashActivity extends AppCompatActivity {
         });
     }
 
+    private void startApp(){
+        FirebaseUser user;
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        boolean firstRun = pref.getBoolean("firstRun",true);
+        if(user != null && !firstRun) {
+            Log.i(DEBUG_TAG,"USER: "+user.getEmail());
+            Bundle bundle = new Bundle();
+            bundle.putString("user_display_name", "opened by " + user.getDisplayName());
+
+            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+            finishAffinity();
+            startActivity(intent);
+
+        } else {
+            // No user is signed in
+            Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+            finishAffinity();
+            startActivity(intent);
+        }
+    }
+
     private void getLezioni(){
+        progressBar.setIndeterminate(false);
+        progressBar.setProgress(0);
         lezioniList = new ArrayList<>();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -96,13 +111,21 @@ public class SplashActivity extends AppCompatActivity {
             .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                 @Override
                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                    Log.w(DEBUG_TAG, "Retrieve Lezioni");
+                    int unitOfProgress = 100/queryDocumentSnapshots.size();
+
+                    Log.w(DEBUG_TAG, "Retrieve Lezioni ");
                     for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                        Log.w(DEBUG_TAG, "Progress: "+progressBar.getProgress());
                         Lezione l = document.toObject(Lezione.class);
                         l.setLinkLezione(document.getReference().getPath());
-                        Util.lezioniList.add(l);
+                        lezioniList.add(l);
+
+                        progressBar.incrementProgressBy(unitOfProgress);
+
                     }
                     Log.w(DEBUG_TAG, "LESSONS RETRIEVED");
+                    progressBar.incrementProgressBy(unitOfProgress);
+                    startApp();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
