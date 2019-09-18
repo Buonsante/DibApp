@@ -27,9 +27,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,6 +62,8 @@ import static it.uniba.maw.dibapp.util.Util.DEBUG_TAG;
 
 
 public class DettagliFragment extends Fragment implements SensorEventListener {
+
+    private ProgressBar progressBar;
 
     private Button buttonRegister;
     private TextView textViewInsegnamento;
@@ -129,6 +133,7 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
         utente = getContext().getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE).getString("tipo", "");
 
         btnBottomSheet = getActivity().findViewById(R.id.btn_bottom_sheet);
+        progressBar = getActivity().findViewById(R.id.progressBarLesson);
 
         buttonRegister = view.findViewById(R.id.buttonRegister);
         textViewInsegnamento = view.findViewById(R.id.text_view_insegnamento);
@@ -152,7 +157,12 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.document(linkLezione).addSnapshotListener(lezioneDbListener);
-
+        db.document(lezione.getProfessoreLink()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                textViewEmail.setText(documentSnapshot.getString("mail"));
+            }
+        });
         if(utente.equals("D")){
             editTextArgomento.setEnabled(false);
             textViewEmail.setVisibility(View.GONE);
@@ -161,6 +171,7 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
         } else {
             editTextArgomento.setEnabled(false);
             buttonSalva.setVisibility(View.GONE);
+
         }
 
         // ShakeDetector initialization
@@ -194,7 +205,7 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
 
             editTextArgomento.setText(document.getString(ARGOMENTO));
             textViewInsegnamento.setText(document.getString(INSEGNAMENTO));
-            textViewDocente.setText(document.getString(PROFESORE));
+            textViewDocente.setText(document.getString(PROFESSORE));
             textViewOraInizio.setText(formattaOra(document.getString(ORA_INIZIO)));
             textViewOraFine.setText(formattaOra(document.getString(ORA_FINE)));
             textViewCounter.setText(String.valueOf(document.getLong(NUM_PRESENZE)));
@@ -261,6 +272,7 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
         public void onClick(View view) {
             if(utente.equals("S")){
                 buttonRegister.setOnClickListener(null);
+                progressShow();
                 registerStudent();
             }else{
                 activateLesson();
@@ -371,6 +383,8 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
                 Log.w(DEBUG_TAG+"ii", "StopScan");
                 // scanning=false significa "Nessuna scansione in corso"
                 scanning = false;
+                progressBar.setVisibility(View.GONE);
+                getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             }
         }, SCAN_PERIOD);
         // SCAN_PERIOD indica una durata in millisecondi
@@ -450,6 +464,11 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+    public void progressShow() {
+        progressBar.setVisibility(View.VISIBLE);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 }
 
