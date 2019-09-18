@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         // load the store fragment by default
-        drawer_toolbar.setTitle("Lezioni del giorno");
+        drawer_toolbar.setTitle(R.string.today_lessons);
 
         View headerView = navigationView.getHeaderView(0);
 

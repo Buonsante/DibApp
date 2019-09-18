@@ -97,8 +97,8 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.input_password);
         passwordLayout = findViewById(R.id.input_layout_password);
 
-        usernameEditText.setText("prova@prova.it");
-        passwordEditText.setText("provaprova");
+//        usernameEditText.setText("prova@prova.it");
+//        passwordEditText.setText("provaprova");
 
         signInButon = findViewById(R.id.sign_in_button);
         signInButon.setOnClickListener(new View.OnClickListener() {
