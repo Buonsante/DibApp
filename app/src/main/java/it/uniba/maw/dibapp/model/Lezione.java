@@ -24,7 +24,7 @@ public class Lezione implements Serializable {
     //costanti per identificare i campi della lezione
     public static final String ARGOMENTO = "argomento";
     public static final String INSEGNAMENTO = "insegnamento";
-    public static final String PROFESORE = "professore";
+    public static final String PROFESSORE = "professore";
     public static final String ORA_INIZIO = "oraInizio";
     public static final String ORA_FINE = "oraFine";
     public static final String STATO = "stato";

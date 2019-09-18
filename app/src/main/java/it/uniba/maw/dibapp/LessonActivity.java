@@ -26,7 +26,10 @@ import android.util.FloatMath;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
+
 import com.google.android.material.tabs.TabLayout;
 
 import static it.uniba.maw.dibapp.util.Util.DEBUG_TAG;
@@ -60,8 +63,6 @@ public class LessonActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
-
 
 
         buttonDialog = findViewById(R.id.btn_bottom_sheet);
@@ -111,12 +112,6 @@ public class LessonActivity extends AppCompatActivity {
     }
 
     private void showBottomSheetDialog() {
-//        // using BottomSheetDialog
-//        View dialogView = getLayoutInflater().inflate(R.layout.fragment_bottom_sheet, null);
-//        BottomSheetDialog dialog = new BottomSheetDialog(this);
-//        dialog.setContentView(dialogView);
-//        dialog.show();
-
         // using BottomSheetDialogFragment
         BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
         

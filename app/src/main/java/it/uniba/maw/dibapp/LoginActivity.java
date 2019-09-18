@@ -104,7 +104,6 @@ public class LoginActivity extends AppCompatActivity {
         signInButon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressCommand();
                 submitForm();
             }
         });
@@ -230,6 +229,7 @@ public class LoginActivity extends AppCompatActivity {
         if (!validatePassword()) {
             return;
         }
+        progressCommand();
         signInUser(usernameEditText.getText().toString(),passwordEditText.getText().toString());
     }
 
