@@ -36,14 +36,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="44dp"
         android:layout_marginEnd="8dp"
         android:numStars="5"
         android:progressTint="@color/primaryColor"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
-
 
     <EditText
         android:id="@+id/edit_text_commento"
@@ -76,5 +76,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_text_commento" />
+
+    <Switch
+        android:id="@+id/switch_visibility"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="119dp"
+        android:layout_marginEnd="118dp"
+        android:layout_marginBottom="9dp"
+        android:checked="true"
+        android:showText="true"
+        android:textOff="@string/visibility_off"
+        android:textOn="@string/visibility_on"
+        android:theme="@style/AppTheme"
+        app:layout_constraintBottom_toTopOf="@+id/rating_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

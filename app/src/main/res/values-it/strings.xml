@@ -5,8 +5,8 @@
     <string name="calendar">Calendario</string>
     <string name="comments">Commenti</string>
     <string name="details">Dettagli</string>
-    <string name="end_time">Ora inizio</string>
-    <string name="err_msg_email">Ora fine</string>
+    <string name="end_time">Ora fine</string>
+    <string name="err_msg_email">Inserire email valida</string>
     <string name="err_msg_password">Inserisci la password</string>
     <string name="evaluate">Valuta</string>
     <string name="evaluate_lesson">Valuta la lezione</string>

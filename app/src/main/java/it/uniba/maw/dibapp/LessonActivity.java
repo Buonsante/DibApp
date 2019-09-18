@@ -105,8 +105,8 @@ public class LessonActivity extends AppCompatActivity {
         bundle.putSerializable("lezione", getIntent().getSerializableExtra("lezione"));
         dettagliFragment.setArguments(bundle);
         commentiFragment.setArguments(bundle);
-        adapter.addFragment(dettagliFragment, "DETTAGLI");
-        adapter.addFragment(commentiFragment, "COMMENTI");
+        adapter.addFragment(dettagliFragment, getResources().getString(R.string.details));
+        adapter.addFragment(commentiFragment, getResources().getString(R.string.comments));
         viewPager.setAdapter(adapter);
     }
 
