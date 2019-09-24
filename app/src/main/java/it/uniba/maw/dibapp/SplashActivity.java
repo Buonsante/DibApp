@@ -112,6 +112,7 @@ public class SplashActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                     int unitOfProgress = 100/queryDocumentSnapshots.size();
+//                    int unitOfProgress = 5;
 
                     Log.w(DEBUG_TAG, "Retrieve Lezioni ");
                     for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {

@@ -7,8 +7,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 
+import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.widget.Toolbar;
 
 import static it.uniba.maw.dibapp.util.Util.USER_INFO_PREFERENCE_NAME;
@@ -38,7 +40,33 @@ public class UserActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar_user_activity);
         toolbar.setTitle(R.string.account);
         toolbar.setTitleTextColor(Color.WHITE);
-        setSupportActionBar(toolbar);
+        toolbar.inflateMenu(R.menu.menu_user_activity);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.action_edit) {
+                    enableEdit();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+
+//        getSupportActionBar().setIcon(R.drawable.ic_arrow_back_white_24dp);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+
+
 
         editTextName.setText(prefs.getString("nome", ""));
         editTextName.setEnabled(false);
@@ -65,14 +93,18 @@ public class UserActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_edit) {
             enableEdit();
             return true;
         }
 
+
         return super.onOptionsItemSelected(item);
     }
+
+
 
     private void enableEdit() {
         if(editTextName.isEnabled()){
@@ -80,13 +112,13 @@ public class UserActivity extends AppCompatActivity {
             editTextEmail.setEnabled(false);
             editTextMatricola.setEnabled(false);
             editTextSurname.setEnabled(false);
-            menu.findItem(R.id.action_edit).setTitle(R.string.edit);
+            toolbar.getMenu().findItem(R.id.action_edit).setTitle(R.string.edit);
         } else {
             editTextName.setEnabled(true);
             editTextEmail.setEnabled(true);
             editTextMatricola.setEnabled(true);
             editTextSurname.setEnabled(true);
-            menu.findItem(R.id.action_edit).setTitle(R.string.save);
+            toolbar.getMenu().findItem(R.id.action_edit).setTitle(R.string.save);
         }
     }
 

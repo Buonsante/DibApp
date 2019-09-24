@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     loadFragment(calendarFragment);
                     return true;
                 case R.id.todayLessons:
-                    drawer_toolbar.setTitle(R.string.lessons);
+                    drawer_toolbar.setTitle(R.string.today_lessons);
                     loadFragment(lezioniDelGiornoFragment);
                     return true;
                 case R.id.settings:
@@ -272,6 +272,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .add(R.id.frame_container, lezioniDelGiornoFragment,"lezioniDelGiorno")
                 .hide(calendarFragment)
                 .commitNow();
+
         //loadFragment(calendarFragment);
         progressBar.setVisibility(View.GONE);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);

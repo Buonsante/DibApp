@@ -42,6 +42,7 @@ public class Lezione implements Serializable {
     private String nameServerBle;
     private String linkLezione;
     private ArrayList<String> utentiRegistrati;
+    private ArrayList<String> hadCommented;
     private int stato;
 
     public Lezione(int numPresenze, String professore, String professoreLink, GregorianCalendar data, String oraInizio, String oraFine, String argomento, String insegnamento, String insegnamentoLink, String nameServerBle) {
@@ -57,6 +58,7 @@ public class Lezione implements Serializable {
         this.nameServerBle = nameServerBle;
         this.stato = LEZIONE_NON_INIZIATA;
         this.utentiRegistrati = null;
+        this.hadCommented = null;
     }
 
 
@@ -183,6 +185,14 @@ public class Lezione implements Serializable {
                 ", insegnamento='" + insegnamento + '\'' +
                 ", insegnamentoLink='" + insegnamentoLink + '\'' +
                 '}';
+    }
+
+    public ArrayList<String> getHadCommented() {
+        return hadCommented;
+    }
+
+    public void setHadCommented(ArrayList<String> hadCommented) {
+        this.hadCommented = hadCommented;
     }
 }
 

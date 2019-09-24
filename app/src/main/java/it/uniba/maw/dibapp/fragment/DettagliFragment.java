@@ -19,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -214,10 +215,14 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
 
             if(utente.equals("S")) {
                 //se l'utente è uno studente
+                ConstraintLayout.LayoutParams layoutParams;
                 switch (document.getLong(STATO).intValue()) {
                     case LEZIONE_NON_INIZIATA:
                         buttonRegister.setOnClickListener(null);
                         getActivity().findViewById(R.id.btn_bottom_sheet).setVisibility(View.INVISIBLE);
+                         layoutParams = (ConstraintLayout.LayoutParams) buttonRegister.getLayoutParams();
+                        layoutParams.setMargins(0,0,0,0);
+                        buttonRegister.setLayoutParams(layoutParams);
                         break;
                     case LEZIONE_IN_REGISTRAZIONE:
                         String nameServeBleStringReceived = document.getString("nameServerBle");
@@ -226,13 +231,23 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
                             buttonRegister.setText(R.string.register);
                             buttonRegister.setOnClickListener(buttonRegisterListener);
                             btnBottomSheet.setVisibility(View.INVISIBLE);
+                            layoutParams = (ConstraintLayout.LayoutParams) buttonRegister.getLayoutParams();
+                            layoutParams.setMargins(0,0,0,0);
+                            buttonRegister.setLayoutParams(layoutParams);
                         } else {
                             buttonRegister.setText(R.string.registration_done);
                             buttonRegister.setOnClickListener(null);
+
                             if(((document.get("hadCommented")) != null) && !(((ArrayList<String>) document.get("hadCommented")).contains(user.getUid()))){
                                 btnBottomSheet.setVisibility(View.VISIBLE);
+                                layoutParams = (ConstraintLayout.LayoutParams) buttonRegister.getLayoutParams();
+                                layoutParams.setMargins(0,0,0,130);
+                                buttonRegister.setLayoutParams(layoutParams);
                             }else{
                                 btnBottomSheet.setVisibility(View.INVISIBLE);
+                                layoutParams = (ConstraintLayout.LayoutParams) buttonRegister.getLayoutParams();
+                                layoutParams.setMargins(0,0,0,0);
+                                buttonRegister.setLayoutParams(layoutParams);
                             }
                         }
                         break;
@@ -241,13 +256,22 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
                             buttonRegister.setText(R.string.registration_stopped);
                             buttonRegister.setOnClickListener(null);
                             btnBottomSheet.setVisibility(View.INVISIBLE);
+                            layoutParams = (ConstraintLayout.LayoutParams) buttonRegister.getLayoutParams();
+                            layoutParams.setMargins(0,0,0,0);
+                            buttonRegister.setLayoutParams(layoutParams);
                         } else {
                             buttonRegister.setText(R.string.registration_done);
                             buttonRegister.setOnClickListener(null);
                             if(((document.get("hadCommented")) != null) && !(((ArrayList<String>) document.get("hadCommented")).contains(user.getUid()))){
                                 btnBottomSheet.setVisibility(View.VISIBLE);
+                                layoutParams = (ConstraintLayout.LayoutParams) buttonRegister.getLayoutParams();
+                                layoutParams.setMargins(0,0,0,130);
+                                buttonRegister.setLayoutParams(layoutParams);
                             }else{
                                 btnBottomSheet.setVisibility(View.INVISIBLE);
+                                layoutParams = (ConstraintLayout.LayoutParams) buttonRegister.getLayoutParams();
+                                layoutParams.setMargins(0,0,0,0);
+                                buttonRegister.setLayoutParams(layoutParams);
                             }
                         }
                         break;

@@ -32,6 +32,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -109,6 +110,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         pref = getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
+
 
     }
 
@@ -303,7 +305,7 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        Log.w(DEBUG_TAG, "Insegamenti");
+                        Log.w(DEBUG_TAG, "Insegnamenti");
                         for (final DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
 //                            Log.w(DEBUG_TAG,"Document Collection: "+document.getReference().getParent().getParent().get().getResult().toString());
                             final String insegnamentoPath = document.getReference().getPath();
@@ -314,22 +316,24 @@ public class LoginActivity extends AppCompatActivity {
                             profReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                 @Override
                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
-
+                                    Log.i(DEBUG_TAG,documentSnapshot.toString());
                                     nomeDocente[0] = documentSnapshot.get("cognome")+" "+documentSnapshot.get("nome");
                                     Random random = new Random();
                                     GregorianCalendar calendar;
-                                    for(int i=0;i<10;i++) {
+                                    for(int i=0;i<4;i++) {
                                         calendar = new GregorianCalendar();
-                                        calendar.add(Calendar.DATE, random.nextInt(6));
+                                        calendar.add(Calendar.DATE, random.nextInt(10));
                                         int oraInizioInt = 8+random.nextInt(5);
                                         String oraInizio = String.valueOf(oraInizioInt);
                                         String oraFine = String.valueOf(oraInizioInt + 3);
                                         document.getReference().collection("lezioni")
-                                                .add(new Lezione(0,nomeDocente[0],profReference.getPath(), calendar,oraInizio,oraFine,"argomento"+i,nomeInsegnamento,insegnamentoPath, null))
+                                                .add(new Lezione(0,nomeDocente[0],profReference.getPath(), calendar,oraInizio,oraFine,"",nomeInsegnamento,insegnamentoPath, null))
                                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                                     @Override
                                                     public void onSuccess(DocumentReference documentReference) {
                                                         Log.w(DEBUG_TAG,"Document in "+insegnamentoPath+" - "+documentReference.getPath()+" created");
+//                                                        documentReference.update("hadCommented", "",
+//                                                                "utentiRegistrati","");
                                                     }
                                                 });
                                     }
