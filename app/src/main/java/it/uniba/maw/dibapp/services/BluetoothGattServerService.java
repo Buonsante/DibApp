@@ -93,6 +93,7 @@ public class BluetoothGattServerService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
         Intent dettaglioIntent = new Intent(this, LessonActivity.class);
         dettaglioIntent.putExtra("lezione", intent.getSerializableExtra("lezione"));
         dettaglioIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -208,7 +209,7 @@ public class BluetoothGattServerService extends Service {
         bluetoothAdapter.setName(bleServerId);
 
         AdvertiseSettings settings = new AdvertiseSettings.Builder()
-                .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_POWER)
+                .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_BALANCED)
                 .setConnectable(false) //non è necessario connettersi al server
                 .setTimeout(0)
                 .setTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_HIGH)
