@@ -1,8 +1,10 @@
 package it.uniba.maw.dibapp.fragment;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
@@ -378,9 +380,12 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        bluetoothLeScanner = bluetoothAdapter.getBluetoothLeScanner();
-
-        startBleScan();
+        if(resultCode == Activity.RESULT_OK) {
+            bluetoothLeScanner = bluetoothAdapter.getBluetoothLeScanner();
+            startBleScan();
+        }else{
+            dialog.dismiss();
+        }
     }
 
     private void startBleScan() {
@@ -403,6 +408,8 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
                 // scansione interrotta
                 bluetoothLeScanner.stopScan(scanCallback);
                 Log.w(DEBUG_TAG+"ii", "StopScan");
+                buttonRegister.setOnClickListener(buttonRegisterListener);
+
                 // scanning=false significa "Nessuna scansione in corso"
                 scanning = false;
                 dialog.dismiss();
@@ -417,7 +424,7 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
         @Override
         public void onScanResult(int callbackType, ScanResult result) {
 
-            Log.w(DEBUG_TAG+"ii", "OnScanResult");
+            Log.w(DEBUG_TAG+"ii", "OnScanResult "+result.getDevice().getAddress());
 
             nameServerBle = lezione.getNameServerBle();
 
@@ -499,7 +506,7 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
         dialog.setTitle("Registrazione in corso");
         dialog.show();
         progressBar.setVisibility(View.VISIBLE);
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+//        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 }
 
