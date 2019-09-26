@@ -53,9 +53,6 @@ public class CalendarFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
-    private SharedPreferences pref;
-    private List<Lezione> lezioni;
-    private Bundle savedState;
 
     private TextView noLessonsOnDateTextView;
 
@@ -93,15 +90,6 @@ public class CalendarFragment extends Fragment {
         noLessonsOnDateTextView = view.findViewById(R.id.noLessonsCalendar);
 
         new AddEventToCalendar().doInBackground(this);
-
-
-//        try {
-//            //lezioni = (List<Lezione>) getArguments().getSerializable("lezioniList");
-//            Log.w(DEBUG_TAG,lezioniList.toString());
-//        }catch (NullPointerException e){
-//            Log.w(DEBUG_TAG,"lezioni null");
-//        }
-
 
 
         collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
