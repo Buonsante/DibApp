@@ -43,7 +43,9 @@ public class BluetoothGattServerService extends Service {
 
     /* Bluetooth API */
     private BluetoothManager mBluetoothManager;
+    //handle connection with devices
     private BluetoothGattServer mBluetoothGattServer;
+    //handle communication (settings and data) with devices
     private BluetoothLeAdvertiser mBluetoothLeAdvertiser;
     /* Collection of notification subscribers */
 
@@ -71,6 +73,7 @@ public class BluetoothGattServerService extends Service {
         unregisterReceiver(mBluetoothReceiver);
     }
 
+    //just for devices from version 8
     @NonNull
     @TargetApi(26)
     private synchronized String createChannel() {
@@ -93,23 +96,27 @@ public class BluetoothGattServerService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
+        //intent for PendingIntent
         Intent dettaglioIntent = new Intent(this, LessonActivity.class);
         dettaglioIntent.putExtra("lezione", intent.getSerializableExtra("lezione"));
         dettaglioIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         bleServerId = intent.getStringExtra("idServer");
 
+        //real intent for notification
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, dettaglioIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
         String channel;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            //just for new versions
             channel = createChannel();
         else {
+            //up to version 7 notifications don't need channel
             channel = "";
         }
 
+        //this method for the last version has to be run within 5 seconds after start service otherwise service will be close
         startForeground(1,
                     new NotificationCompat.Builder(getApplicationContext(),channel)
                             .setContentTitle("Server Lezione Attivo")
@@ -132,7 +139,7 @@ public class BluetoothGattServerService extends Service {
         registerReceiver(mBluetoothReceiver, filter);
         if (!bluetoothAdapter.isEnabled()) {
             Log.d(TAG, "Bluetooth is currently disabled...enabling");
-            bluetoothAdapter.enable();
+            bluetoothAdapter.enable();//activate bluetooth
         } else {
             Log.d(TAG, "Bluetooth enabled...starting services");
             startAdvertising();
@@ -217,7 +224,7 @@ public class BluetoothGattServerService extends Service {
 
         AdvertiseData data = new AdvertiseData.Builder()
                 .setIncludeDeviceName(true)
-                .setIncludeTxPowerLevel(false)
+                .setIncludeTxPowerLevel(false)//clients bluetooth can't see power level
                 .addServiceUuid(new ParcelUuid(ServerProfile.SERVER_SERVICE))
                 .build();
 
@@ -244,6 +251,7 @@ public class BluetoothGattServerService extends Service {
             return;
         }
 
+        //add a service to the server
         mBluetoothGattServer.addService(ServerProfile.createServerService());
     }
 
