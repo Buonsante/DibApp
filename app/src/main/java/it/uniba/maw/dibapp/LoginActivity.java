@@ -71,19 +71,18 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
 
-        FirebaseMessaging.getInstance().subscribeToTopic("newLesson");
+
         //Initialize Firebase Firestore
         db = FirebaseFirestore.getInstance();
 
-        Bundle notification = getIntent().getExtras();
-        if (notification != null) {
-            Log.w(DEBUG_TAG, "Notification: " + notification.getString("nameServerBle"));
-            Toast.makeText(this, "Lezione disponibile con server: " + notification.getString("nameServerBle"), Toast.LENGTH_LONG);
-        } else {
-            Log.w(DEBUG_TAG, "Intent null");
-        }
+//        Bundle notification = getIntent().getExtras();
+//        if (notification != null) {
+//            Log.w(DEBUG_TAG, "Notification: " + notification.getString("nameServerBle"));
+//            Toast.makeText(this, "Lezione disponibile con server: " + notification.getString("nameServerBle"), Toast.LENGTH_LONG);
+//        } else {
+//            Log.w(DEBUG_TAG, "Intent null");
+//        }
 
-        //Initialize Shared preference
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -114,12 +113,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-    }
 
     private void signInUser(String email,String password){
         mAuth.signInWithEmailAndPassword(email, password)
@@ -164,7 +157,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void startMainActivity(){
             Log.w(DEBUG_TAG,"start main activty");
-            String name = user.getDisplayName();
+
             String mail = user.getEmail();
             CollectionReference utenti = db.collection("utenti");
             // Create a query against the collection.
@@ -271,31 +264,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private class MyTextWatcher implements TextWatcher {
-
-        private View view;
-
-        private MyTextWatcher(View view) {
-            this.view = view;
-        }
-
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        }
-
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        }
-
-        public void afterTextChanged(Editable editable) {
-            switch (view.getId()) {
-                case R.id.input_email:
-                    validateEmail();
-                    break;
-                case R.id.input_password:
-                    validatePassword();
-                    break;
-            }
-        }
-    }
 
     private void generateLessonsInDatabase(){
         //algoritmo per la creazione di 10 lezioni per ogni insegnamento generate in modo casauale
@@ -354,22 +322,6 @@ public class LoginActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.login_progress);
         progressBar.setVisibility(View.VISIBLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-//        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-//        LayoutInflater inflater = LayoutInflater.from(this);
-//        View view = inflater.inflate(R.layout.progress_dialog, null);
-//        ((ProgressBar) view.findViewById(R.id.progress)).setIndeterminate(true);
-//        alertDialogBuilder.setView(view);
-//        progressDialog = alertDialogBuilder.create();
-//        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//
-//        //set the dimension of the dialog
-//        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-//        lp.copyFrom(progressDialog.getWindow().getAttributes());
-//        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
-//        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-//
-//        progressDialog.show();
-//        progressDialog.getWindow().setAttributes(lp);
-//        progressDialog.setCancelable(false);
+
     }
 }
