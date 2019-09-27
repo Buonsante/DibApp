@@ -52,13 +52,9 @@ public class BluetoothGattServerService extends Service {
     String bleServerId;
 
     public BluetoothGattServerService() {
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
 
     }
+
 
     @Override
     public void onDestroy() {
