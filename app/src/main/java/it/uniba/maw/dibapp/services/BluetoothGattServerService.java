@@ -47,7 +47,7 @@ public class BluetoothGattServerService extends Service {
     private BluetoothGattServer mBluetoothGattServer;
     //handle communication (settings and data) with devices
     private BluetoothLeAdvertiser mBluetoothLeAdvertiser;
-    /* Collection of notification subscribers */
+
 
     String bleServerId;
 
