@@ -99,16 +99,15 @@ public class LessonActivity extends AppCompatActivity {
 
 
     private void setupViewPager(ViewPager viewPager){
-        SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
         DettagliFragment dettagliFragment = new DettagliFragment();
         CommentiFragment commentiFragment = new CommentiFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("lezione", getIntent().getSerializableExtra("lezione"));
         dettagliFragment.setArguments(bundle);
         commentiFragment.setArguments(bundle);
-        adapter.addFragment(dettagliFragment, getResources().getString(R.string.details));
-        adapter.addFragment(commentiFragment, getResources().getString(R.string.comments));
-        viewPager.setAdapter(adapter);
+        mSectionsPageAdapter.addFragment(dettagliFragment, getResources().getString(R.string.details));
+        mSectionsPageAdapter.addFragment(commentiFragment, getResources().getString(R.string.comments));
+        viewPager.setAdapter(mSectionsPageAdapter);
     }
 
     private void showBottomSheetDialog() {
