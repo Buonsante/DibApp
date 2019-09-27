@@ -62,12 +62,6 @@ public class UserActivity extends AppCompatActivity {
         });
 
 
-//        getSupportActionBar().setIcon(R.drawable.ic_arrow_back_white_24dp);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
-
-
-
         editTextName.setText(prefs.getString("nome", ""));
         editTextName.setEnabled(false);
         editTextSurname.setText(prefs.getString("cognome", ""));
@@ -88,18 +82,13 @@ public class UserActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_edit) {
             enableEdit();
             return true;
         }
-
 
         return super.onOptionsItemSelected(item);
     }

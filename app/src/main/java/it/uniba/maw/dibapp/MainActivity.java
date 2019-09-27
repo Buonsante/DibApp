@@ -273,7 +273,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .hide(calendarFragment)
                 .commitNow();
 
-        //loadFragment(calendarFragment);
         progressBar.setVisibility(View.GONE);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 

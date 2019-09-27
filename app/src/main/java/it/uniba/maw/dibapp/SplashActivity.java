@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +15,6 @@ import android.widget.ProgressBar;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -27,15 +25,15 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 import it.uniba.maw.dibapp.model.Lezione;
-import it.uniba.maw.dibapp.util.Util;
 
 import static it.uniba.maw.dibapp.util.Util.DEBUG_TAG;
 import static it.uniba.maw.dibapp.util.Util.SHARED_PREFERENCE_NAME;
+import static it.uniba.maw.dibapp.util.Util.USER_INFO_PREFERENCE_NAME;
 import static it.uniba.maw.dibapp.util.Util.lezioniList;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private ImageView prova_logo;
+    private ImageView logo;
     SharedPreferences pref;
     private ProgressBar progressBar;
 
@@ -46,11 +44,11 @@ public class SplashActivity extends AppCompatActivity {
         pref = getSharedPreferences(SHARED_PREFERENCE_NAME,MODE_PRIVATE);
 
         progressBar = findViewById(R.id.splashDataDownload);
-        prova_logo = findViewById(R.id.prova_logo);
+        logo = findViewById(R.id.logo);
 
         Animation myanim = AnimationUtils.loadAnimation(this, R.anim.mytransition);
 
-        prova_logo.startAnimation(myanim);
+        logo.startAnimation(myanim);
 
         myanim.setAnimationListener(new Animation.AnimationListener() {
 
@@ -95,15 +93,19 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void getLezioni(){
-        progressBar.setIndeterminate(false);
-        progressBar.setProgress(0);
+
         lezioniList = new ArrayList<>();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+
         Query query;
-        if(pref.getString("tipo","").equals("D"))
-            query = db.collectionGroup("lezioni").whereEqualTo("professore","Denaro Roberto");
+
+        if(pref.getString("tipo","").equals("D")) {
+            SharedPreferences userPref = getSharedPreferences(USER_INFO_PREFERENCE_NAME,MODE_PRIVATE);
+            String nomeDocente = userPref.getString("cognome", "")+" "+userPref.getString("nome","");
+            query = db.collectionGroup("lezioni").whereEqualTo("professore", nomeDocente);
+        }
         else
             query = db.collectionGroup("lezioni");
 
@@ -111,8 +113,6 @@ public class SplashActivity extends AppCompatActivity {
             .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                 @Override
                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                    int unitOfProgress = 100/queryDocumentSnapshots.size();
-//                    int unitOfProgress = 5;
 
                     Log.w(DEBUG_TAG, "Retrieve Lezioni ");
                     for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
@@ -121,11 +121,10 @@ public class SplashActivity extends AppCompatActivity {
                         l.setLinkLezione(document.getReference().getPath());
                         lezioniList.add(l);
 
-                        progressBar.incrementProgressBy(unitOfProgress);
 
                     }
                     Log.w(DEBUG_TAG, "LESSONS RETRIEVED");
-                    progressBar.incrementProgressBy(unitOfProgress);
+
                     startApp();
                 }
             }).addOnFailureListener(new OnFailureListener() {
