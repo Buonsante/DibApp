@@ -84,9 +84,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         textViewFullNameNav = headerView.findViewById(R.id.textViewFullNameNav);
         textViewEmailNav = headerView.findViewById(R.id.textViewEmailNav);
 
-//        textViewFullNameNav = findViewById(R.id.textViewFullNameNav);
-//        textViewEmailNav = findViewById(R.id.textViewEmailNav);
-
         SharedPreferences prefs = getSharedPreferences("profile data", MODE_PRIVATE);
 
         textViewFullNameNav.setText(prefs.getString("nome","") + " " + prefs.getString("cognome", " "));
@@ -129,9 +126,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 drawer_toolbar.setTitle(R.string.settings);
                 loadFragment(settingsFragment);
                 break;
-            case R.id.nav_faq: //TODO//
+            case R.id.nav_faq: //Not handled
                 break;
-            case R.id.nav_info: //TODO//
+            case R.id.nav_info: //Not handled
                 break;
             case R.id.nav_logoout:
                 showPopup();
@@ -147,11 +144,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
         alert.setMessage(R.string.logout_alert_string)
                 .setPositiveButton(R.string.string_logout, new DialogInterface.OnClickListener()                 {
-
                     public void onClick(DialogInterface dialog, int which) {
-
                         logout(); // Last step. Logout function
-
                     }
                 }).setNegativeButton(R.string.cancel, null);
 
@@ -224,42 +218,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         transaction.commit();
 
     }
-
-
-//    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-//            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-//
-//        @Override
-//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//            Fragment fragment;
-//            switch (item.getItemId()) {
-//                case R.id.calendar:
-//                    toolbar.setTitle("Calendar");
-//                    fragment = new CalendarFragment();
-//                    loadFragment(fragment);
-//                    return true;
-//                case R.id.navigation_gifts:
-//                    toolbar.setTitle("My Gifts");
-//                    fragment = new Fragment();
-//                    loadFragment(fragment);
-//                    return true;
-//                case R.id.settings:
-//                    toolbar.setTitle("Settings");
-//                    fragment = new SettingsFragment();
-//                    loadFragment(fragment);
-//                    return true;
-//            }
-//            return false;
-//        }
-//    };
-
-//    private void loadFragment(Fragment fragment) {
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.frame_container, fragment);
-//        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-//        //transaction.addToBackStack(null);
-//        transaction.commit();
-//    }
 
     void initializeFragment() {
         calendarFragment = new CalendarFragment();

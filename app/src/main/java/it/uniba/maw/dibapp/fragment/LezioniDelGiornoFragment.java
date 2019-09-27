@@ -39,7 +39,7 @@ public class LezioniDelGiornoFragment extends Fragment {
 
 
 
-    //
+
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -47,7 +47,7 @@ public class LezioniDelGiornoFragment extends Fragment {
     //textview per allertare l'utente che non ci sono lezioni disponibi nella giornata
     private TextView noLessonsTextView;
 
-    //
+
     private List<Lezione> lezioniDelGiorno;
 
     public LezioniDelGiornoFragment() {

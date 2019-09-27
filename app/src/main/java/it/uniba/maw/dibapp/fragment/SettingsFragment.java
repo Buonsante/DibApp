@@ -21,7 +21,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     public SwitchPreference not_pref;
     private static String MYIMP = "preferenceDefault";
-//    private final static String PREF_TEXT = "prefText";
+
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {

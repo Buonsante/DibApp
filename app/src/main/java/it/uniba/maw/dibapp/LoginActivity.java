@@ -70,19 +70,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-
         //Initialize Firebase Firestore
         db = FirebaseFirestore.getInstance();
-
-//        Bundle notification = getIntent().getExtras();
-//        if (notification != null) {
-//            Log.w(DEBUG_TAG, "Notification: " + notification.getString("nameServerBle"));
-//            Toast.makeText(this, "Lezione disponibile con server: " + notification.getString("nameServerBle"), Toast.LENGTH_LONG);
-//        } else {
-//            Log.w(DEBUG_TAG, "Intent null");
-//        }
-
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -96,9 +85,6 @@ public class LoginActivity extends AppCompatActivity {
         usernameLayout = findViewById(R.id.input_layout_email);
         passwordEditText = findViewById(R.id.input_password);
         passwordLayout = findViewById(R.id.input_layout_password);
-
-//        usernameEditText.setText("prova@prova.it");
-//        passwordEditText.setText("provaprova");
 
         signInButon = findViewById(R.id.sign_in_button);
         signInButon.setOnClickListener(new View.OnClickListener() {
@@ -131,7 +117,6 @@ public class LoginActivity extends AppCompatActivity {
                             usernameLayout.setError(getString(R.string.authentication_failed));
                             passwordLayout.setError(getString(R.string.authentication_failed));
                             requestFocus(passwordEditText);
-//                            progressDialog.dismiss();
                             progressBar.setVisibility(View.GONE);
                             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 

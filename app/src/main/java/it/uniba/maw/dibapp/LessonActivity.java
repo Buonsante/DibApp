@@ -67,32 +67,26 @@ public class LessonActivity extends AppCompatActivity {
 
         buttonDialog = findViewById(R.id.btn_bottom_sheet);
 
-            buttonDialog.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showBottomSheetDialog();
-                }
-            });
-
-            //se l'utente è un docente nasconde il pulsante di aggiunta commenti
-            if (getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE).getString("tipo", "").equals("D")) {
-                buttonDialog.setVisibility(View.INVISIBLE);
-            }else{
-
+        buttonDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showBottomSheetDialog();
             }
+        });
 
+        //se l'utente è un docente nasconde il pulsante di aggiunta commenti
+        if (getSharedPreferences(Util.SHARED_PREFERENCE_NAME, MODE_PRIVATE).getString("tipo", "").equals("D")) {
+            buttonDialog.setVisibility(View.INVISIBLE);
+        }
 
-            mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
+        mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
 
-            //Set up the ViewPager with the sections adapter
+        //Set up the ViewPager with the sections adapter
         ViewPager mViewPager = (ViewPager) findViewById(R.id.container);
 
-            setupViewPager(mViewPager);
-            TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-            tabLayout.setupWithViewPager(mViewPager);
-
-
-
+        setupViewPager(mViewPager);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
 
     }
 

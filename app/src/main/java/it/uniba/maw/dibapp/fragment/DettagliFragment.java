@@ -155,7 +155,6 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
         buttonSalva.setOnClickListener(buttonSalvaListener);
 
         //recupera lezione da LessonActivity
-
         lezione = (Lezione) getArguments().getSerializable("lezione");
         linkLezione = lezione.getLinkLezione();
 
@@ -428,10 +427,6 @@ public class DettagliFragment extends Fragment implements SensorEventListener {
 
             nameServerBle = lezione.getNameServerBle();
 
-            //questo if è provvisorio per il test 
-            if(nameServerBle == null) {
-                nameServerBle = "1234";
-            }
             if(result.getDevice().getName() != null) {
                 if(result.getDevice().getName().equals(nameServerBle)) {
                     progressBar.setVisibility(View.GONE);
