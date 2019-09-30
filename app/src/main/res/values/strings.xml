@@ -7,7 +7,6 @@
     <string name="authentication_failed">The email or password is incorrect</string>
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="details">Details</string>
     <string name="comments">Comments</string>
